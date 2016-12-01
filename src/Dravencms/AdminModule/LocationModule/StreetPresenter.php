@@ -38,7 +38,7 @@ class StreetPresenter extends SecuredPresenter
     private $streetFormEntity = null;
 
     /**
-     * @isAllowed(user,streetEdit)
+     * @isAllowed(location,streetEdit)
      */
     public function actionDefault()
     {
@@ -47,7 +47,7 @@ class StreetPresenter extends SecuredPresenter
 
     /**
      * @param integer $id
-     * @isAllowed(user,streetEdit)
+     * @isAllowed(location,streetEdit)
      * @throws \Exception
      */
     public function actionEdit($id)

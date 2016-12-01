@@ -35,7 +35,7 @@ class CountryPresenter extends SecuredPresenter
 
 
     /**
-     * @isAllowed(user,countryEdit)
+     * @isAllowed(location,countryEdit)
      */
     public function actionDefault()
     {
@@ -44,7 +44,7 @@ class CountryPresenter extends SecuredPresenter
 
     /**
      * @param integer $id
-     * @isAllowed(user,countryEdit)
+     * @isAllowed(location,countryEdit)
      */
     public function actionEdit($id)
     {

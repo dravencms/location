@@ -34,7 +34,7 @@ class CityPresenter extends SecuredPresenter
     private $userCityFormEntity = null;
     
     /**
-     * @isAllowed(user, cityEdit)
+     * @isAllowed(location, cityEdit)
      */
     public function actionDefault()
     {
@@ -43,7 +43,7 @@ class CityPresenter extends SecuredPresenter
 
     /**
      * @param  integer $id
-     * @isAllowed(user, cityEdit)
+     * @isAllowed(location, cityEdit)
      * @throws \Exception
      */
     public function actionEdit($id)

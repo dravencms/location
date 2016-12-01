@@ -34,7 +34,7 @@ class StreetNumberPresenter extends SecuredPresenter
     private $streetNumber = null;
 
     /**
-     * @isAllowed(user,streetEdit)
+     * @isAllowed(location,streetEdit)
      */
     public function actionDefault()
     {
@@ -43,7 +43,7 @@ class StreetNumberPresenter extends SecuredPresenter
 
     /**
      * @param integer $id
-     * @isAllowed(user,streetEdit)
+     * @isAllowed(location,streetEdit)
      * @throws \Exception
      */
     public function actionEdit($id)

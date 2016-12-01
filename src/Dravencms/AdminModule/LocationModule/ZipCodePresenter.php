@@ -39,7 +39,7 @@ class ZipCodePresenter extends SecuredPresenter
 
 
     /**
-     * @isAllowed(user,zipCodeEdit)
+     * @isAllowed(location,zipCodeEdit)
      */
     public function actionDefault()
     {
@@ -48,7 +48,7 @@ class ZipCodePresenter extends SecuredPresenter
 
     /**
      * @param integer $id
-     * @isAllowed(user,zipCodeEdit)
+     * @isAllowed(location,zipCodeEdit)
      */
     public function actionEdit($id)
     {
