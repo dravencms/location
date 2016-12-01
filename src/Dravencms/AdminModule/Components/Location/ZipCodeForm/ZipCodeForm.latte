@@ -1,0 +1,29 @@
+<form n:name="form" class="panel form-horizontal">
+    <ul class="alert alert-danger" n:if="$form->hasErrors()">
+        <li n:foreach="$form->errors as $error">{$error}</li>
+    </ul>
+    <div class="panel-heading">
+        <span class="panel-title">{$panelHeading}</span>
+    </div>
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group no-margin-hr">
+                    <label class="control-label" n:name="name">{_"ZIP"}</label>
+                    <input n:name="name" class="form-control" autofocus="autofocus">
+                </div>
+            </div><!-- col-sm-6 -->
+            <div class="col-sm-6">
+                <div class="form-group no-margin-hr">
+                    <label class="control-label" n:name="city">{_"City"}</label>
+                    <select n:name="city" class="form-control" placeholder="Select city" data-placeholder="Select city"></select>
+                </div>
+            </div><!-- col-sm-6 -->
+        </div><!-- row -->
+    </div>
+
+    <div class="panel-footer">
+        <input type="submit" n:name="send" class="btn btn-success button" value="Uložit">
+    </div>
+</form>
