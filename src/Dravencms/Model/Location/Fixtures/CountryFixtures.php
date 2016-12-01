@@ -24,7 +24,7 @@ class CountryFixtures extends AbstractFixture
         {
             $country = new Country($name, $code);
             $manager->persist($country);
-            $this->addReference('user-country-'.$code, $country);
+            $this->addReference('location-country-'.$code, $country);
         }
         $manager->flush();
     }
