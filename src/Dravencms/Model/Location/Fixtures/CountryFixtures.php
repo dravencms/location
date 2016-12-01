@@ -5,7 +5,7 @@
 
 namespace Dravencms\Model\Location\Fixtures;
 
-use Dravencms\Model\User\Entities\Country;
+use Dravencms\Model\Location\Entities\Country;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 

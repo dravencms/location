@@ -36,13 +36,13 @@ class StreetNumber extends Nette\Object
 
     /**
      * @var ArrayCollection|Company[]
-     * @ORM\OneToMany(targetEntity="Company", mappedBy="streetNumber",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Dravencms\Model\User\Entities\Company", mappedBy="streetNumber",cascade={"persist"})
      */
     private $companies;
 
     /**
      * @var ArrayCollection|User[]
-     * @ORM\OneToMany(targetEntity="User", mappedBy="streetNumber",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Dravencms\Model\User\Entities\User", mappedBy="streetNumber",cascade={"persist"})
      */
     private $users;
 

@@ -24,19 +24,19 @@ class AdminMenuFixtures extends AbstractFixture implements DependentFixtureInter
         $root = new Menu('Locations', null, 'fa-globe', $this->getReference('user-acl-operation-location-edit'), null);
         $manager->persist($root);
 
-        $child = new Menu('Streets', ':Admin:User:Street', 'fa-language', $this->getReference('user-acl-operation-location-streetEdit'));
+        $child = new Menu('Streets', ':Admin:Location:Street', 'fa-language', $this->getReference('user-acl-operation-location-streetEdit'));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
-        $child = new Menu('Street Numbers', ':Admin:User:StreetNumber', 'fa-subscript', $this->getReference('user-acl-operation-location-streetEdit'));
+        $child = new Menu('Street Numbers', ':Admin:Location:StreetNumber', 'fa-subscript', $this->getReference('user-acl-operation-location-streetEdit'));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
-        $child = new Menu('Cities', ':Admin:User:City', 'fa-map-marker', $this->getReference('user-acl-operation-location-cityEdit'));
+        $child = new Menu('Cities', ':Admin:Location:City', 'fa-map-marker', $this->getReference('user-acl-operation-location-cityEdit'));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
-        $child = new Menu('Zip codes', ':Admin:User:ZipCode', 'fa-map-signs', $this->getReference('user-acl-operation-location-zipCodeEdit'));
+        $child = new Menu('Zip codes', ':Admin:Location:ZipCode', 'fa-map-signs', $this->getReference('user-acl-operation-location-zipCodeEdit'));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
-        $child = new Menu('Countries', ':Admin:User:Country', 'fa-globe', $this->getReference('user-acl-operation-location-countryEdit'));
+        $child = new Menu('Countries', ':Admin:Location:Country', 'fa-globe', $this->getReference('user-acl-operation-location-countryEdit'));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
         $manager->flush();

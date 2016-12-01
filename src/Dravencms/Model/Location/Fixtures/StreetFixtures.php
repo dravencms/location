@@ -6,7 +6,7 @@
 namespace Dravencms\Model\Location\Fixtures;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Dravencms\Model\User\Entities\Street;
+use Dravencms\Model\Location\Entities\Street;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 

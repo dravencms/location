@@ -6,11 +6,11 @@
 namespace Dravencms\Model\Location\Fixtures;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Dravencms\Model\User\Entities\City;
+use Dravencms\Model\Location\Entities\City;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class UserCityFixtures extends AbstractFixture implements DependentFixtureInterface
+class CityFixtures extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * Load data fixtures with the passed EntityManager
