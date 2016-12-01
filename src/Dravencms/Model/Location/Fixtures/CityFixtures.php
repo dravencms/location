@@ -19,7 +19,7 @@ class CityFixtures extends AbstractFixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $city = new City($this->getReference('user-country-CZ'), 'Olomouc');
+        $city = new City($this->getReference('location-country-CZ'), 'Olomouc');
         $manager->persist($city);
         $this->addReference('user-city-olomouc', $city);
         $manager->flush();
