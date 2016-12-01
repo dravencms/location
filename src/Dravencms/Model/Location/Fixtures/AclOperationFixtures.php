@@ -34,6 +34,7 @@ class AclOperationFixtures extends AbstractFixture implements DependentFixtureIn
                 'countryDelete' => 'Allows deletion of country'
             ]
         ];
+        
         foreach ($operations AS $resourceName => $operationList)
         {
             /** @var AclResource $aclResource */
