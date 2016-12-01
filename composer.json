@@ -15,8 +15,7 @@
     }
   ],
   "require": {
-    "umpirsky/country-list": "^2.0",
-    "umpirsky/currency-list": "^1.0"
+    "umpirsky/country-list": "^2.0"
   },
   "autoload": {
     "psr-0": {
