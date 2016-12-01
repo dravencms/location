@@ -54,6 +54,6 @@ class AclOperationFixtures extends AbstractFixture implements DependentFixtureIn
      */
     public function getDependencies()
     {
-        return ['Dravencms\Model\Location\Fixtures\AclResourceFixtures', 'Dravencms\Model\User\Fixtures\UserGroupFixtures'];
+        return ['Dravencms\Model\Location\Fixtures\AclResourceFixtures', 'Dravencms\Model\User\Fixtures\GroupFixtures'];
     }
 }
