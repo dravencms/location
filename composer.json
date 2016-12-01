@@ -1,0 +1,34 @@
+{
+  "name": "dravencms/location",
+  "type": "dravencms-package",
+  "description": "DravenCMS Location module",
+  "keywords": [
+    "dravencms",
+    "location"
+  ],
+  "license": [
+    "LGPL-3.0"
+  ],
+  "authors": [
+    {
+      "name": "Adam Schubert"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-0": {
+      "Dravencms\\": "src/"
+    }
+  },
+  "extra": {
+    "dravencms": {
+      "configuration": {
+        "extensions": {
+          "location": "Dravencms\\Location\\DI\\LocationExtension"
+        }
+      }
+    }
+  }
+}
+
