@@ -22,6 +22,8 @@ class AclOperationFixtures extends AbstractFixture implements DependentFixtureIn
     {
         $operations = [
             'location' => [
+                'edit' => 'Allows editation of location',
+                'delete' => 'Allows deletion of location',
                 'streetEdit' => 'Allows editation of street',
                 'streetDelete' => 'Allows deletion of street',
                 'cityEdit' => 'Allows editation of city',
