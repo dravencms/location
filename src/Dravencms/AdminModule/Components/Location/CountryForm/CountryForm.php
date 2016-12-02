@@ -84,7 +84,7 @@ class CountryForm extends Control
         }
 
         //Kontrola opraveni
-        if (!$this->presenter->isAllowed('user', 'countryEdit')) {
+        if (!$this->presenter->isAllowed('location', 'countryEdit')) {
             $form->addError('Nemáte oprávění editovat zeme.');
         }
     }

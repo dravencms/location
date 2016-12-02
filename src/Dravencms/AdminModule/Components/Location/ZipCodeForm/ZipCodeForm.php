@@ -94,7 +94,7 @@ class ZipCodeForm extends BaseControl
         }
 
         //Kontrola opraveni
-        if (!$this->presenter->isAllowed('user', 'zipCodeEdit')) {
+        if (!$this->presenter->isAllowed('location', 'zipCodeEdit')) {
             $form->addError('Nemáte oprávění editovat zip code.');
         }
     }

@@ -87,7 +87,7 @@ class CityForm extends Control
         }
         
         //Kontrola opraveni
-        if (!$this->presenter->isAllowed('user', 'cityEdit')) {
+        if (!$this->presenter->isAllowed('location', 'cityEdit')) {
             $form->addError('Nemáte oprávění editovat mesta.');
         }
     }

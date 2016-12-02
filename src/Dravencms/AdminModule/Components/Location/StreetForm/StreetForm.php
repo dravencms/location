@@ -109,7 +109,7 @@ class StreetForm extends BaseControl
         }
 
         //Kontrola opraveni
-        if (!$this->presenter->isAllowed('user', 'streetEdit')) {
+        if (!$this->presenter->isAllowed('location', 'streetEdit')) {
             $form->addError('Nemáte oprávění editovat ulici.');
         }
     }

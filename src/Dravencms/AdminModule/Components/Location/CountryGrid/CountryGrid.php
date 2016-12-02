@@ -58,12 +58,12 @@ class CountryGrid extends BaseControl
             ->setFilterText()
             ->setSuggestion();
 
-        if ($this->presenter->isAllowed('user', 'countryEdit')) {
+        if ($this->presenter->isAllowed('location', 'countryEdit')) {
             $grid->addActionHref('edit', 'Upravit')
                 ->setIcon('pencil');
         }
 
-        if ($this->presenter->isAllowed('user', 'countryDelete')) {
+        if ($this->presenter->isAllowed('location', 'countryDelete')) {
             $grid->addActionHref('delete', 'Smazat', 'delete!')
                 ->setCustomHref(function($row){
                     return $this->link('delete!', $row->getId());

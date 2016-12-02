@@ -67,12 +67,12 @@ class StreetGrid extends BaseControl
             ->setFilterText()
             ->setSuggestion();
 
-        if ($this->presenter->isAllowed('user', 'streetEdit')) {
+        if ($this->presenter->isAllowed('location', 'streetEdit')) {
             $grid->addActionHref('edit', 'Upravit')
                 ->setIcon('pencil');
         }
 
-        if ($this->presenter->isAllowed('user', 'streetDelete')) {
+        if ($this->presenter->isAllowed('location', 'streetDelete')) {
             $grid->addActionHref('delete', 'Smazat', 'delete!')
                 ->setCustomHref(function($row){
                     return $this->link('delete!', $row->getId());

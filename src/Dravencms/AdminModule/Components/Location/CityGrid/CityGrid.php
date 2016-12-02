@@ -62,12 +62,12 @@ class CityGrid extends BaseControl
             ->setFilterText()
             ->setSuggestion();
 
-        if ($this->presenter->isAllowed('user', 'cityEdit')) {
+        if ($this->presenter->isAllowed('location', 'cityEdit')) {
             $grid->addActionHref('edit', 'Upravit')
                 ->setIcon('pencil');
         }
 
-        if ($this->presenter->isAllowed('user', 'cityDelete')) {
+        if ($this->presenter->isAllowed('location', 'cityDelete')) {
             $grid->addActionHref('delete', 'Smazat', 'delete!')
                 ->setCustomHref(function($row){
                     return $this->link('delete!', $row->getId());

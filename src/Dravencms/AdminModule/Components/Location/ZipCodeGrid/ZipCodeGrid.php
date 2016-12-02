@@ -69,12 +69,12 @@ class ZipCodeGrid extends BaseControl
             ->setFilterText()
             ->setSuggestion();
 
-        if ($this->presenter->isAllowed('user', 'zipCodeEdit')) {
+        if ($this->presenter->isAllowed('location', 'zipCodeEdit')) {
             $grid->addActionHref('edit', 'Upravit')
                 ->setIcon('pencil');
         }
 
-        if ($this->presenter->isAllowed('user', 'zipCodeDelete')) {
+        if ($this->presenter->isAllowed('location', 'zipCodeDelete')) {
             $grid->addActionHref('delete', 'Smazat', 'delete!')
                 ->setCustomHref(function($row){
                     return $this->link('delete!', $row->getId());
