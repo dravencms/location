@@ -83,4 +83,42 @@ class StreetNumberRepository
 
         return (is_null($qb->getQuery()->getOneOrNullResult()));
     }
+
+    /**
+     * @param $name
+     * @param Street|null $street
+     * @return StreetNumber[]
+     */
+    public function findByName($name, Street $street = null)
+    {
+        $qb = $this->streetNumberRepository->createQueryBuilder('s')
+            ->select('s')
+            ->where('s.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%');
+
+        if ($street)
+        {
+            $qb->andWhere('s.street = :street')
+                ->setParameter('street', $street);
+        }
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $name
+     * @param Street|null $street
+     * @return null|StreetNumber
+     */
+    public function getOneByName($name, Street $street = null)
+    {
+        $criteria = ['name' => $name];
+        if (!is_null($street))
+        {
+            $criteria['street'] = $street;
+        }
+
+        return $this->streetNumberRepository->findOneBy($criteria);
+    }
 }

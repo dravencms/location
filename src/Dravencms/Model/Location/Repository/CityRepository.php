@@ -99,4 +99,41 @@ class CityRepository
 
         return (is_null($qb->getQuery()->getOneOrNullResult()));
     }
+
+    /**
+     * @param $name
+     * @param Country|null $country
+     * @return City[]
+     */
+    public function findByName($name, Country $country = null)
+    {
+        $qb = $this->cityRepository->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%');
+
+        if ($country)
+        {
+            $qb->andWhere('c.country = :country')
+                ->setParameter('country', $country);
+        }
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $name
+     * @param Country|null $country
+     * @return null|City
+     */
+    public function getOneByName($name, Country $country = null)
+    {
+        $criteria = ['name' => $name];
+        if (!is_null($country))
+        {
+            $criteria['country'] = $country;
+        }
+        return $this->cityRepository->findOneBy($criteria);
+    }
 }

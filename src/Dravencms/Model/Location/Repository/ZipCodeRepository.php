@@ -5,6 +5,7 @@
 
 namespace Dravencms\Model\Location\Repository;
 
+use Dravencms\Model\Location\Entities\City;
 use Dravencms\Model\Location\Entities\Country;
 use Dravencms\Model\Location\Entities\ZipCode;
 use Kdyby\Doctrine\EntityManager;
@@ -87,5 +88,42 @@ class ZipCodeRepository
         }
 
         return (is_null($qb->getQuery()->getOneOrNullResult()));
+    }
+
+    /**
+     * @param $name
+     * @param City|null $city
+     * @return ZipCode[]
+     */
+    public function findByName($name, City $city = null)
+    {
+        $qb = $this->zipCodeRepository->createQueryBuilder('z')
+            ->select('z')
+            ->where('z.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%');
+
+        if ($city)
+        {
+            $qb->andWhere('z.city = :city')
+                ->setParameter('city', $city);
+        }
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $name
+     * @param City|null $city
+     * @return null|ZipCode
+     */
+    public function getOneByName($name, City $city = null)
+    {
+        $criteria = ['name' => $name];
+        if (!is_null($city))
+        {
+            $criteria['city'] = $city;
+        }
+        return $this->zipCodeRepository->findOneBy($criteria);
     }
 }

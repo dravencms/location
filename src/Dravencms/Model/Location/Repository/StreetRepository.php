@@ -91,4 +91,41 @@ class StreetRepository
     {
         return $this->streetRepository->findAll();
     }
+
+    /**
+     * @param $name
+     * @param ZipCode|null $zipCode
+     * @return Street[]
+     */
+    public function findByName($name, ZipCode $zipCode = null)
+    {
+        $qb = $this->streetRepository->createQueryBuilder('s')
+            ->select('s')
+            ->where('s.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%');
+
+        if ($zipCode)
+        {
+            $qb->andWhere('s.zipCode = :zipCode')
+                ->setParameter('zipCode', $zipCode);
+        }
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $name
+     * @param ZipCode $zipCode
+     * @return null|Street
+     */
+    public function getOneByName($name, ZipCode $zipCode = null)
+    {
+        $criteria = ['name' => $name];
+        if (!is_null($zipCode))
+        {
+            $criteria['zipCode'] = $zipCode;
+        }
+        return $this->streetRepository->findOneBy($criteria);
+    }
 }
