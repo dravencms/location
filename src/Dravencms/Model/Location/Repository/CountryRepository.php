@@ -95,6 +95,15 @@ class CountryRepository
     }
 
     /**
+     * @param $name
+     * @return null|Country
+     */
+    public function getOneByName($name)
+    {
+        return $this->countryRepository->findOneBy(['name' => $name]);
+    }
+
+    /**
      * @param $id
      * @return null|Country
      */
