@@ -8,13 +8,14 @@ use Dravencms\Model\User\Entities\Company;
 use Dravencms\Model\User\Entities\User;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Nette;
 
 /**
  * Class StreetNumber
  * @package App\Model\Entities
  * @ORM\Entity
- * @ORM\Table(name="locationStreetNumber")
+ * @ORM\Table(name="locationStreetNumber", uniqueConstraints={@UniqueConstraint(name="name_street_id", columns={"name", "street_id"})})
  */
 class StreetNumber extends Nette\Object
 {
@@ -30,7 +31,7 @@ class StreetNumber extends Nette\Object
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=255,unique=true,nullable=false)
+     * @ORM\Column(type="string",length=255,nullable=false)
      */
     private $name;
 

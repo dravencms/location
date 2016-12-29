@@ -6,13 +6,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Nette;
 
 /**
  * Class ZipCode
  * @package App\Model\Entities
  * @ORM\Entity
- * @ORM\Table(name="locationZipCode")
+ * @ORM\Table(name="locationZipCode", uniqueConstraints={@UniqueConstraint(name="name_city_id", columns={"name", "city_id"})})
  */
 class ZipCode extends Nette\Object
 {
@@ -28,7 +29,7 @@ class ZipCode extends Nette\Object
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=255,unique=true,nullable=false)
+     * @ORM\Column(type="string",length=255,nullable=false)
      */
     private $name;
 
