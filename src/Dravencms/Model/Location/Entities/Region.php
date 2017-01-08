@@ -14,10 +14,9 @@ use Nette;
 
 /**
  * Class Region
- * @package CzechDatabase\Model\Category\Entities
  * @Gedmo\Tree(type="nested")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
- * @ORM\Table(name="czechDatabaseRegion")
+ * @ORM\Table(name="locationRegion")
  */
 class Region extends Nette\Object
 {

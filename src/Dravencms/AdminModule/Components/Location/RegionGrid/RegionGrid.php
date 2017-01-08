@@ -26,6 +26,7 @@ use Dravencms\Model\Location\Repository\RegionRepository;
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Kdyby\Doctrine\EntityManager;
+use Nette\Utils\Html;
 
 /**
  * Description of CompanyGrid
@@ -105,19 +106,19 @@ class RegionGrid extends BaseControl
         $header->class[] = 'center';
         $grid->getColumn('position')->cellPrototype->class[] = 'center';
 
-        if ($this->presenter->isAllowed('czechDatabase', 'regionEdit'))
+        if ($this->presenter->isAllowed('location', 'regionEdit'))
         {
-            $grid->addActionHref('subcategory', 'Subcategory items')
+            $grid->addActionHref('subregion', 'Subregions items')
                 ->setIcon('folder-open')
                 ->setCustomHref(function ($item) {
-                    return $this->presenter->link('Category:default', ['categoryId' => $item->getId()]);
+                    return $this->presenter->link('Region:default', ['regionId' => $item->getId()]);
                 });
 
             $grid->addActionHref('edit', 'Edit')
                 ->setIcon('pencil');
         }
 
-        if ($this->presenter->isAllowed('czechDatabase', 'regionDelete')) {
+        if ($this->presenter->isAllowed('location', 'regionDelete')) {
 
             $grid->addActionHref('delete', 'Delete', 'delete!')
                 ->setCustomHref(function ($row) {

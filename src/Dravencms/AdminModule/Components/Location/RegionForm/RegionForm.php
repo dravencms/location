@@ -107,7 +107,14 @@ class RegionForm extends Control
         $form->addText('name')
             ->setRequired('Prosím zadejte název firmy.');
 
-        $form->addMultiSelect('cities', null, $this->cityRepository->getAll());
+        $cities = [];
+
+        foreach($this->cityRepository->getAll() AS $city)
+        {
+            $cities[$city->getid()] = $city->getName();
+        }
+
+        $form->addMultiSelect('cities', null, $cities);
 
         $form->addCheckbox('isActive');
 

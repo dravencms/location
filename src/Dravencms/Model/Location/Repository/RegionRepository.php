@@ -5,7 +5,6 @@
 
 namespace Dravencms\Model\Location\Repository;
 
-use CzechDatabase\Model\Category\Entities\Category;
 use Doctrine\ORM\Query;
 use Dravencms\Model\Location\Entities\Region;
 use Kdyby\Doctrine\EntityManager;
@@ -20,7 +19,7 @@ class RegionRepository
     private $entityManager;
 
     /**
-     * CategoryRepository constructor.
+     * RegionRepository constructor.
      * @param EntityManager $entityManager
      */
     public function __construct(EntityManager $entityManager)
@@ -205,7 +204,7 @@ class RegionRepository
                 throw new \Exception('$number != 1 is not supported');
             }
 
-            /** @var Category $prevItem */
+            /** @var Region $prevItem */
             $prevItem = $this->regionRepository->createQueryBuilder('node')
                 ->select('node')
                 ->where('node.root < :root')
@@ -258,7 +257,7 @@ class RegionRepository
                 throw new \Exception('$number != 1 is not supported');
             }
 
-            /** @var Category $prevItem */
+            /** @var Region $prevItem */
             $nextItem = $this->regionRepository->createQueryBuilder('node')
                 ->select('node')
                 ->where('node.root > :root')

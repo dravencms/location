@@ -36,7 +36,7 @@ class RegionPresenter extends SecuredPresenter
 
 
     /**
-     * @isAllowed(czechDatabase, regionEdit)
+     * @isAllowed(location, regionEdit)
      * @param $categoryId integer|null
      * @throws Nette\Application\BadRequestException
      */
@@ -58,7 +58,7 @@ class RegionPresenter extends SecuredPresenter
     }
 
     /**
-     * @isAllowed(czechDatabase, regionEdit)
+     * @isAllowed(location, regionEdit)
      * @param null $id
      * @param null $categoryId
      * @throws Nette\Application\BadRequestException
