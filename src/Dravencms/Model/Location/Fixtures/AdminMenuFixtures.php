@@ -39,6 +39,9 @@ class AdminMenuFixtures extends AbstractFixture implements DependentFixtureInter
         $child = new Menu('Countries', ':Admin:Location:Country', 'fa-globe', $this->getReference('user-acl-operation-location-countryEdit'));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
+        $child = new Menu('Regions', ':Admin:Location:Regions', 'fa-compass', $this->getReference('user-acl-operation-location-regionsEdit'));
+        $manager->persist($child);
+        $menu->persistAsLastChildOf($child, $root);
         $manager->flush();
     }
     /**

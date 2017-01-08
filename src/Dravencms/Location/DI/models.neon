@@ -3,7 +3,7 @@
 - Dravencms\Model\Location\Repository\ZipCodeRepository
 - Dravencms\Model\Location\Repository\CountryRepository
 - Dravencms\Model\Location\Repository\StreetNumberRepository
-
+- Dravencms\Model\Location\Repository\RegionRepository
 
 - Dravencms\Model\Location\Fixtures\CityFixtures
 - Dravencms\Model\Location\Fixtures\StreetFixtures

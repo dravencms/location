@@ -31,7 +31,9 @@ class AclOperationFixtures extends AbstractFixture implements DependentFixtureIn
                 'zipCodeEdit' => 'Allows editation of zip code',
                 'zipCodeDelete' => 'Allows deletion of zip code',
                 'countryEdit' => 'Allows editation of country',
-                'countryDelete' => 'Allows deletion of country'
+                'countryDelete' => 'Allows deletion of country',
+                'regionEdit' => 'Allows editation of region',
+                'regionDelete' => 'Allows deletion of region'
             ]
         ];
         

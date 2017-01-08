@@ -40,14 +40,22 @@ class City extends Nette\Object
     private $zipCodes;
 
     /**
+     * @var Region
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities")
+     * @ORM\JoinColumn(name="region_id", referencedColumnName="id", nullable=true)
+     */
+    private $region;
+
+    /**
      * City constructor.
      * @param string $name
      * @param Country $country
      */
-    public function __construct(Country $country, $name)
+    public function __construct(Country $country, $name, Region $region = null)
     {
         $this->name = $name;
         $this->country = $country;
+        $this->region = $region;
 
         $this->zipCodes = new ArrayCollection();
     }
@@ -66,6 +74,14 @@ class City extends Nette\Object
     public function setCountry(Country $country)
     {
         $this->country = $country;
+    }
+
+    /**
+     * @param Region $region
+     */
+    public function setRegion(Region $region)
+    {
+        $this->region = $region;
     }
 
     /**
@@ -90,5 +106,13 @@ class City extends Nette\Object
     public function getZipCodes()
     {
         return $this->zipCodes;
+    }
+
+    /**
+     * @return Region
+     */
+    public function getRegion()
+    {
+        return $this->region;
     }
 }

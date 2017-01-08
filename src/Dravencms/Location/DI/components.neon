@@ -8,3 +8,5 @@
 - Dravencms\AdminModule\Components\Location\CityGrid\CityGridFactory
 - Dravencms\AdminModule\Components\Location\StreetNumberForm\StreetNumberFormFactory
 - Dravencms\AdminModule\Components\Location\StreetNumberGrid\StreetNumberGridFactory
+- Dravencms\AdminModule\Components\Location\RegionForm\RegionFormFactory
+- Dravencms\AdminModule\Components\Location\RegionGrid\RegionGridFactory
