@@ -21,9 +21,9 @@
 namespace Dravencms\AdminModule\Components\Location\RegionForm;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Dravencms\Model\Location\Entities\Region;
 use Dravencms\Model\Location\Repository\RegionRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Repository\CityRepository;
 use Kdyby\Doctrine\EntityManager;
@@ -85,9 +85,10 @@ class RegionForm extends Control
             {
                 $cities[] = $city->getId();
             }
-            
+
             $default = [
                 'name' => $this->region->getName(),
+                'isActive' => $this->region->isActive(),
                 'cities' => $cities
             ];
 
@@ -154,6 +155,7 @@ class RegionForm extends Control
             $region->setName($values->name);
             $region->setIsActive($values->isActive);
             $region->setCities($cities);
+            $this->entityManager->persist($region);
         } else {
             $region = new Region(
                 $values->name

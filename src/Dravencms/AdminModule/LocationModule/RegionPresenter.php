@@ -37,21 +37,21 @@ class RegionPresenter extends SecuredPresenter
 
     /**
      * @isAllowed(location, regionEdit)
-     * @param $categoryId integer|null
+     * @param $regionId integer|null
      * @throws Nette\Application\BadRequestException
      */
-    public function actionDefault($categoryId = null)
+    public function actionDefault($regionId = null)
     {
         $this->template->h1 = $this->translator->translate('Regions');
-        if ($categoryId) {
+        if ($regionId) {
             /** @var Region $category */
-            $category = $this->regionRepository->getOneById($categoryId);
-            if (!$category) {
+            $region = $this->regionRepository->getOneById($regionId);
+            if (!$region) {
                 $this->error();
             }
 
-            $this->parentRegion = $category;
-            $this->template->h1 .= ' - ' . $category->getName();
+            $this->parentRegion = $region;
+            $this->template->h1 .= ' - ' . $region->getName();
         }
 
         $this->template->parentRegion = $this->parentRegion;
@@ -60,16 +60,16 @@ class RegionPresenter extends SecuredPresenter
     /**
      * @isAllowed(location, regionEdit)
      * @param null $id
-     * @param null $categoryId
+     * @param null $regionId
      * @throws Nette\Application\BadRequestException
      */
-    public function actionEdit($id = null, $categoryId = null)
+    public function actionEdit($id = null, $regionId = null)
     {
         $this->template->h1 = $this->translator->translate('Region');
 
-        if ($categoryId)
+        if ($regionId)
         {
-            $this->parentRegion = $this->regionRepository->getOneById($categoryId);
+            $this->parentRegion = $this->regionRepository->getOneById($regionId);
         }
 
         if ($id) {
@@ -80,7 +80,7 @@ class RegionPresenter extends SecuredPresenter
             }
 
             $this->region = $region;
-            $this->template->h1 .= ' - ' . $category->getName();
+            $this->template->h1 .= ' - ' . $region->getName();
 
         } else {
             $this->template->h1 .= ' - ' . $this->translator->translate('New region');

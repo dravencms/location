@@ -235,6 +235,7 @@ class Region extends Nette\Object
             return;
         }
         $this->cities->add($city);
+        $city->setRegion($this);
     }
 
     /**
@@ -246,6 +247,7 @@ class Region extends Nette\Object
             return;
         }
         $this->cities->removeElement($city);
+        $city->setRegion(null);
     }
 
 

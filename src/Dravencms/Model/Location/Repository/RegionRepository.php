@@ -65,8 +65,7 @@ class RegionRepository
             ->createQueryBuilder('node')
             ->select('node')
             ->orderBy('node.root, node.lft', 'ASC')
-            ->where('node.isHidden = :isHidden')
-            ->andWhere('node.isActive = :isActive')
+            ->where('node.isActive = :isActive')
             ->setParameters(
                 [
                     'isActive' => true
