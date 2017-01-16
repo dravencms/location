@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Nette;
 
 /**
@@ -28,7 +29,7 @@ class City extends Nette\Object
 
     /**
      * @Gedmo\Slug(fields={"name"})
-     * @Doctrine\ORM\Mapping\Column(length=255, unique=true,nullable=false)
+     * @Doctrine\ORM\Mapping\Column(length=255, unique=true,nullable=true)
      */
     private $slug;
 
