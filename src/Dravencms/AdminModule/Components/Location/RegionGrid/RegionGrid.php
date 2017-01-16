@@ -43,10 +43,7 @@ class RegionGrid extends BaseControl
 
     /** @var EntityManager */
     private $entityManager;
-
-    /** @var Region|null */
-    private $parentRegion = null;
-
+    
     /**
      * @var array
      */
@@ -57,15 +54,13 @@ class RegionGrid extends BaseControl
      * @param RegionRepository $regionRepository
      * @param BaseGridFactory $baseGridFactory
      * @param EntityManager $entityManager
-     * @param Region|null $parentRegion
      */
-    public function __construct(RegionRepository $regionRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager, Region $parentRegion = null)
+    public function __construct(RegionRepository $regionRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager)
     {
         parent::__construct();
 
         $this->baseGridFactory = $baseGridFactory;
         $this->regionRepository = $regionRepository;
-        $this->parentRegion = $parentRegion;
         $this->entityManager = $entityManager;
     }
 
@@ -78,7 +73,7 @@ class RegionGrid extends BaseControl
     {
         $grid = $this->baseGridFactory->create($this, $name);
 
-        $grid->setModel($this->regionRepository->getRegionItemsQueryBuilder($this->parentRegion));
+        $grid->setModel($this->regionRepository->getRegionQueryBuilder());
 
         $grid->addColumnText('name', 'Name')
             ->setSortable()
@@ -89,16 +84,23 @@ class RegionGrid extends BaseControl
 
         $grid->addColumnText('position', 'Position')
             ->setCustomRender(function($row){
+                $group = Html::el('div');
+                $group->class = 'btn-group';
+
+
                 $elDown = Html::el('a');
                 $elDown->class = "btn btn-xs";
                 $elDown->href($this->link('down!', ['id' => $row->getId()]));
                 $elDown->setHtml('<i class="fa fa-chevron-down" aria-hidden="true"></i>');
+                $group->addHtml($elDown);
 
                 $elUp = Html::el('a');
                 $elUp->class = "btn btn-xs";
                 $elUp->href($this->link('up!', ['id' => $row->getId()]));
                 $elUp->setHtml('<i class="fa fa-chevron-up" aria-hidden="true"></i>');
-                return $elUp.$elDown;
+                $group->addHtml($elUp);
+
+                return $group;
             });
 
         $header = $grid->getColumn('position')->headerPrototype;
@@ -108,12 +110,6 @@ class RegionGrid extends BaseControl
 
         if ($this->presenter->isAllowed('location', 'regionEdit'))
         {
-            $grid->addActionHref('subregion', 'Subregions items')
-                ->setIcon('folder-open')
-                ->setCustomHref(function ($item) {
-                    return $this->presenter->link('Region:default', ['regionId' => $item->getId()]);
-                });
-
             $grid->addActionHref('edit', 'Edit')
                 ->setIcon('pencil');
         }
@@ -170,7 +166,7 @@ class RegionGrid extends BaseControl
 
         $this->entityManager->flush();
 
-        $this->onDelete($this->parentRegion);
+        $this->onDelete();
     }
 
     /**

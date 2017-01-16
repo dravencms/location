@@ -24,9 +24,8 @@ use Dravencms\Model\Location\Entities\Region;
 interface RegionFormFactory
 {
     /**
-     * @param Region|null $parentRegion
      * @param Region|null $region
      * @return RegionForm
      */
-    public function create(Region $parentRegion = null, Region $region = null);
+    public function create(Region $region = null);
 }

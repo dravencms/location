@@ -53,9 +53,6 @@ class RegionForm extends Control
     /** @var Region|null */
     private $region;
 
-    /** @var null|Region */
-    private $parentRegion = null;
-
     /** @var array */
     public $onSuccess = [];
 
@@ -65,8 +62,7 @@ class RegionForm extends Control
         EntityManager $entityManager,
         RegionRepository $regionRepository,
         CityRepository $cityRepository,
-        Region $region = null,
-        Region $parentRegion = null
+        Region $region = null
     ) {
         parent::__construct();
         $this->baseFormFactory = $baseFormFactory;
@@ -75,7 +71,6 @@ class RegionForm extends Control
         $this->regionRepository = $regionRepository;
         $this->cityRepository = $cityRepository;
         $this->region = $region;
-        $this->parentRegion = $parentRegion;
 
         if ($this->region) {
 
@@ -133,7 +128,7 @@ class RegionForm extends Control
     public function editFormValidate(Form $form)
     {
         $values = $form->getValues();
-        if (!$this->regionRepository->isNameFree($values->name, $this->parentRegion, $this->region))
+        if (!$this->regionRepository->isNameFree($values->name, $this->region))
         {
             $form->addError('Region item with this name already exists!');
         }
@@ -146,7 +141,6 @@ class RegionForm extends Control
     public function editFormSucceeded(Form $form)
     {
         $values = $form->getValues();
-
 
         $cities = new ArrayCollection($this->cityRepository->getById($values->cities));
 
@@ -161,14 +155,7 @@ class RegionForm extends Control
                 $values->name
             );
             $region->setCities($cities);
-            if ($this->parentRegion)
-            {
-                $this->regionRepository->persistAsLastChildOf($region, $this->parentRegion);
-            }
-            else
-            {
-                $this->entityManager->persist($region);
-            }
+            $this->entityManager->persist($region);
         }
 
         $this->entityManager->flush();

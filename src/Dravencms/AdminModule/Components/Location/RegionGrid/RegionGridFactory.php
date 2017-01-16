@@ -19,13 +19,10 @@
  */
 namespace Dravencms\AdminModule\Components\Location\RegionGrid;
 
-use Dravencms\Model\Location\Entities\Region;
-
 interface RegionGridFactory
 {
     /**
-     * @param Region|null $parentRegion
      * @return RegionGrid
      */
-    public function create(Region $parentRegion = null);
+    public function create();
 }

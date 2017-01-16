@@ -1,6 +1,6 @@
 {block #content}
     <p n:isAllowed="location,regionEdit">
-        <a n:href="Region:edit, regionId => ($parentRegion ? $parentRegion->getId() : null)" class="btn btn-primary"><i class="fa fa-plus"></i> Přidat nový region</a>
+        <a n:href="Region:edit" class="btn btn-primary"><i class="fa fa-plus"></i> Přidat nový region</a>
     </p>
     {control regionGrid}
 {/block}
