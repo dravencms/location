@@ -27,6 +27,12 @@ class City extends Nette\Object
     private $name;
 
     /**
+     * @Gedmo\Slug(fields={"name"})
+     * @Doctrine\ORM\Mapping\Column(length=255, unique=true,nullable=false)
+     */
+    private $slug;
+
+    /**
      * @var Country
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="cities")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
@@ -115,4 +121,13 @@ class City extends Nette\Object
     {
         return $this->region;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
 }

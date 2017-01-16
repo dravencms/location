@@ -26,6 +26,12 @@ class Country extends Nette\Object
     private $name;
 
     /**
+     * @Gedmo\Slug(fields={"name"})
+     * @Doctrine\ORM\Mapping\Column(length=255, unique=true,nullable=false)
+     */
+    private $slug;
+
+    /**
      * @var string
      * @ORM\Column(type="string",length=2,unique=true,nullable=false)
      */
@@ -86,5 +92,13 @@ class Country extends Nette\Object
     public function getCities()
     {
         return $this->cities;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
