@@ -8,6 +8,7 @@ namespace Dravencms\Model\Location\Repository;
 
 use Dravencms\Model\Location\Entities\City;
 use Dravencms\Model\Location\Entities\Country;
+use Dravencms\Model\Location\Entities\Region;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 
@@ -130,6 +131,26 @@ class CityRepository
     public function getOneByName($name, Country $country = null)
     {
         $criteria = ['name' => $name];
+        if (!is_null($country))
+        {
+            $criteria['country'] = $country;
+        }
+        return $this->cityRepository->findOneBy($criteria);
+    }
+
+    /**
+     * @param $slug
+     * @param Region|null $region
+     * @param Country|null $country
+     * @return mixed|null|object
+     */
+    public function getOneBySlug($slug, Region $region = null, Country $country = null)
+    {
+        $criteria = ['slug' => $slug];
+        if (!is_null($region))
+        {
+            $criteria['region'] = $region;
+        }
         if (!is_null($country))
         {
             $criteria['country'] = $country;

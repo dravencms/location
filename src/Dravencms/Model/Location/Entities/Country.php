@@ -4,6 +4,7 @@ namespace Dravencms\Model\Location\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
@@ -24,6 +25,12 @@ class Country extends Nette\Object
      * @ORM\Column(type="string",length=255,unique=true,nullable=false)
      */
     private $name;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @Doctrine\ORM\Mapping\Column(length=255, unique=true,nullable=true)
+     */
+    private $slug;
 
     /**
      * @var string
@@ -86,5 +93,13 @@ class Country extends Nette\Object
     public function getCities()
     {
         return $this->cities;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

@@ -32,7 +32,7 @@ class Street extends Nette\Object
      * @ORM\Column(type="string",length=255,nullable=false)
      */
     private $name;
-
+    
     /**
      * @var ArrayCollection|StreetNumber[]
      * @ORM\OneToMany(targetEntity="StreetNumber", mappedBy="street",cascade={"persist"})

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Nette;
 
 /**
@@ -27,6 +28,12 @@ class City extends Nette\Object
     private $name;
 
     /**
+     * @Gedmo\Slug(fields={"name"})
+     * @Doctrine\ORM\Mapping\Column(length=255, unique=true,nullable=true)
+     */
+    private $slug;
+
+    /**
      * @var Country
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="cities")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
@@ -40,14 +47,22 @@ class City extends Nette\Object
     private $zipCodes;
 
     /**
+     * @var Region
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities")
+     * @ORM\JoinColumn(name="region_id", referencedColumnName="id", nullable=true)
+     */
+    private $region;
+
+    /**
      * City constructor.
      * @param string $name
      * @param Country $country
      */
-    public function __construct(Country $country, $name)
+    public function __construct(Country $country, $name, Region $region = null)
     {
         $this->name = $name;
         $this->country = $country;
+        $this->region = $region;
 
         $this->zipCodes = new ArrayCollection();
     }
@@ -66,6 +81,14 @@ class City extends Nette\Object
     public function setCountry(Country $country)
     {
         $this->country = $country;
+    }
+
+    /**
+     * @param Region $region
+     */
+    public function setRegion(Region $region)
+    {
+        $this->region = $region;
     }
 
     /**
@@ -91,4 +114,21 @@ class City extends Nette\Object
     {
         return $this->zipCodes;
     }
+
+    /**
+     * @return Region
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
 }
