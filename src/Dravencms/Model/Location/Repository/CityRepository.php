@@ -104,7 +104,7 @@ class CityRepository
     /**
      * @param $name
      * @param Country|null $country
-     * @return City|null
+     * @return City[]
      */
     public function findByName($name, Country $country = null)
     {
@@ -120,7 +120,7 @@ class CityRepository
         }
 
         return $qb->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
     /**

@@ -93,7 +93,7 @@ class ZipCodeRepository
     /**
      * @param $name
      * @param City|null $city
-     * @return ZipCode
+     * @return ZipCode[]
      */
     public function findByName($name, City $city = null)
     {
@@ -109,7 +109,7 @@ class ZipCodeRepository
         }
 
         return $qb->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
     /**

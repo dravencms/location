@@ -71,7 +71,7 @@ class Location extends \Nette\Object
      * @param $streetNumberName
      * @return StreetNumber|null
      */
-    private function saveStreetNumber($countryId, $cityName, $zipCodeName, $streetName, $streetNumberName)
+    public function saveStreetNumber($countryId, $cityName, $zipCodeName, $streetName, $streetNumberName)
     {
         $country = $this->countryRepository->getOneById($countryId);
         $streetNumber = null;
