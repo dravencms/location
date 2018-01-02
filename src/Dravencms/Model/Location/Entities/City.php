@@ -86,7 +86,7 @@ class City extends Nette\Object
     /**
      * @param Region $region
      */
-    public function setRegion(Region $region)
+    public function setRegion(Region $region = null)
     {
         $this->region = $region;
     }
