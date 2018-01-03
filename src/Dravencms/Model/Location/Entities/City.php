@@ -16,8 +16,9 @@ use Nette;
  * @ORM\Entity
  * @ORM\Table(name="locationCity", uniqueConstraints={@UniqueConstraint(name="name_country_id", columns={"name", "country_id"})})
  */
-class City extends Nette\Object
+class City
 {
+    use Nette\SmartObject;
     use Identifier;
     use TimestampableEntity;
 

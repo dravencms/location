@@ -15,8 +15,9 @@ use Nette;
  * @ORM\Entity
  * @ORM\Table(name="locationCountry")
  */
-class Country extends Nette\Object
+class Country
 {
+    use Nette\SmartObject;
     use Identifier;
     use TimestampableEntity;
 

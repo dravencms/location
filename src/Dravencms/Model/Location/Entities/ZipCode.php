@@ -15,8 +15,9 @@ use Nette;
  * @ORM\Entity
  * @ORM\Table(name="locationZipCode", uniqueConstraints={@UniqueConstraint(name="name_city_id", columns={"name", "city_id"})})
  */
-class ZipCode extends Nette\Object
+class ZipCode
 {
+    use Nette\SmartObject;
     use Identifier;
     use TimestampableEntity;
 

@@ -11,14 +11,16 @@ use Dravencms\Model\Location\Repository\StreetNumberRepository;
 use Dravencms\Model\Location\Repository\StreetRepository;
 use Dravencms\Model\Location\Repository\ZipCodeRepository;
 use Kdyby\Doctrine\EntityManager;
-
+use Nette\SmartObject;
 
 /**
  * Class Location
  * @package Dravencms\Location
  */
-class Location extends \Nette\Object
+class Location
 {
+    use SmartObject;
+
     /** @var CountryRepository */
     private $countryRepository;
 

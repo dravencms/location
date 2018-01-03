@@ -17,8 +17,9 @@ use Nette;
  * @ORM\Entity(repositoryClass="Gedmo\Sortable\Entity\Repository\SortableRepository")
  * @ORM\Table(name="locationRegion")
  */
-class Region extends Nette\Object
+class Region
 {
+    use Nette\SmartObject;
     use Identifier;
     use TimestampableEntity;
 
