@@ -9,6 +9,7 @@ namespace Dravencms\AdminModule\Components\Location\ZipCodeGrid;
 
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
+use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\ZipCodeRepository;
 use Kdyby\Doctrine\EntityManager;
 
@@ -46,69 +47,61 @@ class ZipCodeGrid extends BaseControl
 
     /**
      * @param $name
-     * @return \Grido\Grid
+     * @return Grid
      */
     protected function createComponentGrid($name)
     {
+        /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
 
-        $grid->setModel($this->zipCodeRepository->getZipCodeQueryBuilder());
+        $grid->setDataSource($this->zipCodeRepository->getZipCodeQueryBuilder());
 
-        $renderer = function ($row) {
-            return $row->usersCity->name;
-        };
-        $grid->addColumnText('city.name', 'Město')
+        $grid->addColumnText('cityName', 'Město', 'city.name')
             ->setSortable()
-            ->setColumn('city.name')
-            ->setCustomRenderExport($renderer)
-            ->setFilterText()
-            ->setSuggestion($renderer);
+            ->setFilterText();
 
         $grid->addColumnText('name', 'PSČ')
             ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setFilterText();
 
-        if ($this->presenter->isAllowed('location', 'zipCodeEdit')) {
-            $grid->addActionHref('edit', 'Upravit')
-                ->setIcon('pencil');
+        if ($this->presenter->isAllowed('location', 'zipCodeEdit'))
+        {
+            $grid->addAction('edit', '')
+                ->setIcon('pencil')
+                ->setTitle('Upravit')
+                ->setClass('btn btn-xs btn-primary');
         }
 
-        if ($this->presenter->isAllowed('location', 'zipCodeDelete')) {
-            $grid->addActionHref('delete', 'Smazat', 'delete!')
-                ->setCustomHref(function($row){
-                    return $this->link('delete!', $row->getId());
-                })
-                ->setDisable(function ($row) {
-                    return (count($row->getStreets()) > 0);
-                })
-                ->setIcon('trash-o')
-                ->setConfirm(function ($row) {
-                    return ['Opravdu chcete smazat PSČ %s ?', $row->getName()];
-                });
+        if ($this->presenter->isAllowed('location', 'zipCodeDelete'))
+        {
+            $grid->addAction('delete', '', 'delete!')
+                ->setIcon('trash')
+                ->setTitle('Smazat')
+                ->setClass('btn btn-xs btn-danger ajax')
+                ->setConfirm('Do you really want to delete row %s?', 'name');
 
+            $grid->allowRowsAction('delete', function($item) {
+                return (count($item->getStreets()) == 0);
+            });
 
-            $operations = ['delete' => 'Smazat'];
-            $grid->setOperation($operations, [$this, 'gridZipOperationsHandler'])
-                ->setConfirm('delete', 'Opravu chcete smazat %i PSČ ?');
+            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'gridGroupActionDelete'];
         }
-        $grid->setExport();
+
+        $grid->addExportCsvFiltered('Csv export (filtered)', 'acl_resource_filtered.csv')
+            ->setTitle('Csv export (filtered)');
+
+        $grid->addExportCsv('Csv export', 'acl_resource_all.csv')
+            ->setTitle('Csv export');
 
         return $grid;
     }
 
-
     /**
-     * @param $action
-     * @param $ids
+     * @param array $ids
      */
-    public function gridZipOperationsHandler($action, $ids)
+    public function gridGroupActionDelete(array $ids)
     {
-        switch ($action) {
-            case 'delete':
-                $this->handleDelete($ids);
-                break;
-        }
+        $this->handleDelete($ids);
     }
 
     /**

@@ -21,6 +21,7 @@
 
 namespace Dravencms\AdminModule\Components\Location\RegionGrid;
 
+use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Entities\Region;
 use Dravencms\Model\Location\Repository\RegionRepository;
 use Dravencms\Components\BaseControl\BaseControl;
@@ -67,89 +68,61 @@ class RegionGrid extends BaseControl
 
     /**
      * @param $name
-     * @return \Grido\Grid
+     * @return Grid
      */
     protected function createComponentGrid($name)
     {
+        /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
 
-        $grid->setModel($this->regionRepository->getRegionQueryBuilder());
+        $grid->setDataSource($this->regionRepository->getRegionQueryBuilder());
 
         $grid->addColumnText('name', 'Name')
             ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setFilterText();
 
         $grid->addColumnBoolean('isActive', 'Active');
 
-        $grid->addColumnText('position', 'Position')
-            ->setCustomRender(function($row){
-                $group = Html::el('div');
-                $group->class = 'btn-group';
-
-
-                $elDown = Html::el('a');
-                $elDown->class = "btn btn-xs";
-                $elDown->href($this->link('down!', ['id' => $row->getId()]));
-                $elDown->setHtml('<i class="fa fa-chevron-down" aria-hidden="true"></i>');
-                $group->addHtml($elDown);
-
-                $elUp = Html::el('a');
-                $elUp->class = "btn btn-xs";
-                $elUp->href($this->link('up!', ['id' => $row->getId()]));
-                $elUp->setHtml('<i class="fa fa-chevron-up" aria-hidden="true"></i>');
-                $group->addHtml($elUp);
-
-                return $group;
-            });
-
-        $header = $grid->getColumn('position')->headerPrototype;
-        $header->style['width'] ='2%';
-        $header->class[] = 'center';
-        $grid->getColumn('position')->cellPrototype->class[] = 'center';
+        $grid->addColumnPosition('position', 'Position');
 
         if ($this->presenter->isAllowed('location', 'regionEdit'))
         {
-            $grid->addActionHref('edit', 'Edit')
-                ->setIcon('pencil');
+            $grid->addAction('edit', '')
+                ->setIcon('pencil')
+                ->setTitle('Upravit')
+                ->setClass('btn btn-xs btn-primary');
         }
 
-        if ($this->presenter->isAllowed('location', 'regionDelete')) {
+        if ($this->presenter->isAllowed('location', 'regionDelete'))
+        {
+            $grid->addAction('delete', '', 'delete!')
+                ->setIcon('trash')
+                ->setTitle('Smazat')
+                ->setClass('btn btn-xs btn-danger ajax')
+                ->setConfirm('Do you really want to delete row %s?', 'name');
 
-            $grid->addActionHref('delete', 'Delete', 'delete!')
-                ->setCustomHref(function ($row) {
-                    return $this->link('delete!', $row->getId());
-                })
-                ->setDisable(function($row){
-                    $bool = ($row->getCities()->count());
-                    return $bool;
-                })
-                ->setIcon('trash-o')
-                ->setConfirm(function ($item) {
-                    return ["Are you sure you want to delete %s ?", $item->getName()];
-                });
+            $grid->allowRowsAction('delete', function($item) {
+                return (count($item->getCities()) == 0);
+            });
+
+            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'gridGroupActionDelete'];
         }
 
-        $operations = ['delete' => 'Delete'];
-        $grid->setOperation($operations, [$this, 'gridOperationsHandler'])
-            ->setConfirm('delete', 'Are you sure you want to delete %i items?');
+        $grid->addExportCsvFiltered('Csv export (filtered)', 'acl_resource_filtered.csv')
+            ->setTitle('Csv export (filtered)');
+
+        $grid->addExportCsv('Csv export', 'acl_resource_all.csv')
+            ->setTitle('Csv export');
 
         return $grid;
     }
 
-
     /**
-     * @param $action
-     * @param $ids
+     * @param array $ids
      */
-    public function gridOperationsHandler($action, $ids)
+    public function gridGroupActionDelete(array $ids)
     {
-        switch ($action)
-        {
-            case 'delete':
-                $this->handleDelete($ids);
-                break;
-        }
+        $this->handleDelete($ids);
     }
 
     /**

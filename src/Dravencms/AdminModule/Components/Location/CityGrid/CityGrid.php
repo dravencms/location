@@ -9,6 +9,7 @@ namespace Dravencms\AdminModule\Components\Location\CityGrid;
 
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
+use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\CityRepository;
 use Kdyby\Doctrine\EntityManager;
 
@@ -44,64 +45,61 @@ class CityGrid extends BaseControl
 
     /**
      * @param $name
-     * @return \Grido\Grid
+     * @return Grid
      */
     protected function createComponentGrid($name)
     {
+        /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
 
-        $grid->setModel($this->cityRepository->getCityQueryBuilder());
+        $grid->setDataSource($this->cityRepository->getCityQueryBuilder());
 
         $grid->addColumnText('name', 'Město')
             ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setFilterText();
 
-        $grid->addColumnText('country.name', 'Country')
+        $grid->addColumnText('countryName', 'Country', 'country.name')
             ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setFilterText();
 
-        if ($this->presenter->isAllowed('location', 'cityEdit')) {
-            $grid->addActionHref('edit', 'Upravit')
-                ->setIcon('pencil');
+        if ($this->presenter->isAllowed('location', 'cityEdit'))
+        {
+            $grid->addAction('edit', '')
+                ->setIcon('pencil')
+                ->setTitle('Upravit')
+                ->setClass('btn btn-xs btn-primary');
         }
 
-        if ($this->presenter->isAllowed('location', 'cityDelete')) {
-            $grid->addActionHref('delete', 'Smazat', 'delete!')
-                ->setCustomHref(function($row){
-                    return $this->link('delete!', $row->getId());
-                })
-                ->setDisable(function ($row) {
-                    return (count($row->getZipCodes()) > 0);
-                })
-                ->setIcon('trash-o')
-                ->setConfirm(function ($row) {
-                    return ['Opravdu chcete smazat město %s ?', $row->getName()];
-                });
+        if ($this->presenter->isAllowed('location', 'cityDelete'))
+        {
+            $grid->addAction('delete', '', 'delete!')
+                ->setIcon('trash')
+                ->setTitle('Smazat')
+                ->setClass('btn btn-xs btn-danger ajax')
+                ->setConfirm('Do you really want to delete row %s?', 'name');
 
+            $grid->allowRowsAction('delete', function($item) {
+                return (count($item->getZipCodes()) == 0);
+            });
 
-            $operations = ['delete' => 'Smazat'];
-            $grid->setOperation($operations, [$this, 'gridCityOperationsHandler'])
-                ->setConfirm('delete', 'Opravu chcete smazat %i měst ?');
+            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'gridGroupActionDelete'];
         }
-        $grid->setExport();
+
+        $grid->addExportCsvFiltered('Csv export (filtered)', 'acl_resource_filtered.csv')
+            ->setTitle('Csv export (filtered)');
+
+        $grid->addExportCsv('Csv export', 'acl_resource_all.csv')
+            ->setTitle('Csv export');
 
         return $grid;
     }
 
-
     /**
-     * @param $action
-     * @param $ids
+     * @param array $ids
      */
-    public function gridCityOperationsHandler($action, $ids)
+    public function gridGroupActionDelete(array $ids)
     {
-        switch ($action) {
-            case 'delete':
-                $this->handleDelete($ids);
-                break;
-        }
+        $this->handleDelete($ids);
     }
 
     /**

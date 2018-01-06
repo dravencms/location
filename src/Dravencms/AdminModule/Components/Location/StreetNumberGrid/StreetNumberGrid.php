@@ -9,6 +9,7 @@ namespace Dravencms\AdminModule\Components\Location\StreetNumberGrid;
 
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
+use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\StreetNumberRepository;
 use Kdyby\Doctrine\EntityManager;
 
@@ -48,72 +49,65 @@ class StreetNumberGrid extends BaseControl
      */
     protected function createComponentGrid($name)
     {
+        /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
 
-        $grid->setModel($this->streetNumberRepository->getStreetNumberQueryBuilder());
+        $grid->setDataSource($this->streetNumberRepository->getStreetNumberQueryBuilder());
 
         $grid->addColumnText('name', 'Street Number')
             ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setFilterText();
 
-        $grid->addColumnText('street.name', 'Street')
+        $grid->addColumnText('streetName', 'Street', 'street.name')
             ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setFilterText();
 
-        $grid->addColumnText('street.zipCode.name', 'ZIP')
+        $grid->addColumnText('streetZipCodeName', 'ZIP', 'street.zipCode.name')
             ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setFilterText();
 
-        $grid->addColumnText('street.zipCode.city.name', 'City')
+        $grid->addColumnText('streetZipCodeCityName', 'City', 'street.zipCode.city.name')
             ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setFilterText();
 
-        $grid->addColumnText('street.zipCode.city.country.name', 'Country')
+        $grid->addColumnText('streetZipCodeCityCountryName', 'Country', 'street.zipCode.city.country.name')
             ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setFilterText();
 
-        if ($this->presenter->isAllowed('location', 'streetEdit')) {
-            $grid->addActionHref('edit', 'Upravit')
-                ->setIcon('pencil');
+        if ($this->presenter->isAllowed('location', 'streetEdit'))
+        {
+            $grid->addAction('edit', '')
+                ->setIcon('pencil')
+                ->setTitle('Upravit')
+                ->setClass('btn btn-xs btn-primary');
         }
 
-        if ($this->presenter->isAllowed('location', 'streetDelete')) {
-            $grid->addActionHref('delete', 'Smazat', 'delete!')
-                ->setCustomHref(function($row){
-                    return $this->link('delete!', $row->getId());
-                })
-                ->setIcon('trash-o')
-                ->setConfirm(function ($row) {
-                    return ['Opravdu chcete smazat cislo ulice %s ?', $row->getName()];
-                });
+        if ($this->presenter->isAllowed('location', 'streetDelete'))
+        {
+            $grid->addAction('delete', '', 'delete!')
+                ->setIcon('trash')
+                ->setTitle('Smazat')
+                ->setClass('btn btn-xs btn-danger ajax')
+                ->setConfirm('Do you really want to delete row %s?', 'name');
 
-
-            $operations = ['delete' => 'Smazat'];
-            $grid->setOperation($operations, [$this, 'gridOperationsHandler'])
-                ->setConfirm('delete', 'Opravu chcete smazat %i zákazníků ?');
+            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'gridGroupActionDelete'];
         }
-        $grid->setExport();
+
+        $grid->addExportCsvFiltered('Csv export (filtered)', 'acl_resource_filtered.csv')
+            ->setTitle('Csv export (filtered)');
+
+        $grid->addExportCsv('Csv export', 'acl_resource_all.csv')
+            ->setTitle('Csv export');
 
         return $grid;
     }
 
-
     /**
-     * @param $action
-     * @param $ids
+     * @param array $ids
      */
-    public function gridOperationsHandler($action, $ids)
+    public function gridGroupActionDelete(array $ids)
     {
-        switch ($action) {
-            case 'delete':
-                $this->handleDelete($ids);
-                break;
-        }
+        $this->handleDelete($ids);
     }
 
     /**
