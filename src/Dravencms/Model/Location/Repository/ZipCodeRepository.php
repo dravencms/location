@@ -13,7 +13,7 @@ use Dravencms\Database\EntityManager;
 
 /**
  * Class ZipCodeRepository
- * @package Dravencms\Model\User\Repository
+ * @package Dravencms\Model\Location\Repository
  */
 class ZipCodeRepository
 {

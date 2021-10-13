@@ -4,8 +4,6 @@ namespace Dravencms\Model\Location\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Dravencms\Model\User\Entities\Company;
-use Dravencms\Model\User\Entities\User;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Dravencms\Database\Attributes\Identifier;
 use Doctrine\ORM\Mapping\UniqueConstraint;
@@ -36,17 +34,6 @@ class StreetNumber
      */
     private $name;
 
-    /**
-     * @var ArrayCollection|Company[]
-     * @ORM\OneToMany(targetEntity="Dravencms\Model\User\Entities\Company", mappedBy="streetNumber",cascade={"persist"})
-     */
-    private $companies;
-
-    /**
-     * @var ArrayCollection|User[]
-     * @ORM\OneToMany(targetEntity="Dravencms\Model\User\Entities\User", mappedBy="streetNumber",cascade={"persist"})
-     */
-    private $users;
 
     /**
      * StreetNumber constructor.
@@ -89,21 +76,5 @@ class StreetNumber
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @return Company[]|ArrayCollection
-     */
-    public function getCompanies(): ArrayCollection
-    {
-        return $this->companies;
-    }
-
-    /**
-     * @return User[]|ArrayCollection
-     */
-    public function getUsers(): ArrayCollection
-    {
-        return $this->users;
     }
 }

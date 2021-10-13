@@ -19,9 +19,11 @@
     "dravencms/application": ">=0.0.2",
     "dravencms/database": ">=0.0.3",
     "dravencms/base-form": ">=0.0.1",
-    "dravencms/base-grid": ">=0.0.1",
-    "dravencms/user": ">=0.0.1",
-    "dravencms/admin": ">=0.0.1"
+    "dravencms/base-grid": ">=0.0.1"
+  },
+  "suggest": {
+    "dravencms/admin": "Provides admin inteface to manage locations",
+    "dravencms/user": "Provides ACL settings"
   },
   "autoload": {
     "psr-0": {

@@ -7,7 +7,7 @@ use Nette;
 
 /**
  * Class LocationExtension
- * @package Dravencms\User\DI
+ * @package Dravencms\Location\DI
  */
 class LocationExtension extends Nette\DI\CompilerExtension
 {

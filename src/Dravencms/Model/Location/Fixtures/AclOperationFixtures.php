@@ -20,6 +20,11 @@ class AclOperationFixtures extends AbstractFixture implements DependentFixtureIn
      */
     public function load(ObjectManager $manager): void
     {
+        if (!class_exists(AclOperation::class)) {
+            trigger_error('dravencms/user module not found, dravencms/location module won\'t install ACL Operation', E_USER_NOTICE);
+            return;
+        }
+
         $operations = [
             'location' => [
                 'edit' => 'Allows editation of location',
