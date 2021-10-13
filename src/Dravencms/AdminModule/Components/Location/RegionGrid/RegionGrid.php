@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /*
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
@@ -22,12 +22,10 @@
 namespace Dravencms\AdminModule\Components\Location\RegionGrid;
 
 use Dravencms\Components\BaseGrid\Grid;
-use Dravencms\Model\Location\Entities\Region;
 use Dravencms\Model\Location\Repository\RegionRepository;
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
-use Kdyby\Doctrine\EntityManager;
-use Nette\Utils\Html;
+use Dravencms\Database\EntityManager;
 
 /**
  * Description of CompanyGrid
@@ -58,8 +56,6 @@ class RegionGrid extends BaseControl
      */
     public function __construct(RegionRepository $regionRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager)
     {
-        parent::__construct();
-
         $this->baseGridFactory = $baseGridFactory;
         $this->regionRepository = $regionRepository;
         $this->entityManager = $entityManager;
@@ -67,10 +63,11 @@ class RegionGrid extends BaseControl
 
 
     /**
-     * @param $name
+     * @param string $name
      * @return Grid
+     * @throws \Ublaboo\DataGrid\Exception\DataGridException
      */
-    protected function createComponentGrid($name)
+    protected function createComponentGrid(string $name): Grid
     {
         /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
@@ -119,17 +116,18 @@ class RegionGrid extends BaseControl
 
     /**
      * @param array $ids
+     * @throws \Exception
      */
-    public function gridGroupActionDelete(array $ids)
+    public function gridGroupActionDelete(array $ids): void
     {
         $this->handleDelete($ids);
     }
 
     /**
-     * @param $id
+     * @param array|int $id
      * @throws \Exception
      */
-    public function handleDelete($id)
+    public function handleDelete($id): void
     {
         $categories = $this->regionRepository->getById($id);
         foreach ($categories AS $category)
@@ -143,26 +141,26 @@ class RegionGrid extends BaseControl
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @throws \Exception
      */
-    public function handleUp($id)
+    public function handleUp(int $id): void
     {
         $menuItem = $this->regionRepository->getOneById($id);
         $this->regionRepository->moveUp($menuItem, 1);
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @throws \Exception
      */
-    public function handleDown($id)
+    public function handleDown($id): void
     {
         $menuItem = $this->regionRepository->getOneById($id);
         $this->regionRepository->moveDown($menuItem, 1);
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->setFile(__DIR__ . '/RegionGrid.latte');

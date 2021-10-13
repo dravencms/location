@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
@@ -8,12 +8,12 @@ namespace Dravencms\Model\Location\Repository;
 
 use Dravencms\Model\Location\Entities\Street;
 use Dravencms\Model\Location\Entities\StreetNumber;
-use Kdyby\Doctrine\EntityManager;
-use Nette;
+use Dravencms\Database\EntityManager;
+
 
 class StreetNumberRepository
 {
-    /** @var \Kdyby\Doctrine\EntityRepository */
+    /** @var \Doctrine\Persistence\ObjectRepository|StreetNumber|string */
     private $streetNumberRepository;
 
     /** @var EntityManager */
@@ -33,13 +33,13 @@ class StreetNumberRepository
      * @param $id
      * @return null|StreetNumber
      */
-    public function getOneById($id)
+    public function getOneById(int $id): ?StreetNumber
     {
         return $this->streetNumberRepository->find($id);
     }
 
     /**
-     * @param $id
+     * @param array|int $id
      * @return StreetNumber[]
      */
     public function getById($id)
@@ -48,7 +48,7 @@ class StreetNumberRepository
     }
 
     /**
-     * @return \Kdyby\Doctrine\QueryBuilder
+     * @return mixed
      */
     public function getStreetNumberQueryBuilder()
     {
@@ -58,13 +58,12 @@ class StreetNumberRepository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param Street $street
      * @param StreetNumber|null $ignoreStreetNumber
-     * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return bool
      */
-    public function isStreetNumberNameFree($name, Street $street, StreetNumber $ignoreStreetNumber = null)
+    public function isStreetNumberNameFree(string $name, Street $street, StreetNumber $ignoreStreetNumber = null): bool
     {
         $qb = $this->streetNumberRepository->createQueryBuilder('sn')
             ->select('sn')
@@ -85,11 +84,11 @@ class StreetNumberRepository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param Street|null $street
      * @return StreetNumber[]
      */
-    public function findByName($name, Street $street = null)
+    public function findByName(string $name, Street $street = null)
     {
         $qb = $this->streetNumberRepository->createQueryBuilder('s')
             ->select('s')
@@ -111,7 +110,7 @@ class StreetNumberRepository
      * @param Street|null $street
      * @return null|StreetNumber
      */
-    public function getOneByName($name, Street $street = null)
+    public function getOneByName(string $name, Street $street = null): ?StreetNumber
     {
         $criteria = ['name' => $name];
         if (!is_null($street))

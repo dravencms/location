@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
@@ -11,7 +11,7 @@ use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\StreetNumberRepository;
-use Kdyby\Doctrine\EntityManager;
+use Dravencms\Database\EntityManager;
 
 class StreetNumberGrid extends BaseControl
 {
@@ -35,8 +35,6 @@ class StreetNumberGrid extends BaseControl
      */
     public function __construct(StreetNumberRepository $streetNumberRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager)
     {
-        parent::__construct();
-
         $this->baseGridFactory = $baseGridFactory;
         $this->streetNumberRepository = $streetNumberRepository;
         $this->entityManager = $entityManager;
@@ -44,10 +42,11 @@ class StreetNumberGrid extends BaseControl
 
 
     /**
-     * @param $name
-     * @return \Grido\Grid
+     * @param string $name
+     * @return Grid
+     * @throws \Ublaboo\DataGrid\Exception\DataGridException
      */
-    protected function createComponentGrid($name)
+    protected function createComponentGrid(string $name): Grid
     {
         /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
@@ -105,7 +104,7 @@ class StreetNumberGrid extends BaseControl
     /**
      * @param array $ids
      */
-    public function gridGroupActionDelete(array $ids)
+    public function gridGroupActionDelete(array $ids): void
     {
         $this->handleDelete($ids);
     }
@@ -114,7 +113,7 @@ class StreetNumberGrid extends BaseControl
      * @param integer|array $id
      * @isAllowed(user,streetDelete)
      */
-    public function handleDelete($id)
+    public function handleDelete($id): void
     {
         $streetNumbers = $this->streetNumberRepository->getById($id);
         foreach ($streetNumbers AS $streetNumber) {
@@ -125,7 +124,7 @@ class StreetNumberGrid extends BaseControl
         $this->onDelete();
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->setFile(__DIR__ . '/StreetNumberGrid.latte');

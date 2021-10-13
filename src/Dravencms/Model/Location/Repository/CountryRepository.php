@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
@@ -6,12 +6,12 @@
 namespace Dravencms\Model\Location\Repository;
 
 use Dravencms\Model\Location\Entities\Country;
-use Kdyby\Doctrine\EntityManager;
-use Nette;
+use Dravencms\Database\EntityManager;
+
 
 class CountryRepository
 {
-    /** @var \Kdyby\Doctrine\EntityRepository */
+    /** @var \Doctrine\Persistence\ObjectRepository|Country|string */
     private $countryRepository;
 
     /** @var EntityManager */
@@ -28,12 +28,11 @@ class CountryRepository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param Country|null $ignoreCountry
-     * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return bool
      */
-    public function isCountryNameFree($name, Country $ignoreCountry = null)
+    public function isCountryNameFree(string $name, Country $ignoreCountry = null): bool
     {
         $qb = $this->countryRepository->createQueryBuilder('c')
             ->select('c')
@@ -52,12 +51,11 @@ class CountryRepository
     }
 
     /**
-     * @param $code
+     * @param string $code
      * @param Country|null $ignoreCountry
-     * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return bool
      */
-    public function isCountryCodeFree($code, Country $ignoreCountry = null)
+    public function isCountryCodeFree(string $code, Country $ignoreCountry = null): bool
     {
         $qb = $this->countryRepository->createQueryBuilder('c')
             ->select('c')
@@ -76,7 +74,7 @@ class CountryRepository
     }
 
     /**
-     * @return \Kdyby\Doctrine\QueryBuilder
+     * @return mixed
      */
     public function getCountryQueryBuilder()
     {
@@ -89,7 +87,7 @@ class CountryRepository
      * @param $id
      * @return Country[]
      */
-    public function getById($id)
+    public function getById(int $id): array
     {
         return $this->countryRepository->findBy(['id' => $id]);
     }
@@ -98,7 +96,7 @@ class CountryRepository
      * @param $name
      * @return null|Country
      */
-    public function getOneByName($name)
+    public function getOneByName(string $name): ?Country
     {
         return $this->countryRepository->findOneBy(['name' => $name]);
     }
@@ -107,7 +105,7 @@ class CountryRepository
      * @param $id
      * @return null|Country
      */
-    public function getOneById($id)
+    public function getOneById(int $id): ?Country
     {
         return $this->countryRepository->find($id);
     }
@@ -115,7 +113,7 @@ class CountryRepository
     /**
      * @return array
      */
-    public function getPairs()
+    public function getPairs(): array
     {
         return $this->countryRepository->findPairs('name');
     }

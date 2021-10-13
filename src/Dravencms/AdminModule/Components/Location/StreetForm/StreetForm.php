@@ -1,14 +1,15 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\AdminModule\Components\Location\StreetForm;
 
 use Dravencms\Components\BaseControl\BaseControl;
+use Dravencms\Components\BaseForm\BaseForm;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\Street;
 use Dravencms\Model\Location\Repository\CityRepository;
 use Dravencms\Model\Location\Repository\StreetRepository;
 use Dravencms\Model\Location\Repository\ZipCodeRepository;
-use Kdyby\Doctrine\EntityManager;
+use Dravencms\Database\EntityManager;
 use Nette\Application\UI\Form;
 
 /**
@@ -53,7 +54,6 @@ class StreetForm extends BaseControl
         EntityManager $entityManager,
         Street $street = null
     ) {
-        parent::__construct();
         $this->street = $street;
         $this->baseFormFactory = $baseFormFactory;
         $this->streetRepository = $streetRepository;
@@ -70,7 +70,10 @@ class StreetForm extends BaseControl
         }
     }
 
-    public function createComponentForm()
+    /**
+     * @return BaseForm
+     */
+    public function createComponentForm(): BaseForm
     {
         $form = $this->baseFormFactory->create();
 
@@ -96,8 +99,9 @@ class StreetForm extends BaseControl
 
     /**
      * @param Form $form
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function onValidateForm(Form $form)
+    public function onValidateForm(Form $form): void
     {
         $values = $form->getValues();
 
@@ -117,7 +121,7 @@ class StreetForm extends BaseControl
     /**
      * @param Form $form
      */
-    public function onSuccessForm(Form $form)
+    public function onSuccessForm(Form $form): void
     {
         $values = $form->getValues();
 
@@ -140,7 +144,7 @@ class StreetForm extends BaseControl
         $this->onSuccess();
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->panelHeading = ($this->street ? 'Editation of '.$this->street->getName().' Street' : 'New street');

@@ -1,0 +1,7 @@
+extensions:
+    location: Dravencms\Location\DI\LocationExtension
+
+
+doctrine:
+    metadata:
+        Dravencms\Model\Location: %appDir%/../vendor/dravencms/location/src/Dravencms/Model/Location

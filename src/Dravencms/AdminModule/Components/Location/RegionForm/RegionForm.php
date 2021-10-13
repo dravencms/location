@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /*
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  *
@@ -22,12 +22,13 @@ namespace Dravencms\AdminModule\Components\Location\RegionForm;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Dravencms\Components\BaseControl\BaseControl;
+use Dravencms\Components\BaseForm\BaseForm;
 use Dravencms\Model\Location\Entities\Region;
 use Dravencms\Model\Location\Repository\RegionRepository;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Repository\CityRepository;
-use Kdyby\Doctrine\EntityManager;
-use Nette\Application\UI\Control;
+use Dravencms\Database\EntityManager;
 use Nette\Application\UI\Form;
 
 
@@ -36,7 +37,7 @@ use Nette\Application\UI\Form;
  *
  * @author Adam Schubert <adam.schubert@sg1-game.net>
  */
-class RegionForm extends Control
+class RegionForm extends BaseControl
 {
     /** @var BaseFormFactory */
     private $baseFormFactory;
@@ -64,7 +65,6 @@ class RegionForm extends Control
         CityRepository $cityRepository,
         Region $region = null
     ) {
-        parent::__construct();
         $this->baseFormFactory = $baseFormFactory;
         $this->entityManager = $entityManager;
 
@@ -96,7 +96,10 @@ class RegionForm extends Control
         $this['form']->setDefaults($default);
     }
 
-    protected function createComponentForm()
+    /**
+     * @return BaseForm
+     */
+    protected function createComponentForm(): BaseForm
     {
         $form = $this->baseFormFactory->create();
 
@@ -124,8 +127,9 @@ class RegionForm extends Control
 
     /**
      * @param Form $form
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function editFormValidate(Form $form)
+    public function editFormValidate(Form $form): void
     {
         $values = $form->getValues();
         if (!$this->regionRepository->isNameFree($values->name, $this->region))
@@ -138,7 +142,7 @@ class RegionForm extends Control
      * @param Form $form
      * @throws \Exception
      */
-    public function editFormSucceeded(Form $form)
+    public function editFormSucceeded(Form $form): void
     {
         $values = $form->getValues();
 
@@ -163,7 +167,7 @@ class RegionForm extends Control
         $this->onSuccess($region);
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->setFile(__DIR__ . '/RegionForm.latte');

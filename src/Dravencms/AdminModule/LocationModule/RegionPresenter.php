@@ -1,12 +1,14 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\AdminModule\LocationModule;
 
+use Dravencms\AdminModule\Components\Location\RegionForm\RegionForm;
 use Dravencms\AdminModule\Components\Location\RegionForm\RegionFormFactory;
+use Dravencms\AdminModule\Components\Location\RegionGrid\RegionGrid;
 use Dravencms\AdminModule\Components\Location\RegionGrid\RegionGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
 use Dravencms\Flash;
-use Kdyby\Doctrine\EntityManager;
+use Dravencms\Database\EntityManager;
 use Nette;
 use Dravencms\Model\Location\Repository\RegionRepository;
 use Dravencms\Model\Location\Entities\Region;
@@ -33,19 +35,17 @@ class RegionPresenter extends SecuredPresenter
 
     /**
      * @isAllowed(location, regionEdit)
-     * @throws Nette\Application\BadRequestException
      */
-    public function actionDefault()
+    public function actionDefault(): void
     {
         $this->template->h1 = $this->translator->translate('Regions');
     }
 
     /**
      * @isAllowed(location, regionEdit)
-     * @param null $id
-     * @throws Nette\Application\BadRequestException
+     * @param int|null $id
      */
-    public function actionEdit($id = null)
+    public function actionEdit(int $id = null): void
     {
         $this->template->h1 = $this->translator->translate('Region');
 
@@ -68,7 +68,7 @@ class RegionPresenter extends SecuredPresenter
     /**
      * @return \Dravencms\AdminModule\Components\Location\RegionForm\RegionForm
      */
-    public function createComponentRegionForm()
+    public function createComponentRegionForm(): RegionForm
     {
         $component = $this->regionFormFactory->create($this->region);
         $component->onSuccess[] = function ($region) {
@@ -89,7 +89,7 @@ class RegionPresenter extends SecuredPresenter
     /**
      * @return \Dravencms\AdminModule\Components\Location\RegionGrid\RegionGrid
      */
-    protected function createComponentRegionGrid()
+    protected function createComponentRegionGrid(): RegionGrid
     {
         $control = $this->regionGridFactory->create();
         $control->onDelete[] = function()

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
@@ -9,12 +9,11 @@ namespace Dravencms\Model\Location\Repository;
 use Dravencms\Model\Location\Entities\City;
 use Dravencms\Model\Location\Entities\Country;
 use Dravencms\Model\Location\Entities\Region;
-use Kdyby\Doctrine\EntityManager;
-use Nette;
+use Dravencms\Database\EntityManager;
 
 class CityRepository
 {
-    /** @var \Kdyby\Doctrine\EntityRepository */
+    /** @var \Doctrine\Persistence\ObjectRepository|City|string */
     private $cityRepository;
 
     /** @var EntityManager */
@@ -31,7 +30,7 @@ class CityRepository
     }
 
     /**
-     * @return array
+     * @return mixed
      */
     public function getPairs()
     {
@@ -39,19 +38,19 @@ class CityRepository
     }
 
     /**
-     * @param $id
-     * @return null|City
+     * @param int $id
+     * @return City|null
      */
-    public function getOneById($id)
+    public function getOneById(int $id): ?City
     {
         return $this->cityRepository->find($id);
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return City[]
      */
-    public function getById($id)
+    public function getById(int $id): array
     {
         return $this->cityRepository->findBy(['id' => $id]);
     }
@@ -59,13 +58,13 @@ class CityRepository
     /**
      * @return City[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->cityRepository->findAll();
     }
 
     /**
-     * @return \Kdyby\Doctrine\QueryBuilder
+     * @return mixed
      */
     public function getCityQueryBuilder()
     {
@@ -75,13 +74,12 @@ class CityRepository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param Country $country
      * @param City|null $ignoreCity
-     * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return bool
      */
-    public function isCityNameFree($name, Country $country, City $ignoreCity = null)
+    public function isCityNameFree(string $name, Country $country, City $ignoreCity = null): bool
     {
         $qb = $this->cityRepository->createQueryBuilder('c')
             ->select('c')
@@ -102,11 +100,11 @@ class CityRepository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param Country|null $country
      * @return City[]
      */
-    public function findByName($name, Country $country = null)
+    public function findByName(string $name, Country $country = null): array
     {
         $qb = $this->cityRepository->createQueryBuilder('c')
             ->select('c')
@@ -124,11 +122,11 @@ class CityRepository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param Country|null $country
      * @return null|City
      */
-    public function getOneByName($name, Country $country = null)
+    public function getOneByName(string $name, Country $country = null): ?City
     {
         $criteria = ['name' => $name];
         if (!is_null($country))
@@ -139,12 +137,12 @@ class CityRepository
     }
 
     /**
-     * @param $slug
+     * @param string $slug
      * @param Region|null $region
      * @param Country|null $country
-     * @return mixed|null|object
+     * @return City|null
      */
-    public function getOneBySlug($slug, Region $region = null, Country $country = null)
+    public function getOneBySlug(string $slug, Region $region = null, Country $country = null): ?City
     {
         $criteria = ['slug' => $slug];
         if (!is_null($region))

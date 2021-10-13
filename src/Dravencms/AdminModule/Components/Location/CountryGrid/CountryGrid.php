@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
@@ -10,9 +10,8 @@ namespace Dravencms\AdminModule\Components\Location\CountryGrid;
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Components\BaseGrid\Grid;
-use Dravencms\Model\Location\Entities\Country;
 use Dravencms\Model\Location\Repository\CountryRepository;
-use Kdyby\Doctrine\EntityManager;
+use Dravencms\Database\EntityManager;
 
 class CountryGrid extends BaseControl
 {
@@ -36,8 +35,6 @@ class CountryGrid extends BaseControl
      */
     public function __construct(CountryRepository $countryRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager)
     {
-        parent::__construct();
-
         $this->baseGridFactory = $baseGridFactory;
         $this->countryRepository = $countryRepository;
         $this->entityManager = $entityManager;
@@ -45,10 +42,11 @@ class CountryGrid extends BaseControl
 
 
     /**
-     * @param $name
-     * @return \Grido\Grid
+     * @param string $name
+     * @return Grid
+     * @throws \Ublaboo\DataGrid\Exception\DataGridException
      */
-    protected function createComponentGrid($name)
+    protected function createComponentGrid(string $name): Grid
     {
         /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
@@ -94,7 +92,7 @@ class CountryGrid extends BaseControl
     /**
      * @param array $ids
      */
-    public function gridGroupActionDelete(array $ids)
+    public function gridGroupActionDelete(array $ids): void
     {
         $this->handleDelete($ids);
     }
@@ -103,7 +101,7 @@ class CountryGrid extends BaseControl
      * @param integer|array $id
      * @isAllowed(user,countryDelete)
      */
-    public function handleDelete($id)
+    public function handleDelete($id): void
     {
         $countries = $this->countryRepository->getById($id);
         foreach($countries AS $country)
@@ -117,7 +115,7 @@ class CountryGrid extends BaseControl
     }
 
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->setFile(__DIR__ . '/CountryGrid.latte');

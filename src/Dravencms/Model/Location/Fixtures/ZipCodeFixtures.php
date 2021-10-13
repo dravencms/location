@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
@@ -8,7 +8,7 @@ namespace Dravencms\Model\Location\Fixtures;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Dravencms\Model\Location\Entities\ZipCode;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class ZipCodeFixtures extends AbstractFixture implements DependentFixtureInterface
 {
@@ -17,7 +17,7 @@ class ZipCodeFixtures extends AbstractFixture implements DependentFixtureInterfa
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $zipCode = new ZipCode($this->getReference('user-city-olomouc'), '77900');
         $manager->persist($zipCode);
@@ -27,9 +27,9 @@ class ZipCodeFixtures extends AbstractFixture implements DependentFixtureInterfa
     /**
      * Get the order of this fixture
      *
-     * @return integer
+     * @return array
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return ['Dravencms\Model\Location\Fixtures\CityFixtures'];
     }

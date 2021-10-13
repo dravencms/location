@@ -1,18 +1,19 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\AdminModule\Components\Location\CountryForm;
 
+use Dravencms\Components\BaseForm\BaseForm;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\Country;
 use Dravencms\Model\Location\Repository\CountryRepository;
-use Kdyby\Doctrine\EntityManager;
-use Nette\Application\UI\Control;
+use Dravencms\Database\EntityManager;
+use Dravencms\Components\BaseControl\BaseControl;
 use Nette\Application\UI\Form;
 
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
-class CountryForm extends Control
+class CountryForm extends BaseControl
 {
     /** @var Country|null */
     private $country = null;
@@ -34,7 +35,6 @@ class CountryForm extends Control
         EntityManager $entityManager,
         Country $country = null
     ) {
-        parent::__construct();
         $this->country = $country;
         $this->baseFormFactory = $baseFormFactory;
         $this->countryRepository = $streetRepository;
@@ -49,7 +49,10 @@ class CountryForm extends Control
         }
     }
 
-    public function createComponentForm()
+    /**
+     * @return BaseForm
+     */
+    public function createComponentForm(): BaseForm
     {
         $form = $this->baseFormFactory->create();
 
@@ -68,8 +71,9 @@ class CountryForm extends Control
 
     /**
      * @param Form $form
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function onValidateForm(Form $form)
+    public function onValidateForm(Form $form): void
     {
         $values = $form->getValues();
 
@@ -92,7 +96,7 @@ class CountryForm extends Control
     /**
      * @param Form $form
      */
-    public function onSuccessForm(Form $form)
+    public function onSuccessForm(Form $form): void
     {
         $values = $form->getValues();
 
@@ -113,7 +117,7 @@ class CountryForm extends Control
         $this->onSuccess();
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->panelHeading = ($this->country ? 'Editation of '.$this->country->getName().' country' : 'New Country');

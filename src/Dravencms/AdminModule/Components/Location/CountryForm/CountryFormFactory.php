@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\AdminModule\Components\Location\CountryForm;
 
@@ -13,5 +13,5 @@ interface CountryFormFactory
      * @param Country|null $country
      * @return CountryForm
      */
-    public function create(Country $country = null);
+    public function create(Country $country = null): CountryForm;
 }

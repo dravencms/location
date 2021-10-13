@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -8,7 +8,9 @@
 namespace Dravencms\AdminModule\LocationModule;
 
 
+use Dravencms\AdminModule\Components\Location\StreetNumberForm\StreetNumberForm;
 use Dravencms\AdminModule\Components\Location\StreetNumberForm\StreetNumberFormFactory;
+use Dravencms\AdminModule\Components\Location\StreetNumberGrid\StreetNumberGrid;
 use Dravencms\AdminModule\Components\Location\StreetNumberGrid\StreetNumberGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
 use Dravencms\Model\Location\Entities\StreetNumber;
@@ -36,7 +38,7 @@ class StreetNumberPresenter extends SecuredPresenter
     /**
      * @isAllowed(location,streetEdit)
      */
-    public function actionDefault()
+    public function actionDefault(): void
     {
         $this->template->h1 = 'Přehled čísel ulic';
     }
@@ -46,7 +48,7 @@ class StreetNumberPresenter extends SecuredPresenter
      * @isAllowed(location,streetEdit)
      * @throws \Exception
      */
-    public function actionEdit($id)
+    public function actionEdit(int $id): void
     {
         if ($id) {
             $streetNumber = $this->userStreetNumberRepository->getOneById($id);
@@ -61,9 +63,9 @@ class StreetNumberPresenter extends SecuredPresenter
     }
 
     /**
-     * @return \AdminModule\Components\User\StreetNumberGrid
+     * @return \Dravencms\AdminModule\Components\Location\StreetNumberGrid\StreetNumberGrid
      */
-    public function createComponentGridStreetNumber()
+    public function createComponentGridStreetNumber(): StreetNumberGrid
     {
         $control = $this->userStreetNumberGridFactory->create();
         $control->onDelete[] = function(){
@@ -74,9 +76,9 @@ class StreetNumberPresenter extends SecuredPresenter
     }
 
     /**
-     * @return \AdminModule\Components\User\StreetNumberForm
+     * @return \Dravencms\AdminModule\Components\Location\StreetNumberForm\StreetNumberForm
      */
-    public function createComponentFormStreetNumber()
+    public function createComponentFormStreetNumber(): StreetNumberForm
     {
         $component = $this->userStreetNumberFormFactory->create($this->streetNumber);
         $component->onSuccess[] = function()

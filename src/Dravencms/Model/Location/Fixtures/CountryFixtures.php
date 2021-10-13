@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
@@ -7,7 +7,7 @@ namespace Dravencms\Model\Location\Fixtures;
 
 use Dravencms\Model\Location\Entities\Country;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 
 class CountryFixtures extends AbstractFixture
@@ -17,7 +17,7 @@ class CountryFixtures extends AbstractFixture
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $countries = require_once __DIR__."/../../../../../../../../vendor/umpirsky/country-list/data/en_US/country.php";
         foreach ($countries AS $code => $name)

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\AdminModule\Components\Location\StreetNumberForm;
 
@@ -13,5 +13,5 @@ interface StreetNumberFormFactory
      * @param StreetNumber|null $streetNumber
      * @return StreetNumberForm
      */
-    public function create(StreetNumber $streetNumber = null);
+    public function create(StreetNumber $streetNumber = null): StreetNumberForm;
 }

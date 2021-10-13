@@ -1,19 +1,20 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\AdminModule\Components\Location\CityForm;
 
+use Dravencms\Components\BaseControl\BaseControl;
+use Dravencms\Components\BaseForm\BaseForm;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\City;
 use Dravencms\Model\Location\Repository\CityRepository;
 use Dravencms\Model\Location\Repository\CountryRepository;
-use Kdyby\Doctrine\EntityManager;
-use Nette\Application\UI\Control;
+use Dravencms\Database\EntityManager;
 use Nette\Application\UI\Form;
 
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
-class CityForm extends Control
+class CityForm extends BaseControl
 {
     /** @var City|null */
     private $city = null;
@@ -39,7 +40,6 @@ class CityForm extends Control
         EntityManager $entityManager,
         City $city = null
     ) {
-        parent::__construct();
         $this->city = $city;
         $this->baseFormFactory = $baseFormFactory;
         $this->cityRepository = $cityRepository;
@@ -55,7 +55,7 @@ class CityForm extends Control
         }
     }
 
-    public function createComponentForm()
+    public function createComponentForm(): BaseForm
     {
         $form = $this->baseFormFactory->create();
 
@@ -74,8 +74,9 @@ class CityForm extends Control
 
     /**
      * @param Form $form
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function onValidateForm(Form $form)
+    public function onValidateForm(Form $form): void
     {
         $values = $form->getValues();
 
@@ -95,7 +96,7 @@ class CityForm extends Control
     /**
      * @param Form $form
      */
-    public function onSuccessForm(Form $form)
+    public function onSuccessForm(Form $form): void
     {
         $values = $form->getValues();
 
@@ -118,7 +119,7 @@ class CityForm extends Control
         $this->onSuccess();
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->panelHeading = ($this->city ? 'Editation of '.$this->city->getName().' city' : 'New City');

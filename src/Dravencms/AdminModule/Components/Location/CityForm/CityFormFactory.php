@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\AdminModule\Components\Location\CityForm;
 
@@ -13,5 +13,5 @@ interface CityFormFactory
      * @param City|null $city
      * @return CityForm
      */
-    public function create(City $city = null);
+    public function create(City $city = null): CityForm;
 }

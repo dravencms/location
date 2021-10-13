@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -8,7 +8,9 @@
 namespace Dravencms\AdminModule\LocationModule;
 
 
+use Dravencms\AdminModule\Components\Location\ZipCodeForm\ZipCodeForm;
 use Dravencms\AdminModule\Components\Location\ZipCodeForm\ZipCodeFormFactory;
+use Dravencms\AdminModule\Components\Location\ZipCodeGrid\ZipCodeGrid;
 use Dravencms\AdminModule\Components\Location\ZipCodeGrid\ZipCodeGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
 use Dravencms\Model\Location\Entities\ZipCode;
@@ -41,7 +43,7 @@ class ZipCodePresenter extends SecuredPresenter
     /**
      * @isAllowed(location,zipCodeEdit)
      */
-    public function actionDefault()
+    public function actionDefault(): void
     {
         $this->template->h1 = 'Přehled PSČ';
     }
@@ -50,7 +52,7 @@ class ZipCodePresenter extends SecuredPresenter
      * @param integer $id
      * @isAllowed(location,zipCodeEdit)
      */
-    public function actionEdit($id)
+    public function actionEdit(int $id): void
     {
         if ($id) {
             $zipCode = $this->userCountryRepository->getOneById($id);
@@ -65,9 +67,9 @@ class ZipCodePresenter extends SecuredPresenter
     }
 
     /**
-     * @return \AdminModule\Components\User\ZipCodeGrid
+     * @return \Dravencms\AdminModule\Components\Location\ZipCodeGrid\ZipCodeGrid
      */
-    public function createComponentGridZipCode()
+    public function createComponentGridZipCode(): ZipCodeGrid
     {
         $control = $this->userZipCodeGridFactory->create();
         $control->onDelete[] = function()
@@ -79,9 +81,9 @@ class ZipCodePresenter extends SecuredPresenter
     }
 
     /**
-     * @return \AdminModule\Components\User\ZipCodeForm
+     * @return \Dravencms\AdminModule\Components\Location\ZipCodeForm\ZipCodeForm
      */
-    public function createComponentFormZipCode()
+    public function createComponentFormZipCode(): ZipCodeForm
     {
         $control = $this->userZipCodeFormFactory->create($this->userZipCodeFormEntity);
         $control->onSuccess[] = function(){

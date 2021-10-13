@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\Model\Location\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Dravencms\Database\Attributes\Identifier;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Nette;
 
@@ -45,7 +45,7 @@ class ZipCode
      * @param City $city
      * @param string $name
      */
-    public function __construct(City $city, $name)
+    public function __construct(City $city, string $name)
     {
         $this->city = $city;
         $this->name = $name;
@@ -56,7 +56,7 @@ class ZipCode
     /**
      * @param City $city
      */
-    public function setCity(City $city)
+    public function setCity(City $city): void
     {
         $this->city = $city;
     }
@@ -64,7 +64,7 @@ class ZipCode
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -72,7 +72,7 @@ class ZipCode
     /**
      * @return City
      */
-    public function getCity()
+    public function getCity(): City
     {
         return $this->city;
     }
@@ -80,7 +80,7 @@ class ZipCode
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -88,7 +88,7 @@ class ZipCode
     /**
      * @return Street[]|ArrayCollection
      */
-    public function getStreets()
+    public function getStreets(): ArrayCollection
     {
         return $this->streets;
     }

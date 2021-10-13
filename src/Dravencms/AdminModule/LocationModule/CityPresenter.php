@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -8,7 +8,9 @@
 namespace Dravencms\AdminModule\LocationModule;
 
 
+use Dravencms\AdminModule\Components\Location\CityForm\CityForm;
 use Dravencms\AdminModule\Components\Location\CityForm\CityFormFactory;
+use Dravencms\AdminModule\Components\Location\CityGrid\CityGrid;
 use Dravencms\AdminModule\Components\Location\CityGrid\CityGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
 use Dravencms\Model\Location\Entities\City;
@@ -36,7 +38,7 @@ class CityPresenter extends SecuredPresenter
     /**
      * @isAllowed(location, cityEdit)
      */
-    public function actionDefault()
+    public function actionDefault(): void
     {
         $this->template->h1 = 'Přehled měst';
     }
@@ -46,7 +48,7 @@ class CityPresenter extends SecuredPresenter
      * @isAllowed(location, cityEdit)
      * @throws \Exception
      */
-    public function actionEdit($id)
+    public function actionEdit(int $id): void
     {
         if ($id) {
             $city = $this->userCityRepository->getOneById($id);
@@ -62,9 +64,9 @@ class CityPresenter extends SecuredPresenter
     }
 
     /**
-     * @return \AdminModule\Components\User\CityGrid
+     * @return \Dravencms\AdminModule\Components\Location\CityGrid\CityGrid
      */
-    public function createComponentGridCity()
+    public function createComponentGridCity(): CityGrid
     {
         $control = $this->userCityGridFactory->create();
         $control->onDelete[] = function()
@@ -75,7 +77,10 @@ class CityPresenter extends SecuredPresenter
         return $control;
     }
 
-    public function createComponentFormCity()
+    /**
+     * @return \Dravencms\AdminModule\Components\Location\CityForm\CityForm
+     */
+    public function createComponentFormCity(): CityForm
     {
         $control = $this->userCityFormFactory->create($this->userCityFormEntity);
         $control->onSuccess[] = function()

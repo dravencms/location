@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\Model\Location\Entities;
 
@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Dravencms\Database\Attributes\Identifier;
 use Nette;
 
 /**
@@ -50,7 +50,7 @@ class Country
      * @param string $name
      * @param string $code
      */
-    public function __construct($name, $code)
+    public function __construct(string $name, string $code)
     {
         $this->name = $name;
         $this->code = $code;
@@ -59,7 +59,7 @@ class Country
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -67,7 +67,7 @@ class Country
     /**
      * @param string $code
      */
-    public function setCode($code)
+    public function setCode(string $code): void
     {
         $this->code = $code;
     }
@@ -75,7 +75,7 @@ class Country
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -83,7 +83,7 @@ class Country
     /**
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -91,15 +91,15 @@ class Country
     /**
      * @return Country[]|ArrayCollection
      */
-    public function getCities()
+    public function getCities(): ArrayCollection
     {
         return $this->cities;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }

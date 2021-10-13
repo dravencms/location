@@ -1,18 +1,16 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
 
 namespace Dravencms\Model\Location\Repository;
 
-use Doctrine\ORM\Query;
 use Dravencms\Model\Location\Entities\Region;
-use Kdyby\Doctrine\EntityManager;
-use Nette;
+use Dravencms\Database\EntityManager;
 
 class RegionRepository
 {
-    /** @var \Kdyby\Doctrine\EntityRepository */
+    /** @var \Doctrine\Persistence\ObjectRepository|Region|string */
     private $regionRepository;
 
     /** @var EntityManager */
@@ -30,18 +28,9 @@ class RegionRepository
 
     /**
      * @param $id
-     * @return Region[]
-     */
-    public function getById($id)
-    {
-        return $this->regionRepository->findBy(['id' => $id]);
-    }
-
-    /**
-     * @param $id
      * @return null|Region
      */
-    public function getOneById($id)
+    public function getOneById(int $id): ?Region
     {
         return $this->regionRepository->find($id);
     }
@@ -50,7 +39,7 @@ class RegionRepository
      * @param $slug
      * @return null|Region
      */
-    public function getOneBySlug($slug)
+    public function getOneBySlug(string $slug): ?Region
     {
         return $this->regionRepository->findOneBy(['slug' => $slug]);
     }
@@ -58,13 +47,13 @@ class RegionRepository
     /**
      * @return Region[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->regionRepository->findAll();
     }
 
     /**
-     * @return \Kdyby\Doctrine\QueryBuilder
+     * @return mixed
      */
     public function getRegionQueryBuilder()
     {
@@ -74,12 +63,11 @@ class RegionRepository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param Region|null $ignoreRegion
      * @return bool
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function isNameFree($name, Region $ignoreRegion = null)
+    public function isNameFree(string $name, Region $ignoreRegion = null): bool
     {
         $qb = $this->regionRepository->createQueryBuilder('r')
             ->select('r')
@@ -101,10 +89,8 @@ class RegionRepository
     /**
      * @param Region $region
      * @param int $number
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Exception
      */
-    public function moveUp(Region $region, $number = 1)
+    public function moveUp(Region $region, int $number = 1): void
     {
         if ($region->getPosition() > 0)
         {
@@ -117,10 +103,8 @@ class RegionRepository
     /**
      * @param Region $region
      * @param int $number
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Exception
      */
-    public function moveDown(Region $region, $number = 1)
+    public function moveDown(Region $region, int $number = 1): void
     {
         $region->setPosition($region->getPosition() +$number);
         $this->entityManager->persist($region);

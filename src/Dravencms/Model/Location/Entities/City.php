@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\Model\Location\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Dravencms\Database\Attributes\Identifier;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Nette;
@@ -56,10 +56,11 @@ class City
 
     /**
      * City constructor.
-     * @param string $name
      * @param Country $country
+     * @param string $name
+     * @param Region|null $region
      */
-    public function __construct(Country $country, $name, Region $region = null)
+    public function __construct(Country $country, string $name, Region $region = null)
     {
         $this->name = $name;
         $this->country = $country;
@@ -71,7 +72,7 @@ class City
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -79,7 +80,7 @@ class City
     /**
      * @param Country $country
      */
-    public function setCountry(Country $country)
+    public function setCountry(Country $country): void
     {
         $this->country = $country;
     }
@@ -87,7 +88,7 @@ class City
     /**
      * @param Region $region
      */
-    public function setRegion(Region $region = null)
+    public function setRegion(Region $region = null): void
     {
         $this->region = $region;
     }
@@ -95,7 +96,7 @@ class City
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -103,7 +104,7 @@ class City
     /**
      * @return Country
      */
-    public function getCountry()
+    public function getCountry(): Country
     {
         return $this->country;
     }
@@ -111,7 +112,7 @@ class City
     /**
      * @return ZipCode[]|ArrayCollection
      */
-    public function getZipCodes()
+    public function getZipCodes(): ArrayCollection
     {
         return $this->zipCodes;
     }
@@ -119,15 +120,15 @@ class City
     /**
      * @return Region
      */
-    public function getRegion()
+    public function getRegion(): Region
     {
         return $this->region;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }

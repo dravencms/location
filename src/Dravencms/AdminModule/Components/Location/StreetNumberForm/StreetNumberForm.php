@@ -1,13 +1,14 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\AdminModule\Components\Location\StreetNumberForm;
 
 use Dravencms\Components\BaseControl\BaseControl;
+use Dravencms\Components\BaseForm\BaseForm;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\StreetNumber;
 use Dravencms\Model\Location\Repository\StreetNumberRepository;
 use Dravencms\Model\Location\Repository\StreetRepository;
-use Kdyby\Doctrine\EntityManager;
+use Dravencms\Database\EntityManager;
 use Nette\Application\UI\Form;
 
 /**
@@ -47,7 +48,6 @@ class StreetNumberForm extends BaseControl
         EntityManager $entityManager,
         StreetNumber $streetNumber = null
     ) {
-        parent::__construct();
         $this->streetNumber = $streetNumber;
         $this->baseFormFactory = $baseFormFactory;
         $this->streetNumberRepository = $streetNumberRepository;
@@ -63,7 +63,10 @@ class StreetNumberForm extends BaseControl
         }
     }
 
-    public function createComponentForm()
+    /**
+     * @return BaseForm
+     */
+    public function createComponentForm(): BaseForm
     {
         $form = $this->baseFormFactory->create();
 
@@ -85,8 +88,9 @@ class StreetNumberForm extends BaseControl
 
     /**
      * @param Form $form
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function onValidateForm(Form $form)
+    public function onValidateForm(Form $form): void
     {
         $values = $form->getValues();
 
@@ -106,7 +110,7 @@ class StreetNumberForm extends BaseControl
     /**
      * @param Form $form
      */
-    public function onSuccessForm(Form $form)
+    public function onSuccessForm(Form $form): void
     {
         $values = $form->getValues();
 
@@ -129,7 +133,7 @@ class StreetNumberForm extends BaseControl
         $this->onSuccess();
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->panelHeading = ($this->streetNumber ? 'Editation of '.$this->streetNumber->getName().' Street Number' : 'New street number');

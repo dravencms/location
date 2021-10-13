@@ -15,8 +15,13 @@
     }
   ],
   "require": {
-    "dravencms/base": "^v1.0.4",
-    "umpirsky/country-list": "^2.0"
+    "umpirsky/country-list": "^2.0",
+    "dravencms/application": ">=0.0.2",
+    "dravencms/database": ">=0.0.3",
+    "dravencms/base-form": ">=0.0.1",
+    "dravencms/base-grid": ">=0.0.1",
+    "dravencms/user": ">=0.0.1",
+    "dravencms/admin": ">=0.0.1"
   },
   "autoload": {
     "psr-0": {
@@ -25,16 +30,7 @@
   },
   "extra": {
     "dravencms": {
-      "configuration": {
-        "extensions": {
-          "location": "Dravencms\\Location\\DI\\LocationExtension"
-        },
-        "doctrine":{
-          "metadata": {
-            "Dravencms\\Model\\Location": "%appDir%/../vendor/dravencms/location/src/Dravencms/Model/Location"
-          }
-        }
-      }
+      "configuration": "dravencms.config.neon"
     }
   }
 }

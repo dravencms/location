@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\Model\Location\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Dravencms\Database\Attributes\Identifier;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Nette;
 
@@ -45,7 +45,7 @@ class Street
      * @param ZipCode $zipCode
      * @param string $name
      */
-    public function __construct(ZipCode $zipCode, $name)
+    public function __construct(ZipCode $zipCode, string $name)
     {
         $this->zipCode = $zipCode;
         $this->name = $name;
@@ -54,7 +54,7 @@ class Street
     /**
      * @param ZipCode $zipCode
      */
-    public function setZipCode($zipCode)
+    public function setZipCode(ZipCode $zipCode): void
     {
         $this->zipCode = $zipCode;
     }
@@ -62,7 +62,7 @@ class Street
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -70,7 +70,7 @@ class Street
     /**
      * @return ZipCode
      */
-    public function getZipCode()
+    public function getZipCode(): ZipCode
     {
         return $this->zipCode;
     }
@@ -78,7 +78,7 @@ class Street
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -86,7 +86,7 @@ class Street
     /**
      * @return StreetNumber[]|ArrayCollection
      */
-    public function getStreetNumbers()
+    public function getStreetNumbers(): ArrayCollection
     {
         return $this->streetNumbers;
     }

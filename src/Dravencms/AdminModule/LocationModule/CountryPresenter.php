@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -8,7 +8,9 @@
 namespace Dravencms\AdminModule\LocationModule;
 
 
+use Dravencms\AdminModule\Components\Location\CountryForm\CountryForm;
 use Dravencms\AdminModule\Components\Location\CountryForm\CountryFormFactory;
+use Dravencms\AdminModule\Components\Location\CountryGrid\CountryGrid;
 use Dravencms\AdminModule\Components\Location\CountryGrid\CountryGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
 use Dravencms\Model\Location\Entities\Country;
@@ -37,7 +39,7 @@ class CountryPresenter extends SecuredPresenter
     /**
      * @isAllowed(location,countryEdit)
      */
-    public function actionDefault()
+    public function actionDefault(): void
     {
         $this->template->h1 = 'Přehled Států';
     }
@@ -46,7 +48,7 @@ class CountryPresenter extends SecuredPresenter
      * @param integer $id
      * @isAllowed(location,countryEdit)
      */
-    public function actionEdit($id)
+    public function actionEdit(int $id): void
     {
         if ($id) {
             $country = $this->userCountryRepository->getOneById($id);
@@ -61,9 +63,9 @@ class CountryPresenter extends SecuredPresenter
     }
 
     /**
-     * @return \AdminModule\Components\User\CountryGrid
+     * @return \Dravencms\AdminModule\Components\Location\CountryGrid\CountryGrid
      */
-    public function createComponentGridCountry()
+    public function createComponentGridCountry(): CountryGrid
     {
         $control = $this->userCountryGridFactory->create();
         $control->onDelete[] = function()
@@ -75,9 +77,9 @@ class CountryPresenter extends SecuredPresenter
     }
 
     /**
-     * @return \AdminModule\Components\User\CountryForm
+     * @return \Dravencms\AdminModule\Components\Location\CountryForm\CountryForm
      */
-    public function createComponentFormCountry()
+    public function createComponentFormCountry(): CountryForm
     {
         $control = $this->userCountryFormFactory->create($this->userCountryFormEntity);
         $control->onSuccess[] = function(){

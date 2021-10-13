@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Dravencms\Database\Attributes\Identifier;
 use Nette;
 
 /**
@@ -61,7 +61,7 @@ class Region
      * @param string $name
      * @param bool $isActive
      */
-    public function __construct($name, $isActive = true)
+    public function __construct(string $name, bool $isActive = true)
     {
         $this->name = $name;
         $this->isActive = $isActive;
@@ -71,7 +71,7 @@ class Region
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -79,7 +79,7 @@ class Region
     /**
      * @param boolean $isActive
      */
-    public function setIsActive($isActive)
+    public function setIsActive(bool $isActive): void
     {
         $this->isActive = $isActive;
     }
@@ -87,7 +87,7 @@ class Region
     /**
      * @param string $slug
      */
-    public function setSlug($slug)
+    public function setSlug(string $slug): void
     {
         $this->slug = $slug;
     }
@@ -95,7 +95,7 @@ class Region
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -103,15 +103,7 @@ class Region
     /**
      * @return boolean
      */
-    public function isActive()
-    {
-        return $this->isActive;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isIsActive()
+    public function isActive(): bool
     {
         return $this->isActive;
     }
@@ -119,7 +111,7 @@ class Region
     /**
      * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
@@ -127,7 +119,7 @@ class Region
     /**
      * @param City $city
      */
-    public function addCity(City $city)
+    public function addCity(City $city): void
     {
         if ($this->cities->contains($city)) {
             return;
@@ -139,7 +131,7 @@ class Region
     /**
      * @param City $city
      */
-    public function removeCity(City $city)
+    public function removeCity(City $city): void
     {
         if (!$this->cities->contains($city)) {
             return;
@@ -152,7 +144,7 @@ class Region
     /**
      * @param ArrayCollection $cities
      */
-    public function setCities(ArrayCollection $cities)
+    public function setCities(ArrayCollection $cities): void
     {
         //Remove all not in
         foreach($this->cities AS $city)
@@ -173,9 +165,9 @@ class Region
     }
 
     /**
-     * @return \Doctrine\Common\Collections\Collection|\Dravencms\Model\Location\Entities\City[]
+     * @return ArrayCollection
      */
-    public function getCities()
+    public function getCities(): ArrayCollection
     {
         return $this->cities;
     }
@@ -183,7 +175,7 @@ class Region
     /**
      * @return int
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -191,7 +183,7 @@ class Region
     /**
      * @param int $position
      */
-    public function setPosition($position)
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }

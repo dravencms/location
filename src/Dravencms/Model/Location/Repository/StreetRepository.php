@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
@@ -8,12 +8,11 @@ namespace Dravencms\Model\Location\Repository;
 
 use Dravencms\Model\Location\Entities\Street;
 use Dravencms\Model\Location\Entities\ZipCode;
-use Kdyby\Doctrine\EntityManager;
-use Nette;
+use Dravencms\Database\EntityManager;
 
 class StreetRepository
 {
-    /** @var \Kdyby\Doctrine\EntityRepository */
+    /** @var \Doctrine\Persistence\ObjectRepository|Street|string */
     private $streetRepository;
 
     /** @var EntityManager */
@@ -33,13 +32,13 @@ class StreetRepository
      * @param $id
      * @return null|Street
      */
-    public function getOneById($id)
+    public function getOneById(int $id): ?Street
     {
         return $this->streetRepository->find($id);
     }
 
     /**
-     * @param $id
+     * @param array|int $id
      * @return Street[]
      */
     public function getById($id)
@@ -48,7 +47,7 @@ class StreetRepository
     }
 
     /**
-     * @return \Kdyby\Doctrine\QueryBuilder
+     * @return mixed
      */
     public function getStreetQueryBuilder()
     {
@@ -58,13 +57,12 @@ class StreetRepository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param ZipCode $zipCode
      * @param Street|null $ignoreStreet
-     * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return bool
      */
-    public function isStreetNameFree($name, ZipCode $zipCode, Street $ignoreStreet = null)
+    public function isStreetNameFree(string $name, ZipCode $zipCode, Street $ignoreStreet = null): bool
     {
         $qb = $this->streetRepository->createQueryBuilder('s')
             ->select('s')
@@ -97,7 +95,7 @@ class StreetRepository
      * @param ZipCode|null $zipCode
      * @return Street[]
      */
-    public function findByName($name, ZipCode $zipCode = null)
+    public function findByName(string $name, ZipCode $zipCode = null)
     {
         $qb = $this->streetRepository->createQueryBuilder('s')
             ->select('s')
@@ -119,7 +117,7 @@ class StreetRepository
      * @param ZipCode $zipCode
      * @return null|Street
      */
-    public function getOneByName($name, ZipCode $zipCode = null)
+    public function getOneByName(string $name, ZipCode $zipCode = null): ?Street
     {
         $criteria = ['name' => $name];
         if (!is_null($zipCode))

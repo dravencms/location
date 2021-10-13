@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /*
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  *
@@ -19,10 +19,11 @@
  */
 namespace Dravencms\AdminModule\Components\Location\RegionGrid;
 
+
 interface RegionGridFactory
 {
     /**
      * @return RegionGrid
      */
-    public function create();
+    public function create(): RegionGrid;
 }

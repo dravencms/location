@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
@@ -11,7 +11,7 @@ use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\ZipCodeRepository;
-use Kdyby\Doctrine\EntityManager;
+use Dravencms\Database\EntityManager;
 
 class ZipCodeGrid extends BaseControl
 {
@@ -37,8 +37,6 @@ class ZipCodeGrid extends BaseControl
      */
     public function __construct(ZipCodeRepository $zipCodeRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager)
     {
-        parent::__construct();
-
         $this->baseGridFactory = $baseGridFactory;
         $this->zipCodeRepository = $zipCodeRepository;
         $this->entityManager = $entityManager;
@@ -46,10 +44,11 @@ class ZipCodeGrid extends BaseControl
 
 
     /**
-     * @param $name
+     * @param string $name
      * @return Grid
+     * @throws \Ublaboo\DataGrid\Exception\DataGridException
      */
-    protected function createComponentGrid($name)
+    protected function createComponentGrid(string $name): Grid
     {
         /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
@@ -99,7 +98,7 @@ class ZipCodeGrid extends BaseControl
     /**
      * @param array $ids
      */
-    public function gridGroupActionDelete(array $ids)
+    public function gridGroupActionDelete(array $ids): void
     {
         $this->handleDelete($ids);
     }
@@ -108,7 +107,7 @@ class ZipCodeGrid extends BaseControl
      * @param integer|array $id
      * @isAllowed(user,zipCodeDelete)
      */
-    public function handleDelete($id)
+    public function handleDelete($id): void
     {
         $zipCodes = $this->zipCodeRepository->getById($id);
         foreach($zipCodes AS $zipCode)
@@ -121,7 +120,7 @@ class ZipCodeGrid extends BaseControl
         $this->onDelete();
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->setFile(__DIR__ . '/ZipCodeGrid.latte');

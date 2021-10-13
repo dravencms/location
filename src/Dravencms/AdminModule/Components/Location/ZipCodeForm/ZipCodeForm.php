@@ -1,13 +1,14 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\AdminModule\Components\Location\ZipCodeForm;
 
 use Dravencms\Components\BaseControl\BaseControl;
+use Dravencms\Components\BaseForm\BaseForm;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\ZipCode;
 use Dravencms\Model\Location\Repository\CityRepository;
 use Dravencms\Model\Location\Repository\ZipCodeRepository;
-use Kdyby\Doctrine\EntityManager;
+use Dravencms\Database\EntityManager;
 use Nette\Application\UI\Form;
 
 /**
@@ -47,7 +48,6 @@ class ZipCodeForm extends BaseControl
         EntityManager $entityManager,
         ZipCode $zipCode = null
     ) {
-        parent::__construct();
         $this->zipCode = $zipCode;
         $this->baseFormFactory = $baseFormFactory;
         $this->zipCodeRepository = $streetRepository;
@@ -63,7 +63,10 @@ class ZipCodeForm extends BaseControl
         }
     }
 
-    public function createComponentForm()
+    /**
+     * @return BaseForm
+     */
+    public function createComponentForm(): BaseForm
     {
         $form = $this->baseFormFactory->create();
 
@@ -81,6 +84,7 @@ class ZipCodeForm extends BaseControl
 
     /**
      * @param Form $form
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function onValidateForm(Form $form)
     {
@@ -102,7 +106,7 @@ class ZipCodeForm extends BaseControl
     /**
      * @param Form $form
      */
-    public function onSuccessForm(Form $form)
+    public function onSuccessForm(Form $form): void
     {
         $values = $form->getValues();
 
@@ -125,7 +129,7 @@ class ZipCodeForm extends BaseControl
         $this->onSuccess();
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->panelHeading = ($this->zipCode ? 'Editation of '.$this->zipCode->getName().' ZIP code' : 'New ZIP code');

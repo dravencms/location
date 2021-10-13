@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\Location;
 use Dravencms\Model\Location\Entities\City;
@@ -10,7 +10,7 @@ use Dravencms\Model\Location\Repository\CountryRepository;
 use Dravencms\Model\Location\Repository\StreetNumberRepository;
 use Dravencms\Model\Location\Repository\StreetRepository;
 use Dravencms\Model\Location\Repository\ZipCodeRepository;
-use Kdyby\Doctrine\EntityManager;
+use Dravencms\Database\EntityManager;
 use Nette\SmartObject;
 
 /**
@@ -66,14 +66,14 @@ class Location
     }
 
     /**
-     * @param $countryId
-     * @param $cityName
-     * @param $zipCodeName
-     * @param $streetName
-     * @param $streetNumberName
+     * @param int $countryId
+     * @param string $cityName
+     * @param string $zipCodeName
+     * @param string $streetName
+     * @param string $streetNumberName
      * @return StreetNumber|null
      */
-    public function saveStreetNumber($countryId, $cityName, $zipCodeName, $streetName, $streetNumberName)
+    public function saveStreetNumber(int $countryId, string $cityName, string $zipCodeName, string $streetName, string $streetNumberName): ?StreetNumber
     {
         $country = $this->countryRepository->getOneById($countryId);
         $streetNumber = null;

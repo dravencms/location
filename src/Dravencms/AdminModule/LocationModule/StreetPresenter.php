@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -8,7 +8,9 @@
 namespace Dravencms\AdminModule\LocationModule;
 
 
+use Dravencms\AdminModule\Components\Location\StreetForm\StreetForm;
 use Dravencms\AdminModule\Components\Location\StreetForm\StreetFormFactory;
+use Dravencms\AdminModule\Components\Location\StreetGrid\StreetGrid;
 use Dravencms\AdminModule\Components\Location\StreetGrid\StreetGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
 use Dravencms\Model\Location\Entities\Street;
@@ -40,7 +42,7 @@ class StreetPresenter extends SecuredPresenter
     /**
      * @isAllowed(location,streetEdit)
      */
-    public function actionDefault()
+    public function actionDefault(): void
     {
         $this->template->h1 = 'Přehled ulic';
     }
@@ -50,7 +52,7 @@ class StreetPresenter extends SecuredPresenter
      * @isAllowed(location,streetEdit)
      * @throws \Exception
      */
-    public function actionEdit($id)
+    public function actionEdit(int $id): void
     {
         if ($id) {
             $street = $this->userStreetNumberRepository->getOneById($id);
@@ -65,9 +67,9 @@ class StreetPresenter extends SecuredPresenter
     }
 
     /**
-     * @return \AdminModule\Components\User\StreetGrid
+     * @return \Dravencms\AdminModule\Components\Location\StreetGrid\StreetGrid
      */
-    public function createComponentGridStreet()
+    public function createComponentGridStreet(): StreetGrid
     {
         $control = $this->userStreetGridFactory->create();
         $control->onDelete[] = function(){
@@ -78,9 +80,9 @@ class StreetPresenter extends SecuredPresenter
     }
 
     /**
-     * @return \AdminModule\Components\User\StreetForm
+     * @return \Dravencms\AdminModule\Components\Location\StreetForm\StreetForm
      */
-    public function createComponentFormStreet()
+    public function createComponentFormStreet(): StreetForm
     {
         $component = $this->userStreetFormFactory->create($this->streetFormEntity);
         $component->onSuccess[] = function()

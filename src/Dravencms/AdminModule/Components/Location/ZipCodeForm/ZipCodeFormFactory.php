@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\AdminModule\Components\Location\ZipCodeForm;
 
@@ -13,5 +13,5 @@ interface ZipCodeFormFactory
      * @param ZipCode|null $zipCode
      * @return ZipCodeForm
      */
-    public function create(ZipCode $zipCode = null);
+    public function create(ZipCode $zipCode = null): ZipCodeForm;
 }

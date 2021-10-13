@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
@@ -11,7 +11,7 @@ use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\StreetRepository;
-use Kdyby\Doctrine\EntityManager;
+use Dravencms\Database\EntityManager;
 
 class StreetGrid extends BaseControl
 {
@@ -35,8 +35,6 @@ class StreetGrid extends BaseControl
      */
     public function __construct(StreetRepository $streetRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager)
     {
-        parent::__construct();
-
         $this->baseGridFactory = $baseGridFactory;
         $this->streetRepository = $streetRepository;
         $this->entityManager = $entityManager;
@@ -45,9 +43,10 @@ class StreetGrid extends BaseControl
 
     /**
      * @param $name
-     * @return \Grido\Grid
+     * @return Grid
+     * @throws \Ublaboo\DataGrid\Exception\DataGridException
      */
-    protected function createComponentGrid($name)
+    protected function createComponentGrid($name): Grid
     {
         /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
@@ -101,7 +100,7 @@ class StreetGrid extends BaseControl
     /**
      * @param array $ids
      */
-    public function gridGroupActionDelete(array $ids)
+    public function gridGroupActionDelete(array $ids): void
     {
         $this->handleDelete($ids);
     }
@@ -110,7 +109,7 @@ class StreetGrid extends BaseControl
      * @param integer|array $id
      * @isAllowed(user,streetDelete)
      */
-    public function handleDelete($id)
+    public function handleDelete($id): void
     {
         $streets = $this->streetRepository->getById($id);
         foreach ($streets AS $street) {
@@ -121,7 +120,7 @@ class StreetGrid extends BaseControl
         $this->onDelete();
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->setFile(__DIR__ . '/StreetGrid.latte');

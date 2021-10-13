@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Dravencms\Model\Location\Entities;
 
@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Dravencms\Model\User\Entities\Company;
 use Dravencms\Model\User\Entities\User;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Dravencms\Database\Attributes\Identifier;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Nette;
 
@@ -53,7 +53,7 @@ class StreetNumber
      * @param Street $street
      * @param string $name
      */
-    public function __construct(Street $street, $name)
+    public function __construct(Street $street, string $name)
     {
         $this->street = $street;
         $this->name = $name;
@@ -62,7 +62,7 @@ class StreetNumber
     /**
      * @param Street $street
      */
-    public function setStreet(Street $street)
+    public function setStreet(Street $street): void
     {
         $this->street = $street;
     }
@@ -70,7 +70,7 @@ class StreetNumber
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -78,7 +78,7 @@ class StreetNumber
     /**
      * @return Street
      */
-    public function getStreet()
+    public function getStreet(): Street
     {
         return $this->street;
     }
@@ -86,7 +86,7 @@ class StreetNumber
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -94,7 +94,7 @@ class StreetNumber
     /**
      * @return Company[]|ArrayCollection
      */
-    public function getCompanies()
+    public function getCompanies(): ArrayCollection
     {
         return $this->companies;
     }
@@ -102,7 +102,7 @@ class StreetNumber
     /**
      * @return User[]|ArrayCollection
      */
-    public function getUsers()
+    public function getUsers(): ArrayCollection
     {
         return $this->users;
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
@@ -8,8 +8,8 @@ namespace Dravencms\Model\Location\Repository;
 use Dravencms\Model\Location\Entities\City;
 use Dravencms\Model\Location\Entities\Country;
 use Dravencms\Model\Location\Entities\ZipCode;
-use Kdyby\Doctrine\EntityManager;
-use Nette;
+use Dravencms\Database\EntityManager;
+
 
 /**
  * Class ZipCodeRepository
@@ -17,7 +17,7 @@ use Nette;
  */
 class ZipCodeRepository
 {
-    /** @var \Kdyby\Doctrine\EntityRepository */
+    /** @var \Doctrine\Persistence\ObjectRepository|ZipCode|string */
     private $zipCodeRepository;
 
     /** @var EntityManager */
@@ -34,7 +34,7 @@ class ZipCodeRepository
     }
 
     /**
-     * @return \Kdyby\Doctrine\QueryBuilder
+     * @return mixed
      */
     public function getZipCodeQueryBuilder()
     {
@@ -44,10 +44,10 @@ class ZipCodeRepository
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return null|ZipCode
      */
-    public function getOneById($id)
+    public function getOneById(int $id): ?ZipCode
     {
         return $this->zipCodeRepository->find($id);
     }
@@ -62,13 +62,12 @@ class ZipCodeRepository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param Country $country
      * @param ZipCode|null $ignoreZipCode
-     * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return bool
      */
-    public function isZipCodeFree($name, Country $country, ZipCode $ignoreZipCode = null)
+    public function isZipCodeFree(string $name, Country $country, ZipCode $ignoreZipCode = null): bool
     {
         $qb = $this->zipCodeRepository->createQueryBuilder('z')
             ->select('z')
@@ -91,11 +90,11 @@ class ZipCodeRepository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param City|null $city
      * @return ZipCode[]
      */
-    public function findByName($name, City $city = null)
+    public function findByName(string $name, City $city = null)
     {
         $qb = $this->zipCodeRepository->createQueryBuilder('z')
             ->select('z')
@@ -117,7 +116,7 @@ class ZipCodeRepository
      * @param City|null $city
      * @return null|ZipCode
      */
-    public function getOneByName($name, City $city = null)
+    public function getOneByName(string $name, City $city = null): ?ZipCode
     {
         $criteria = ['name' => $name];
         if (!is_null($city))
