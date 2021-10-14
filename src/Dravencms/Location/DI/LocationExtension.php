@@ -29,10 +29,10 @@ class LocationExtension extends Nette\DI\CompilerExtension
     {
         $builder = $this->getContainerBuilder();
         foreach ($this->loadFromFile(__DIR__ . '/components.neon') as $i => $command) {
-            $cli = $builder->addDefinition($this->prefix('components.' . $i))
+            $cli = $builder->addFactoryDefinition($this->prefix('components.' . $i))
                 ->setAutowired(false);
             if (is_string($command)) {
-                $cli->setFactory($command);
+                $cli->setImplement($command);
             } else {
                 throw new \InvalidArgumentException;
             }
