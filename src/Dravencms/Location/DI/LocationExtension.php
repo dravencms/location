@@ -11,12 +11,10 @@ use Nette;
  */
 class LocationExtension extends Nette\DI\CompilerExtension
 {
-    public static $prefix = 'location';
-
     public function loadConfiguration(): void
     {
         $builder = $this->getContainerBuilder();
-        $builder->addDefinition($this->prefix(self::$prefix))
+        $builder->addDefinition($this->prefix('location'))
             ->setFactory(Location::class);
 
         $this->loadComponents();
@@ -43,8 +41,7 @@ class LocationExtension extends Nette\DI\CompilerExtension
     {
         $builder = $this->getContainerBuilder();
         foreach ($this->loadFromFile(__DIR__ . '/models.neon') as $i => $command) {
-            $cli = $builder->addDefinition($this->prefix('models.' . $i))
-                ->setAutowired(false);
+            $cli = $builder->addDefinition($this->prefix('models.' . $i));
             if (is_string($command)) {
                 $cli->setFactory($command);
             } else {
