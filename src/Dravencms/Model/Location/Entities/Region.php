@@ -6,6 +6,7 @@
 namespace Dravencms\Model\Location\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -167,7 +168,7 @@ class Region
     /**
      * @return ArrayCollection
      */
-    public function getCities(): ArrayCollection
+    public function getCities(): Collection
     {
         return $this->cities;
     }

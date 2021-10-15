@@ -3,6 +3,7 @@
 namespace Dravencms\Model\Location\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Dravencms\Database\Attributes\Identifier;
@@ -86,7 +87,7 @@ class Street
     /**
      * @return StreetNumber[]|ArrayCollection
      */
-    public function getStreetNumbers(): ArrayCollection
+    public function getStreetNumbers(): Collection
     {
         return $this->streetNumbers;
     }
