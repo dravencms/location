@@ -9,7 +9,6 @@ use Dravencms\AdminModule\Components\Location\RegionGrid\RegionGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
 use Dravencms\Flash;
 use Dravencms\Database\EntityManager;
-use Nette;
 use Dravencms\Model\Location\Repository\RegionRepository;
 use Dravencms\Model\Location\Entities\Region;
 
@@ -75,10 +74,10 @@ class RegionPresenter extends SecuredPresenter
 
             /** @var Region $region */
             if ($this->region) {
-                $this->flashMessage('Changes has been saved.', 'alert-success');
+                $this->flashMessage('Changes has been saved.', Flash::SUCCESS);
                 $this->redirect('Region:edit', ['id' => $region->getId()]);
             } else {
-                $this->flashMessage('New region item has been saved.', 'alert-success');
+                $this->flashMessage('New region item has been saved.', Flash::SUCCESS);
                 $this->redirect('Region:');
             }
         };

@@ -12,6 +12,8 @@ use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\CountryRepository;
 use Dravencms\Database\EntityManager;
+use Nette\Security\User;
+use Ublaboo\DataGrid\Column\Action\Confirmation\StringConfirmation;
 
 class CountryGrid extends BaseControl
 {
@@ -24,6 +26,9 @@ class CountryGrid extends BaseControl
     /** @var EntityManager */
     private $entityManager;
 
+    /** @var User */
+    private $user;
+
     /** @var array */
     public $onDelete = [];
 
@@ -32,12 +37,14 @@ class CountryGrid extends BaseControl
      * @param CountryRepository $countryRepository
      * @param BaseGridFactory $baseGridFactory
      * @param EntityManager $entityManager
+     * @param User $user
      */
-    public function __construct(CountryRepository $countryRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager)
+    public function __construct(CountryRepository $countryRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager, User $user)
     {
         $this->baseGridFactory = $baseGridFactory;
         $this->countryRepository = $countryRepository;
         $this->entityManager = $entityManager;
+        $this->user = $user;
     }
 
 
@@ -57,7 +64,7 @@ class CountryGrid extends BaseControl
             ->setSortable()
             ->setFilterText();
 
-        if ($this->presenter->isAllowed('location', 'countryEdit'))
+        if ($this->user->isAllowed('location', 'countryEdit'))
         {
             $grid->addAction('edit', '')
                 ->setIcon('pencil')
@@ -65,13 +72,13 @@ class CountryGrid extends BaseControl
                 ->setClass('btn btn-xs btn-primary');
         }
 
-        if ($this->presenter->isAllowed('location', 'countryDelete'))
+        if ($this->user->isAllowed('location', 'countryDelete'))
         {
             $grid->addAction('delete', '', 'delete!')
                 ->setIcon('trash')
                 ->setTitle('Smazat')
                 ->setClass('btn btn-xs btn-danger ajax')
-                ->setConfirm('Do you really want to delete row %s?', 'name');
+                ->setConfirmation(new StringConfirmation('Do you really want to delete row %s?', 'name'));
 
             $grid->allowRowsAction('delete', function($item) {
                 return (count($item->getCities()) == 0);

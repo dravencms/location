@@ -12,6 +12,7 @@ use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\StreetNumberRepository;
 use Dravencms\Database\EntityManager;
+use Nette\Security\User;
 
 class StreetNumberGrid extends BaseControl
 {
@@ -24,6 +25,9 @@ class StreetNumberGrid extends BaseControl
     /** @var EntityManager */
     private $entityManager;
 
+    /** @var User */
+    private $user;
+
     /** @var array */
     public $onDelete = [];
 
@@ -33,11 +37,12 @@ class StreetNumberGrid extends BaseControl
      * @param BaseGridFactory $baseGridFactory
      * @param EntityManager $entityManager
      */
-    public function __construct(StreetNumberRepository $streetNumberRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager)
+    public function __construct(StreetNumberRepository $streetNumberRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager, User $user)
     {
         $this->baseGridFactory = $baseGridFactory;
         $this->streetNumberRepository = $streetNumberRepository;
         $this->entityManager = $entityManager;
+        $this->user = $user;
     }
 
 
@@ -73,7 +78,7 @@ class StreetNumberGrid extends BaseControl
             ->setSortable()
             ->setFilterText();
 
-        if ($this->presenter->isAllowed('location', 'streetEdit'))
+        if ($this->user->isAllowed('location', 'streetEdit'))
         {
             $grid->addAction('edit', '')
                 ->setIcon('pencil')
@@ -81,7 +86,7 @@ class StreetNumberGrid extends BaseControl
                 ->setClass('btn btn-xs btn-primary');
         }
 
-        if ($this->presenter->isAllowed('location', 'streetDelete'))
+        if ($this->user->isAllowed('location', 'streetDelete'))
         {
             $grid->addAction('delete', '', 'delete!')
                 ->setIcon('trash')

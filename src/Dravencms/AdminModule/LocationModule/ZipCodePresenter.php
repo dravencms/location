@@ -13,6 +13,7 @@ use Dravencms\AdminModule\Components\Location\ZipCodeForm\ZipCodeFormFactory;
 use Dravencms\AdminModule\Components\Location\ZipCodeGrid\ZipCodeGrid;
 use Dravencms\AdminModule\Components\Location\ZipCodeGrid\ZipCodeGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
+use Dravencms\Flash;
 use Dravencms\Model\Location\Entities\ZipCode;
 use Dravencms\Model\Location\Repository\CityRepository;
 use Dravencms\Model\Location\Repository\ZipCodeRepository;
@@ -49,10 +50,10 @@ class ZipCodePresenter extends SecuredPresenter
     }
 
     /**
-     * @param integer $id
+     * @param integer|null $id
      * @isAllowed(location,zipCodeEdit)
      */
-    public function actionEdit(int $id): void
+    public function actionEdit(int $id = null): void
     {
         if ($id) {
             $zipCode = $this->userCountryRepository->getOneById($id);
@@ -74,7 +75,7 @@ class ZipCodePresenter extends SecuredPresenter
         $control = $this->userZipCodeGridFactory->create();
         $control->onDelete[] = function()
         {
-            $this->flashMessage('Zip Code has been successfully deleted', 'alert-success');
+            $this->flashMessage('Zip Code has been successfully deleted', Flash::SUCCESS);
             $this->redirect('ZipCode:');
         };
         return $control;
@@ -87,7 +88,7 @@ class ZipCodePresenter extends SecuredPresenter
     {
         $control = $this->userZipCodeFormFactory->create($this->userZipCodeFormEntity);
         $control->onSuccess[] = function(){
-            $this->flashMessage('PSČ bylo úspěšně uloženo', 'alert-success');
+            $this->flashMessage('PSČ bylo úspěšně uloženo', Flash::SUCCESS);
             $this->redirect('ZipCode:');
         };
         return $control;

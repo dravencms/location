@@ -13,6 +13,7 @@ use Dravencms\AdminModule\Components\Location\CityForm\CityFormFactory;
 use Dravencms\AdminModule\Components\Location\CityGrid\CityGrid;
 use Dravencms\AdminModule\Components\Location\CityGrid\CityGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
+use Dravencms\Flash;
 use Dravencms\Model\Location\Entities\City;
 use Dravencms\Model\Location\Repository\CityRepository;
 
@@ -44,11 +45,11 @@ class CityPresenter extends SecuredPresenter
     }
 
     /**
-     * @param  integer $id
+     * @param  integer|null $id
      * @isAllowed(location, cityEdit)
      * @throws \Exception
      */
-    public function actionEdit(int $id): void
+    public function actionEdit(int $id = null): void
     {
         if ($id) {
             $city = $this->userCityRepository->getOneById($id);
@@ -71,7 +72,7 @@ class CityPresenter extends SecuredPresenter
         $control = $this->userCityGridFactory->create();
         $control->onDelete[] = function()
         {
-            $this->flashMessage('City has been successfuly deleted', 'alert-success');
+            $this->flashMessage('City has been successfuly deleted', Flash::SUCCESS);
             $this->redirect('City:');
         };
         return $control;
@@ -85,7 +86,7 @@ class CityPresenter extends SecuredPresenter
         $control = $this->userCityFormFactory->create($this->userCityFormEntity);
         $control->onSuccess[] = function()
         {
-            $this->flashMessage('City has been successfuly saved', 'alert-success');
+            $this->flashMessage('City has been successfuly saved', Flash::SUCCESS);
             $this->redirect('City:');
         };
         return $control;

@@ -2,13 +2,14 @@
 
 namespace Dravencms\AdminModule\Components\Location\CountryForm;
 
-use Dravencms\Components\BaseForm\BaseForm;
+
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\Country;
 use Dravencms\Model\Location\Repository\CountryRepository;
 use Dravencms\Database\EntityManager;
 use Dravencms\Components\BaseControl\BaseControl;
-use Nette\Application\UI\Form;
+use Dravencms\Components\BaseForm\Form;
+use Nette\Security\User;
 
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
@@ -24,6 +25,9 @@ class CountryForm extends BaseControl
     /** @var CountryRepository */
     private $countryRepository;
 
+    /** @var User */
+    private $user;
+
     /** @var EntityManager */
     private $entityManager;
 
@@ -33,12 +37,14 @@ class CountryForm extends BaseControl
         BaseFormFactory $baseFormFactory,
         CountryRepository $streetRepository,
         EntityManager $entityManager,
+        User $user,
         Country $country = null
     ) {
         $this->country = $country;
         $this->baseFormFactory = $baseFormFactory;
         $this->countryRepository = $streetRepository;
         $this->entityManager = $entityManager;
+        $this->user = $user;
 
         if ($this->country)
         {
@@ -50,9 +56,9 @@ class CountryForm extends BaseControl
     }
 
     /**
-     * @return BaseForm
+     * @return Form
      */
-    public function createComponentForm(): BaseForm
+    public function createComponentForm(): Form
     {
         $form = $this->baseFormFactory->create();
 
@@ -71,7 +77,6 @@ class CountryForm extends BaseControl
 
     /**
      * @param Form $form
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function onValidateForm(Form $form): void
     {
@@ -88,7 +93,7 @@ class CountryForm extends BaseControl
         }
 
         //Kontrola opraveni
-        if (!$this->presenter->isAllowed('location', 'countryEdit')) {
+        if (!$this->user->isAllowed('location', 'countryEdit')) {
             $form->addError('Nemáte oprávění editovat zeme.');
         }
     }

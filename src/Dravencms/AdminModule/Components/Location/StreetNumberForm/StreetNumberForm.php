@@ -3,13 +3,13 @@
 namespace Dravencms\AdminModule\Components\Location\StreetNumberForm;
 
 use Dravencms\Components\BaseControl\BaseControl;
-use Dravencms\Components\BaseForm\BaseForm;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\StreetNumber;
 use Dravencms\Model\Location\Repository\StreetNumberRepository;
 use Dravencms\Model\Location\Repository\StreetRepository;
 use Dravencms\Database\EntityManager;
-use Nette\Application\UI\Form;
+use Dravencms\Components\BaseForm\Form;
+use Nette\Security\User;
 
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
@@ -31,14 +31,18 @@ class StreetNumberForm extends BaseControl
     /** @var EntityManager */
     private $entityManager;
 
+    /** @var User */
+    private $user;
+
     public $onSuccess = [];
 
     /**
-     * StreetForm constructor.
+     * StreetNumberForm constructor.
      * @param BaseFormFactory $baseFormFactory
      * @param StreetNumberRepository $streetNumberRepository
      * @param StreetRepository $streetRepository
      * @param EntityManager $entityManager
+     * @param User $user
      * @param StreetNumber|null $streetNumber
      */
     public function __construct(
@@ -46,6 +50,7 @@ class StreetNumberForm extends BaseControl
         StreetNumberRepository $streetNumberRepository,
         StreetRepository $streetRepository,
         EntityManager $entityManager,
+        User $user,
         StreetNumber $streetNumber = null
     ) {
         $this->streetNumber = $streetNumber;
@@ -53,6 +58,7 @@ class StreetNumberForm extends BaseControl
         $this->streetNumberRepository = $streetNumberRepository;
         $this->streetRepository = $streetRepository;
         $this->entityManager = $entityManager;
+        $this->user = $user;
 
         if ($this->streetNumber)
         {
@@ -64,9 +70,9 @@ class StreetNumberForm extends BaseControl
     }
 
     /**
-     * @return BaseForm
+     * @return Form
      */
-    public function createComponentForm(): BaseForm
+    public function createComponentForm(): Form
     {
         $form = $this->baseFormFactory->create();
 
@@ -88,7 +94,6 @@ class StreetNumberForm extends BaseControl
 
     /**
      * @param Form $form
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function onValidateForm(Form $form): void
     {
@@ -102,7 +107,7 @@ class StreetNumberForm extends BaseControl
         }
 
         //Kontrola opraveni
-        if (!$this->presenter->isAllowed('location', 'streetEdit')) {
+        if (!$this->user->isAllowed('location', 'streetEdit')) {
             $form->addError('Nemáte oprávění editovat číslo ulice.');
         }
     }

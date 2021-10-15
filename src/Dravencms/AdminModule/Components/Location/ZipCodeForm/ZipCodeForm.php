@@ -3,13 +3,13 @@
 namespace Dravencms\AdminModule\Components\Location\ZipCodeForm;
 
 use Dravencms\Components\BaseControl\BaseControl;
-use Dravencms\Components\BaseForm\BaseForm;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\ZipCode;
 use Dravencms\Model\Location\Repository\CityRepository;
 use Dravencms\Model\Location\Repository\ZipCodeRepository;
 use Dravencms\Database\EntityManager;
-use Nette\Application\UI\Form;
+use Dravencms\Components\BaseForm\Form;
+use Nette\Security\User;
 
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
@@ -31,6 +31,9 @@ class ZipCodeForm extends BaseControl
     /** @var EntityManager */
     private $entityManager;
 
+    /** @var User */
+    private $user;
+
     public $onSuccess = [];
 
     /**
@@ -39,6 +42,7 @@ class ZipCodeForm extends BaseControl
      * @param ZipCodeRepository $streetRepository
      * @param CityRepository $zipCodeRepository
      * @param EntityManager $entityManager
+     * @param User $user
      * @param ZipCode|null $zipCode
      */
     public function __construct(
@@ -46,6 +50,7 @@ class ZipCodeForm extends BaseControl
         ZipCodeRepository $streetRepository,
         CityRepository $zipCodeRepository,
         EntityManager $entityManager,
+        User $user,
         ZipCode $zipCode = null
     ) {
         $this->zipCode = $zipCode;
@@ -53,6 +58,7 @@ class ZipCodeForm extends BaseControl
         $this->zipCodeRepository = $streetRepository;
         $this->cityRepository = $zipCodeRepository;
         $this->entityManager = $entityManager;
+        $this->user = $user;
 
         if ($this->zipCode)
         {
@@ -64,9 +70,9 @@ class ZipCodeForm extends BaseControl
     }
 
     /**
-     * @return BaseForm
+     * @return Form
      */
-    public function createComponentForm(): BaseForm
+    public function createComponentForm(): Form
     {
         $form = $this->baseFormFactory->create();
 
@@ -98,7 +104,7 @@ class ZipCodeForm extends BaseControl
         }
 
         //Kontrola opraveni
-        if (!$this->presenter->isAllowed('location', 'zipCodeEdit')) {
+        if (!$this->user->isAllowed('location', 'zipCodeEdit')) {
             $form->addError('Nemáte oprávění editovat zip code.');
         }
     }

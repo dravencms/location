@@ -13,6 +13,7 @@ use Dravencms\AdminModule\Components\Location\StreetNumberForm\StreetNumberFormF
 use Dravencms\AdminModule\Components\Location\StreetNumberGrid\StreetNumberGrid;
 use Dravencms\AdminModule\Components\Location\StreetNumberGrid\StreetNumberGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
+use Dravencms\Flash;
 use Dravencms\Model\Location\Entities\StreetNumber;
 use Dravencms\Model\Location\Repository\StreetNumberRepository;
 
@@ -44,11 +45,11 @@ class StreetNumberPresenter extends SecuredPresenter
     }
 
     /**
-     * @param integer $id
+     * @param integer|null $id
      * @isAllowed(location,streetEdit)
      * @throws \Exception
      */
-    public function actionEdit(int $id): void
+    public function actionEdit(int $id = null): void
     {
         if ($id) {
             $streetNumber = $this->userStreetNumberRepository->getOneById($id);
@@ -69,7 +70,7 @@ class StreetNumberPresenter extends SecuredPresenter
     {
         $control = $this->userStreetNumberGridFactory->create();
         $control->onDelete[] = function(){
-            $this->flashMessage('Street number has been successfully deleted', 'alert-success');
+            $this->flashMessage('Street number has been successfully deleted', Flash::SUCCESS);
             $this->redirect('StreetNumber:');
         };
         return $control;
@@ -83,7 +84,7 @@ class StreetNumberPresenter extends SecuredPresenter
         $component = $this->userStreetNumberFormFactory->create($this->streetNumber);
         $component->onSuccess[] = function()
         {
-            $this->flashMessage('Street number byla úspěšně uložena', 'alert-success');
+            $this->flashMessage('Street number byla úspěšně uložena', Flash::SUCCESS);
             $this->redirect('StreetNumber:');
         };
         return $component;

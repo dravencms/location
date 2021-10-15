@@ -9,7 +9,8 @@ use Dravencms\Model\Location\Entities\City;
 use Dravencms\Model\Location\Repository\CityRepository;
 use Dravencms\Model\Location\Repository\CountryRepository;
 use Dravencms\Database\EntityManager;
-use Nette\Application\UI\Form;
+use Dravencms\Components\BaseForm\Form;
+use Nette\Security\User;
 
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
@@ -31,6 +32,9 @@ class CityForm extends BaseControl
     /** @var EntityManager */
     private $entityManager;
 
+    /** @var User */
+    private $user;
+
     public $onSuccess = [];
 
     public function __construct(
@@ -38,6 +42,7 @@ class CityForm extends BaseControl
         CityRepository $cityRepository,
         CountryRepository $countryRepository,
         EntityManager $entityManager,
+        User $user,
         City $city = null
     ) {
         $this->city = $city;
@@ -45,6 +50,7 @@ class CityForm extends BaseControl
         $this->cityRepository = $cityRepository;
         $this->countryRepository = $countryRepository;
         $this->entityManager = $entityManager;
+        $this->user = $user;
 
         if ($this->city)
         {
@@ -55,7 +61,7 @@ class CityForm extends BaseControl
         }
     }
 
-    public function createComponentForm(): BaseForm
+    public function createComponentForm(): Form
     {
         $form = $this->baseFormFactory->create();
 
@@ -74,7 +80,6 @@ class CityForm extends BaseControl
 
     /**
      * @param Form $form
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function onValidateForm(Form $form): void
     {
@@ -88,7 +93,7 @@ class CityForm extends BaseControl
         }
         
         //Kontrola opraveni
-        if (!$this->presenter->isAllowed('location', 'cityEdit')) {
+        if (!$this->user->isAllowed('location', 'cityEdit')) {
             $form->addError('Nemáte oprávění editovat mesta.');
         }
     }

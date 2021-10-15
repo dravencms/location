@@ -26,6 +26,8 @@ use Dravencms\Model\Location\Repository\RegionRepository;
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Database\EntityManager;
+use Nette\Security\User;
+use Ublaboo\DataGrid\Column\Action\Confirmation\StringConfirmation;
 
 /**
  * Description of CompanyGrid
@@ -42,6 +44,9 @@ class RegionGrid extends BaseControl
 
     /** @var EntityManager */
     private $entityManager;
+
+    /** @var User */
+    private $user;
     
     /**
      * @var array
@@ -54,11 +59,12 @@ class RegionGrid extends BaseControl
      * @param BaseGridFactory $baseGridFactory
      * @param EntityManager $entityManager
      */
-    public function __construct(RegionRepository $regionRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager)
+    public function __construct(RegionRepository $regionRepository, BaseGridFactory $baseGridFactory, EntityManager $entityManager, User $user)
     {
         $this->baseGridFactory = $baseGridFactory;
         $this->regionRepository = $regionRepository;
         $this->entityManager = $entityManager;
+        $this->user = $user;
     }
 
 
@@ -82,7 +88,7 @@ class RegionGrid extends BaseControl
 
         $grid->addColumnPosition('position', 'Position');
 
-        if ($this->presenter->isAllowed('location', 'regionEdit'))
+        if ($this->user->isAllowed('location', 'regionEdit'))
         {
             $grid->addAction('edit', '')
                 ->setIcon('pencil')
@@ -90,13 +96,13 @@ class RegionGrid extends BaseControl
                 ->setClass('btn btn-xs btn-primary');
         }
 
-        if ($this->presenter->isAllowed('location', 'regionDelete'))
+        if ($this->user->isAllowed('location', 'regionDelete'))
         {
             $grid->addAction('delete', '', 'delete!')
                 ->setIcon('trash')
                 ->setTitle('Smazat')
                 ->setClass('btn btn-xs btn-danger ajax')
-                ->setConfirm('Do you really want to delete row %s?', 'name');
+                ->setConfirmation(new StringConfirmation('Do you really want to delete row %s?', 'name'));
 
             $grid->allowRowsAction('delete', function($item) {
                 return (count($item->getCities()) == 0);

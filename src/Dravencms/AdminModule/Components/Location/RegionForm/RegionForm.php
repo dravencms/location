@@ -23,13 +23,12 @@ namespace Dravencms\AdminModule\Components\Location\RegionForm;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Dravencms\Components\BaseControl\BaseControl;
-use Dravencms\Components\BaseForm\BaseForm;
 use Dravencms\Model\Location\Entities\Region;
 use Dravencms\Model\Location\Repository\RegionRepository;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Repository\CityRepository;
 use Dravencms\Database\EntityManager;
-use Nette\Application\UI\Form;
+use Dravencms\Components\BaseForm\Form;
 
 
 /**
@@ -97,9 +96,9 @@ class RegionForm extends BaseControl
     }
 
     /**
-     * @return BaseForm
+     * @return Form
      */
-    protected function createComponentForm(): BaseForm
+    protected function createComponentForm(): Form
     {
         $form = $this->baseFormFactory->create();
 
@@ -127,7 +126,6 @@ class RegionForm extends BaseControl
 
     /**
      * @param Form $form
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function editFormValidate(Form $form): void
     {

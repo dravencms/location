@@ -13,6 +13,7 @@ use Dravencms\AdminModule\Components\Location\CountryForm\CountryFormFactory;
 use Dravencms\AdminModule\Components\Location\CountryGrid\CountryGrid;
 use Dravencms\AdminModule\Components\Location\CountryGrid\CountryGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
+use Dravencms\Flash;
 use Dravencms\Model\Location\Entities\Country;
 use Dravencms\Model\Location\Repository\CountryRepository;
 
@@ -45,10 +46,10 @@ class CountryPresenter extends SecuredPresenter
     }
 
     /**
-     * @param integer $id
+     * @param integer|null $id
      * @isAllowed(location,countryEdit)
      */
-    public function actionEdit(int $id): void
+    public function actionEdit(int $id = null): void
     {
         if ($id) {
             $country = $this->userCountryRepository->getOneById($id);
@@ -70,7 +71,7 @@ class CountryPresenter extends SecuredPresenter
         $control = $this->userCountryGridFactory->create();
         $control->onDelete[] = function()
         {
-            $this->flashMessage('Country has been successfully deleted', 'alert-success');
+            $this->flashMessage('Country has been successfully deleted', Flash::SUCCESS);
             $this->redirect('Country:');
         };
         return $control;
@@ -83,7 +84,7 @@ class CountryPresenter extends SecuredPresenter
     {
         $control = $this->userCountryFormFactory->create($this->userCountryFormEntity);
         $control->onSuccess[] = function(){
-            $this->flashMessage('Stát bylo úspěšně uložen', 'alert-success');
+            $this->flashMessage('Stát byl úspěšně uložen', Flash::SUCCESS);
             $this->redirect('Country:');
         };
         return $control;
