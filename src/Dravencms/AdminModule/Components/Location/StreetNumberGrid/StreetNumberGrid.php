@@ -13,6 +13,7 @@ use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\StreetNumberRepository;
 use Dravencms\Database\EntityManager;
 use Nette\Security\User;
+use Ublaboo\DataGrid\Column\Action\Confirmation\StringConfirmation;
 
 class StreetNumberGrid extends BaseControl
 {
@@ -92,7 +93,7 @@ class StreetNumberGrid extends BaseControl
                 ->setIcon('trash')
                 ->setTitle('Smazat')
                 ->setClass('btn btn-xs btn-danger ajax')
-                ->setConfirm('Do you really want to delete row %s?', 'name');
+                ->setConfirmation(new StringConfirmation('Do you really want to delete row %s?', 'name'));
 
             $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'gridGroupActionDelete'];
         }
