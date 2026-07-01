@@ -16,6 +16,7 @@ use Nette\Security\User;
  */
 class ZipCodeForm extends BaseControl
 {
+
     /** @var ZipCode|null */
     private $zipCode = null;
 
@@ -59,14 +60,6 @@ class ZipCodeForm extends BaseControl
         $this->cityRepository = $zipCodeRepository;
         $this->entityManager = $entityManager;
         $this->user = $user;
-
-        if ($this->zipCode)
-        {
-            $this['form']->setDefaults([
-                'name' => $this->zipCode->getName(),
-                'city' => $this->zipCode->getCity()->getId()
-            ]);
-        }
     }
 
     /**
@@ -85,6 +78,13 @@ class ZipCodeForm extends BaseControl
 
         $form->onValidate[] = [$this, 'onValidateForm'];
         $form->onSuccess[] = [$this, 'onSuccessForm'];
+        if ($this->zipCode) {
+            $form->setDefaults([
+                'name' => $this->zipCode->getName(),
+                'city' => $this->zipCode->getCity()->getId(),
+            ]);
+        }
+
         return $form;
     }
 

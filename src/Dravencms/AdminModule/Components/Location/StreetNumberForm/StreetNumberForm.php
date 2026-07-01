@@ -16,6 +16,7 @@ use Nette\Security\User;
  */
 class StreetNumberForm extends BaseControl
 {
+
     /** @var StreetNumber|null */
     private $streetNumber = null;
 
@@ -59,14 +60,6 @@ class StreetNumberForm extends BaseControl
         $this->streetRepository = $streetRepository;
         $this->entityManager = $entityManager;
         $this->user = $user;
-
-        if ($this->streetNumber)
-        {
-            $this['form']->setDefaults([
-                'name' => $this->streetNumber->getName(),
-                'street' => $this->streetNumber->getStreet()->getId()
-            ]);
-        }
     }
 
     /**
@@ -89,6 +82,13 @@ class StreetNumberForm extends BaseControl
 
         $form->onValidate[] = [$this, 'onValidateForm'];
         $form->onSuccess[] = [$this, 'onSuccessForm'];
+        if ($this->streetNumber) {
+            $form->setDefaults([
+                'name' => $this->streetNumber->getName(),
+                'street' => $this->streetNumber->getStreet()->getId(),
+            ]);
+        }
+
         return $form;
     }
 

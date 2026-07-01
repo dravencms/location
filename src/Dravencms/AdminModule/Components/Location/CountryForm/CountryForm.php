@@ -16,6 +16,7 @@ use Nette\Security\User;
  */
 class CountryForm extends BaseControl
 {
+
     /** @var Country|null */
     private $country = null;
 
@@ -45,14 +46,6 @@ class CountryForm extends BaseControl
         $this->countryRepository = $streetRepository;
         $this->entityManager = $entityManager;
         $this->user = $user;
-
-        if ($this->country)
-        {
-            $this['form']->setDefaults([
-                'name' => $this->country->getName(),
-                'code' => $this->country->getCode()
-            ]);
-        }
     }
 
     /**
@@ -72,6 +65,13 @@ class CountryForm extends BaseControl
 
         $form->onValidate[] = [$this, 'onValidateForm'];
         $form->onSuccess[] = [$this, 'onSuccessForm'];
+        if ($this->country) {
+            $form->setDefaults([
+                'name' => $this->country->getName(),
+                'code' => $this->country->getCode(),
+            ]);
+        }
+
         return $form;
     }
 

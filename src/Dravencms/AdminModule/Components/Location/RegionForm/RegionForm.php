@@ -38,6 +38,7 @@ use Dravencms\Components\BaseForm\Form;
  */
 class RegionForm extends BaseControl
 {
+
     /** @var BaseFormFactory */
     private $baseFormFactory;
 
@@ -70,29 +71,6 @@ class RegionForm extends BaseControl
         $this->regionRepository = $regionRepository;
         $this->cityRepository = $cityRepository;
         $this->region = $region;
-
-        if ($this->region) {
-
-            $cities = [];
-            
-            foreach ($this->region->getCities() AS $city)
-            {
-                $cities[] = $city->getId();
-            }
-
-            $default = [
-                'name' => $this->region->getName(),
-                'isActive' => $this->region->isActive(),
-                'cities' => $cities
-            ];
-
-        } else {
-            $default = [
-                'isActive' => true
-            ];
-        }
-
-        $this['form']->setDefaults($default);
     }
 
     /**
@@ -120,6 +98,24 @@ class RegionForm extends BaseControl
 
         $form->onValidate[] = [$this, 'editFormValidate'];
         $form->onSuccess[] = [$this, 'editFormSucceeded'];
+
+        if ($this->region) {
+            $selectedCities = [];
+            foreach ($this->region->getCities() as $city) {
+                $selectedCities[] = $city->getId();
+            }
+
+            $form->setDefaults([
+                'name' => $this->region->getName(),
+                'isActive' => $this->region->isActive(),
+                'cities' => $selectedCities,
+            ]);
+        } else {
+            $form->setDefaults([
+                'isActive' => true,
+            ]);
+        }
+
 
         return $form;
     }

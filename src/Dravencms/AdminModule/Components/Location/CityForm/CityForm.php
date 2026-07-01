@@ -17,6 +17,7 @@ use Nette\Security\User;
  */
 class CityForm extends BaseControl
 {
+
     /** @var City|null */
     private $city = null;
 
@@ -51,14 +52,6 @@ class CityForm extends BaseControl
         $this->countryRepository = $countryRepository;
         $this->entityManager = $entityManager;
         $this->user = $user;
-
-        if ($this->city)
-        {
-            $this['form']->setDefaults([
-                'name' => $this->city->getName(),
-                'country' => $this->city->getCountry()->getId()
-            ]);
-        }
     }
 
     public function createComponentForm(): Form
@@ -75,6 +68,13 @@ class CityForm extends BaseControl
 
         $form->onValidate[] = [$this, 'onValidateForm'];
         $form->onSuccess[] = [$this, 'onSuccessForm'];
+        if ($this->city) {
+            $form->setDefaults([
+                'name' => $this->city->getName(),
+                'country' => $this->city->getCountry()->getId(),
+            ]);
+        }
+
         return $form;
     }
 

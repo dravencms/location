@@ -17,6 +17,7 @@ use Nette\Security\User;
  */
 class StreetForm extends BaseControl
 {
+
     /** @var Street|null */
     private $street = null;
 
@@ -66,14 +67,6 @@ class StreetForm extends BaseControl
         $this->zipCodeRepository = $zipCodeRepository;
         $this->entityManager = $entityManager;
         $this->user = $user;
-
-        if ($this->street)
-        {
-            $this['form']->setDefaults([
-                'name' => $this->street->getName(),
-                'zipCode' => $this->street->getZipCode()->getId()
-            ]);
-        }
     }
 
     /**
@@ -100,6 +93,13 @@ class StreetForm extends BaseControl
 
         $form->onValidate[] = [$this, 'onValidateForm'];
         $form->onSuccess[] = [$this, 'onSuccessForm'];
+        if ($this->street) {
+            $form->setDefaults([
+                'name' => $this->street->getName(),
+                'zipCode' => $this->street->getZipCode()->getId(),
+            ]);
+        }
+
         return $form;
     }
 
