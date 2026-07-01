@@ -8,6 +8,8 @@
 namespace Dravencms\AdminModule\LocationModule;
 
 
+
+use Dravencms\User\Attributes\IsAllowed;
 use Dravencms\AdminModule\Components\Location\StreetForm\StreetForm;
 use Dravencms\AdminModule\Components\Location\StreetForm\StreetFormFactory;
 use Dravencms\AdminModule\Components\Location\StreetGrid\StreetGrid;
@@ -40,9 +42,7 @@ class StreetPresenter extends SecuredPresenter
     /** @var Street|null */
     private $streetFormEntity = null;
 
-    /**
-     * @isAllowed(location,streetEdit)
-     */
+    #[IsAllowed('location', 'streetEdit')]
     public function actionDefault(): void
     {
         $this->template->h1 = 'Přehled ulic';
@@ -50,10 +50,12 @@ class StreetPresenter extends SecuredPresenter
 
     /**
      * @param integer|null $id
-     * @isAllowed(location,streetEdit)
+     */
+    /**
      * @throws \Exception
      */
-    public function actionEdit(int $id = null): void
+    #[IsAllowed('location', 'streetEdit')]
+    public function actionEdit(?int $id = null): void
     {
         if ($id) {
             $street = $this->userStreetNumberRepository->getOneById($id);

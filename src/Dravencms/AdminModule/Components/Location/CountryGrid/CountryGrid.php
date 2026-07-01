@@ -7,13 +7,15 @@
 
 namespace Dravencms\AdminModule\Components\Location\CountryGrid;
 
+
+use Dravencms\User\Attributes\IsAllowed;
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\CountryRepository;
 use Dravencms\Database\EntityManager;
 use Nette\Security\User;
-use Ublaboo\DataGrid\Column\Action\Confirmation\StringConfirmation;
+use Contributte\Datagrid\Column\Action\Confirmation\StringConfirmation;
 
 class CountryGrid extends BaseControl
 {
@@ -51,7 +53,7 @@ class CountryGrid extends BaseControl
     /**
      * @param string $name
      * @return Grid
-     * @throws \Ublaboo\DataGrid\Exception\DataGridException
+     * @throws \Contributte\Datagrid\Exception\DatagridException
      */
     protected function createComponentGrid(string $name): Grid
     {
@@ -106,8 +108,8 @@ class CountryGrid extends BaseControl
 
     /**
      * @param integer|array $id
-     * @isAllowed(user,countryDelete)
      */
+    #[IsAllowed('user', 'countryDelete')]
     public function handleDelete($id): void
     {
         $countries = $this->countryRepository->getById($id);

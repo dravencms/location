@@ -7,13 +7,15 @@
 
 namespace Dravencms\AdminModule\Components\Location\StreetGrid;
 
+
+use Dravencms\User\Attributes\IsAllowed;
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\StreetRepository;
 use Dravencms\Database\EntityManager;
 use Nette\Security\User;
-use Ublaboo\DataGrid\Column\Action\Confirmation\StringConfirmation;
+use Contributte\Datagrid\Column\Action\Confirmation\StringConfirmation;
 
 class StreetGrid extends BaseControl
 {
@@ -51,7 +53,7 @@ class StreetGrid extends BaseControl
     /**
      * @param $name
      * @return Grid
-     * @throws \Ublaboo\DataGrid\Exception\DataGridException
+     * @throws \Contributte\Datagrid\Exception\DatagridException
      */
     protected function createComponentGrid($name): Grid
     {
@@ -114,8 +116,8 @@ class StreetGrid extends BaseControl
 
     /**
      * @param integer|array $id
-     * @isAllowed(user,streetDelete)
      */
+    #[IsAllowed('user', 'streetDelete')]
     public function handleDelete($id): void
     {
         $streets = $this->streetRepository->getById($id);

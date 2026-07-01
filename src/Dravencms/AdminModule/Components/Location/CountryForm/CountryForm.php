@@ -38,7 +38,7 @@ class CountryForm extends BaseControl
         CountryRepository $streetRepository,
         EntityManager $entityManager,
         User $user,
-        Country $country = null
+        ?Country $country = null
     ) {
         $this->country = $country;
         $this->baseFormFactory = $baseFormFactory;

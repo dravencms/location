@@ -51,7 +51,7 @@ class StreetNumberForm extends BaseControl
         StreetRepository $streetRepository,
         EntityManager $entityManager,
         User $user,
-        StreetNumber $streetNumber = null
+        ?StreetNumber $streetNumber = null
     ) {
         $this->streetNumber = $streetNumber;
         $this->baseFormFactory = $baseFormFactory;

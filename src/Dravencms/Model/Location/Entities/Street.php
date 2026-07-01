@@ -5,7 +5,7 @@ namespace Dravencms\Model\Location\Entities;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Dravencms\Database\Attributes\TimestampableEntity;
 use Dravencms\Database\Attributes\Identifier;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Nette;
@@ -13,9 +13,9 @@ use Nette;
 /**
  * Class Street
  * @package App\Model\Entities
- * @ORM\Entity
- * @ORM\Table(name="locationStreet", uniqueConstraints={@UniqueConstraint(name="name_zip_code_id", columns={"name", "zip_code_id"})})
  */
+#[ORM\Entity]
+#[ORM\Table(name: "locationStreet", uniqueConstraints: [new ORM\UniqueConstraint(name: "name_zip_code_id", columns: ["name", "zip_code_id"])])]
 class Street
 {
     use Nette\SmartObject;
@@ -24,21 +24,21 @@ class Street
 
     /**
      * @var ZipCode
-     * @ORM\ManyToOne(targetEntity="ZipCode", inversedBy="streets")
-     * @ORM\JoinColumn(name="zip_code_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: "ZipCode", inversedBy: "streets")]
+    #[ORM\JoinColumn(name: "zip_code_id", referencedColumnName: "id")]
     private $zipCode;
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=255,nullable=false)
      */
+    #[ORM\Column(type: "string", length: 255, nullable: false)]
     private $name;
     
     /**
      * @var ArrayCollection|StreetNumber[]
-     * @ORM\OneToMany(targetEntity="StreetNumber", mappedBy="street",cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: "StreetNumber", mappedBy: "street", cascade: ["persist"])]
     private $streetNumbers;
 
     /**

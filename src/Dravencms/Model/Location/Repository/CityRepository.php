@@ -79,16 +79,14 @@ class CityRepository
      * @param City|null $ignoreCity
      * @return bool
      */
-    public function isCityNameFree(string $name, Country $country, City $ignoreCity = null): bool
+    public function isCityNameFree(string $name, Country $country, ?City $ignoreCity = null): bool
     {
         $qb = $this->cityRepository->createQueryBuilder('c')
             ->select('c')
             ->where('c.name = :name')
             ->andWhere('c.country = :country')
-            ->setParameters([
-                'name' => $name,
-                'country' => $country
-            ]);
+            ->setParameter('name', $name)
+            ->setParameter('country', $country);
 
         if ($ignoreCity)
         {
@@ -104,7 +102,7 @@ class CityRepository
      * @param Country|null $country
      * @return City[]
      */
-    public function findByName(string $name, Country $country = null): array
+    public function findByName(string $name, ?Country $country = null): array
     {
         $qb = $this->cityRepository->createQueryBuilder('c')
             ->select('c')
@@ -126,7 +124,7 @@ class CityRepository
      * @param Country|null $country
      * @return null|City
      */
-    public function getOneByName(string $name, Country $country = null): ?City
+    public function getOneByName(string $name, ?Country $country = null): ?City
     {
         $criteria = ['name' => $name];
         if (!is_null($country))
@@ -142,7 +140,7 @@ class CityRepository
      * @param Country|null $country
      * @return City|null
      */
-    public function getOneBySlug(string $slug, Region $region = null, Country $country = null): ?City
+    public function getOneBySlug(string $slug, ?Region $region = null, ?Country $country = null): ?City
     {
         $criteria = ['slug' => $slug];
         if (!is_null($region))

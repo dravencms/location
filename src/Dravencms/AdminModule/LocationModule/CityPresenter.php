@@ -8,6 +8,8 @@
 namespace Dravencms\AdminModule\LocationModule;
 
 
+
+use Dravencms\User\Attributes\IsAllowed;
 use Dravencms\AdminModule\Components\Location\CityForm\CityForm;
 use Dravencms\AdminModule\Components\Location\CityForm\CityFormFactory;
 use Dravencms\AdminModule\Components\Location\CityGrid\CityGrid;
@@ -36,9 +38,7 @@ class CityPresenter extends SecuredPresenter
     /** @var City|null */
     private $userCityFormEntity = null;
     
-    /**
-     * @isAllowed(location, cityEdit)
-     */
+    #[IsAllowed('location', 'cityEdit')]
     public function actionDefault(): void
     {
         $this->template->h1 = 'Přehled měst';
@@ -46,10 +46,12 @@ class CityPresenter extends SecuredPresenter
 
     /**
      * @param  integer|null $id
-     * @isAllowed(location, cityEdit)
+     */
+    /**
      * @throws \Exception
      */
-    public function actionEdit(int $id = null): void
+    #[IsAllowed('location', 'cityEdit')]
+    public function actionEdit(?int $id = null): void
     {
         if ($id) {
             $city = $this->userCityRepository->getOneById($id);

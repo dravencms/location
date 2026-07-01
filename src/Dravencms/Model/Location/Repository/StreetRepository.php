@@ -62,16 +62,14 @@ class StreetRepository
      * @param Street|null $ignoreStreet
      * @return bool
      */
-    public function isStreetNameFree(string $name, ZipCode $zipCode, Street $ignoreStreet = null): bool
+    public function isStreetNameFree(string $name, ZipCode $zipCode, ?Street $ignoreStreet = null): bool
     {
         $qb = $this->streetRepository->createQueryBuilder('s')
             ->select('s')
             ->where('s.name = :name')
             ->andWhere('s.zipCode = :zipCode')
-            ->setParameters([
-                'name' => $name,
-                'zipCode' => $zipCode
-            ]);
+            ->setParameter('name', $name)
+            ->setParameter('zipCode', $zipCode);
 
         if ($ignoreStreet)
         {
@@ -95,7 +93,7 @@ class StreetRepository
      * @param ZipCode|null $zipCode
      * @return Street[]
      */
-    public function findByName(string $name, ZipCode $zipCode = null)
+    public function findByName(string $name, ?ZipCode $zipCode = null)
     {
         $qb = $this->streetRepository->createQueryBuilder('s')
             ->select('s')
@@ -117,7 +115,7 @@ class StreetRepository
      * @param ZipCode $zipCode
      * @return null|Street
      */
-    public function getOneByName(string $name, ZipCode $zipCode = null): ?Street
+    public function getOneByName(string $name, ?ZipCode $zipCode = null): ?Street
     {
         $criteria = ['name' => $name];
         if (!is_null($zipCode))

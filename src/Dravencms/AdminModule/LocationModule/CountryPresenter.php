@@ -8,6 +8,8 @@
 namespace Dravencms\AdminModule\LocationModule;
 
 
+
+use Dravencms\User\Attributes\IsAllowed;
 use Dravencms\AdminModule\Components\Location\CountryForm\CountryForm;
 use Dravencms\AdminModule\Components\Location\CountryForm\CountryFormFactory;
 use Dravencms\AdminModule\Components\Location\CountryGrid\CountryGrid;
@@ -37,9 +39,7 @@ class CountryPresenter extends SecuredPresenter
     private $userCountryFormEntity;
 
 
-    /**
-     * @isAllowed(location,countryEdit)
-     */
+    #[IsAllowed('location', 'countryEdit')]
     public function actionDefault(): void
     {
         $this->template->h1 = 'Přehled Států';
@@ -47,9 +47,9 @@ class CountryPresenter extends SecuredPresenter
 
     /**
      * @param integer|null $id
-     * @isAllowed(location,countryEdit)
      */
-    public function actionEdit(int $id = null): void
+    #[IsAllowed('location', 'countryEdit')]
+    public function actionEdit(?int $id = null): void
     {
         if ($id) {
             $country = $this->userCountryRepository->getOneById($id);

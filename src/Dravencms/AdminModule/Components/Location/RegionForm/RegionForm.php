@@ -62,7 +62,7 @@ class RegionForm extends BaseControl
         EntityManager $entityManager,
         RegionRepository $regionRepository,
         CityRepository $cityRepository,
-        Region $region = null
+        ?Region $region = null
     ) {
         $this->baseFormFactory = $baseFormFactory;
         $this->entityManager = $entityManager;

@@ -13,5 +13,5 @@ interface ZipCodeFormFactory
      * @param ZipCode|null $zipCode
      * @return ZipCodeForm
      */
-    public function create(ZipCode $zipCode = null): ZipCodeForm;
+    public function create(?ZipCode $zipCode = null): ZipCodeForm;
 }

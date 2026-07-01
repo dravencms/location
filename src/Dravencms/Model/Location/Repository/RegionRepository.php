@@ -67,14 +67,12 @@ class RegionRepository
      * @param Region|null $ignoreRegion
      * @return bool
      */
-    public function isNameFree(string $name, Region $ignoreRegion = null): bool
+    public function isNameFree(string $name, ?Region $ignoreRegion = null): bool
     {
         $qb = $this->regionRepository->createQueryBuilder('r')
             ->select('r')
             ->where('r.name = :name')
-            ->setParameters([
-                'name' => $name,
-            ]);
+            ->setParameter('name', $name);
 
         if ($ignoreRegion) {
             $qb->andWhere('r != :ignoreRegion')

@@ -13,5 +13,5 @@ interface StreetNumberFormFactory
      * @param StreetNumber|null $streetNumber
      * @return StreetNumberForm
      */
-    public function create(StreetNumber $streetNumber = null): StreetNumberForm;
+    public function create(?StreetNumber $streetNumber = null): StreetNumberForm;
 }

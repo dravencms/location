@@ -67,7 +67,7 @@ class ZipCodeRepository
      * @param ZipCode|null $ignoreZipCode
      * @return bool
      */
-    public function isZipCodeFree(string $name, Country $country, ZipCode $ignoreZipCode = null): bool
+    public function isZipCodeFree(string $name, Country $country, ?ZipCode $ignoreZipCode = null): bool
     {
         $qb = $this->zipCodeRepository->createQueryBuilder('z')
             ->select('z')
@@ -75,10 +75,8 @@ class ZipCodeRepository
             ->join('c.country', 'co')
             ->where('z.name = :name')
             ->andWhere('co = :country')
-            ->setParameters([
-                'name' => $name,
-                'country' => $country
-            ]);
+            ->setParameter('name', $name)
+            ->setParameter('country', $country);
 
         if ($ignoreZipCode)
         {
@@ -94,7 +92,7 @@ class ZipCodeRepository
      * @param City|null $city
      * @return ZipCode[]
      */
-    public function findByName(string $name, City $city = null)
+    public function findByName(string $name, ?City $city = null)
     {
         $qb = $this->zipCodeRepository->createQueryBuilder('z')
             ->select('z')
@@ -116,7 +114,7 @@ class ZipCodeRepository
      * @param City|null $city
      * @return null|ZipCode
      */
-    public function getOneByName(string $name, City $city = null): ?ZipCode
+    public function getOneByName(string $name, ?City $city = null): ?ZipCode
     {
         $criteria = ['name' => $name];
         if (!is_null($city))

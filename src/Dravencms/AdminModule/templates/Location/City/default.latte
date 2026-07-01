@@ -1,5 +1,5 @@
 {block #content}
-    <p n:isAllowed="location,cityEdit">
+    <p n:if="isAllowed('location', 'cityEdit')">
         <a n:href="City:edit" class="btn btn-primary"><i class="fa fa-plus"></i> Přidat nové město</a>
     </p>
     {control gridCity}

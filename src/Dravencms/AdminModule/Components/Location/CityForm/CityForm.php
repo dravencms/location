@@ -43,7 +43,7 @@ class CityForm extends BaseControl
         CountryRepository $countryRepository,
         EntityManager $entityManager,
         User $user,
-        City $city = null
+        ?City $city = null
     ) {
         $this->city = $city;
         $this->baseFormFactory = $baseFormFactory;

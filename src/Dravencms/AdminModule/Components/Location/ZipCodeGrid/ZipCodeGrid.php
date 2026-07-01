@@ -7,13 +7,15 @@
 
 namespace Dravencms\AdminModule\Components\Location\ZipCodeGrid;
 
+
+use Dravencms\User\Attributes\IsAllowed;
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\ZipCodeRepository;
 use Dravencms\Database\EntityManager;
 use Nette\Security\User;
-use Ublaboo\DataGrid\Column\Action\Confirmation\StringConfirmation;
+use Contributte\Datagrid\Column\Action\Confirmation\StringConfirmation;
 
 class ZipCodeGrid extends BaseControl
 {
@@ -53,7 +55,7 @@ class ZipCodeGrid extends BaseControl
     /**
      * @param string $name
      * @return Grid
-     * @throws \Ublaboo\DataGrid\Exception\DataGridException
+     * @throws \Contributte\Datagrid\Exception\DatagridException
      */
     protected function createComponentGrid(string $name): Grid
     {
@@ -112,8 +114,8 @@ class ZipCodeGrid extends BaseControl
 
     /**
      * @param integer|array $id
-     * @isAllowed(user,zipCodeDelete)
      */
+    #[IsAllowed('user', 'zipCodeDelete')]
     public function handleDelete($id): void
     {
         $zipCodes = $this->zipCodeRepository->getById($id);

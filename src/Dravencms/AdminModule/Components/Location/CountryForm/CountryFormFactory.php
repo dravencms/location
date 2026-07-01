@@ -13,5 +13,5 @@ interface CountryFormFactory
      * @param Country|null $country
      * @return CountryForm
      */
-    public function create(Country $country = null): CountryForm;
+    public function create(?Country $country = null): CountryForm;
 }

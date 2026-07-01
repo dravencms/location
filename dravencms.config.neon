@@ -1,7 +1,32 @@
 extensions:
     location: Dravencms\Location\DI\LocationExtension
 
+services:
+    location.cityPresenter:
+        class: Dravencms\AdminModule\LocationModule\CityPresenter
 
-nettrine.orm.annotations:
-    mapping:
-        Dravencms\Model\Location: %appDir%/../vendor/dravencms/location/src/Dravencms/Model/Location
+    location.countryPresenter:
+        class: Dravencms\AdminModule\LocationModule\CountryPresenter
+
+    location.regionPresenter:
+        class: Dravencms\AdminModule\LocationModule\RegionPresenter
+
+    location.streetPresenter:
+        class: Dravencms\AdminModule\LocationModule\StreetPresenter
+
+    location.streetNumberPresenter:
+        class: Dravencms\AdminModule\LocationModule\StreetNumberPresenter
+
+    location.zipCodePresenter:
+        class: Dravencms\AdminModule\LocationModule\ZipCodePresenter
+
+
+nettrine.orm:
+    managers:
+        default:
+            mapping:
+                location:
+                    type: attributes
+                    directories:
+                        - %appDir%/../vendor/dravencms/location/src/Dravencms/Model/Location
+                    namespace: Dravencms\Model\Location

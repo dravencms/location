@@ -7,13 +7,15 @@
 
 namespace Dravencms\AdminModule\Components\Location\CityGrid;
 
+
+use Dravencms\User\Attributes\IsAllowed;
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Components\BaseGrid\Grid;
 use Dravencms\Model\Location\Repository\CityRepository;
 use Dravencms\Database\EntityManager;
 use Nette\Security\User;
-use Ublaboo\DataGrid\Column\Action\Confirmation\StringConfirmation;
+use Contributte\Datagrid\Column\Action\Confirmation\StringConfirmation;
 
 class CityGrid extends BaseControl
 {
@@ -51,7 +53,7 @@ class CityGrid extends BaseControl
     /**
      * @param string $name
      * @return Grid
-     * @throws \Ublaboo\DataGrid\Exception\DataGridException
+     * @throws \Contributte\Datagrid\Exception\DatagridException
      */
     protected function createComponentGrid(string $name): Grid
     {
@@ -110,8 +112,8 @@ class CityGrid extends BaseControl
 
     /**
      * @param integer|array $id
-     * @isAllowed(user, cityDelete)
      */
+    #[IsAllowed('user', 'cityDelete')]
     public function handleDelete($id): void
     {
         $cities = $this->cityRepository->getById($id);

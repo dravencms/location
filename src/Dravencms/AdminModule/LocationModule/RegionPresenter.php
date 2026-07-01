@@ -2,6 +2,8 @@
 
 namespace Dravencms\AdminModule\LocationModule;
 
+
+use Dravencms\User\Attributes\IsAllowed;
 use Dravencms\AdminModule\Components\Location\RegionForm\RegionForm;
 use Dravencms\AdminModule\Components\Location\RegionForm\RegionFormFactory;
 use Dravencms\AdminModule\Components\Location\RegionGrid\RegionGrid;
@@ -32,19 +34,17 @@ class RegionPresenter extends SecuredPresenter
     /** @var Region|null */
     private $region = null;
 
-    /**
-     * @isAllowed(location, regionEdit)
-     */
+    #[IsAllowed('location', 'regionEdit')]
     public function actionDefault(): void
     {
         $this->template->h1 = $this->translator->translate('Regions');
     }
 
     /**
-     * @isAllowed(location, regionEdit)
      * @param int|null $id
      */
-    public function actionEdit(int $id = null): void
+    #[IsAllowed('location', 'regionEdit')]
+    public function actionEdit(?int $id = null): void
     {
         $this->template->h1 = $this->translator->translate('Region');
 

@@ -27,5 +27,5 @@ interface RegionFormFactory
      * @param Region|null $region
      * @return RegionForm
      */
-    public function create(Region $region = null): RegionForm;
+    public function create(?Region $region = null): RegionForm;
 }

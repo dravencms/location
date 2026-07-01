@@ -6,16 +6,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Dravencms\Database\Attributes\TimestampableEntity;
 use Dravencms\Database\Attributes\Identifier;
 use Nette;
 
 /**
  * Class Country
  * @package App\Model\Entities
- * @ORM\Entity
- * @ORM\Table(name="locationCountry")
  */
+#[ORM\Entity]
+#[ORM\Table(name: "locationCountry")]
 class Country
 {
     use Nette\SmartObject;
@@ -24,26 +24,24 @@ class Country
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=255,unique=true,nullable=false)
      */
+    #[ORM\Column(type: "string", length: 255, unique: true, nullable: false)]
     private $name;
 
-    /**
-     * @Gedmo\Slug(fields={"name"})
-     * @Doctrine\ORM\Mapping\Column(length=255, unique=true,nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 255, unique: true, nullable: true)]
+    #[Gedmo\Slug(fields: ["name"])]
     private $slug;
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=2,unique=true,nullable=false)
      */
+    #[ORM\Column(type: "string", length: 2, unique: true, nullable: false)]
     private $code;
 
     /**
      * @var ArrayCollection|City[]
-     * @ORM\OneToMany(targetEntity="City", mappedBy="country",cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: "City", mappedBy: "country", cascade: ["persist"])]
     private $cities;
 
     /**

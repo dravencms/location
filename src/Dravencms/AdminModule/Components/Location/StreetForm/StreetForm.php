@@ -57,7 +57,7 @@ class StreetForm extends BaseControl
         ZipCodeRepository $zipCodeRepository,
         EntityManager $entityManager,
         User $user,
-        Street $street = null
+        ?Street $street = null
     ) {
         $this->street = $street;
         $this->baseFormFactory = $baseFormFactory;

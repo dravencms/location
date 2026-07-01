@@ -51,7 +51,7 @@ class ZipCodeForm extends BaseControl
         CityRepository $zipCodeRepository,
         EntityManager $entityManager,
         User $user,
-        ZipCode $zipCode = null
+        ?ZipCode $zipCode = null
     ) {
         $this->zipCode = $zipCode;
         $this->baseFormFactory = $baseFormFactory;

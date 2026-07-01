@@ -5,7 +5,7 @@ namespace Dravencms\Model\Location\Entities;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Dravencms\Database\Attributes\TimestampableEntity;
 use Dravencms\Database\Attributes\Identifier;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -14,9 +14,9 @@ use Nette;
 /**
  * Class City
  * @package App\Model\Entities
- * @ORM\Entity
- * @ORM\Table(name="locationCity", uniqueConstraints={@UniqueConstraint(name="name_country_id", columns={"name", "country_id"})})
  */
+#[ORM\Entity]
+#[ORM\Table(name: "locationCity", uniqueConstraints: [new ORM\UniqueConstraint(name: "name_country_id", columns: ["name", "country_id"])])]
 class City
 {
     use Nette\SmartObject;
@@ -25,34 +25,32 @@ class City
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=255,nullable=false)
      */
+    #[ORM\Column(type: "string", length: 255, nullable: false)]
     private $name;
 
-    /**
-     * @Gedmo\Slug(fields={"name"})
-     * @Doctrine\ORM\Mapping\Column(length=255, unique=true,nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 255, unique: true, nullable: true)]
+    #[Gedmo\Slug(fields: ["name"])]
     private $slug;
 
     /**
      * @var Country
-     * @ORM\ManyToOne(targetEntity="Country", inversedBy="cities")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: "Country", inversedBy: "cities")]
+    #[ORM\JoinColumn(name: "country_id", referencedColumnName: "id")]
     private $country;
 
     /**
      * @var ArrayCollection|ZipCode[]
-     * @ORM\OneToMany(targetEntity="ZipCode", mappedBy="city",cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: "ZipCode", mappedBy: "city", cascade: ["persist"])]
     private $zipCodes;
 
     /**
      * @var Region
-     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities")
-     * @ORM\JoinColumn(name="region_id", referencedColumnName="id", nullable=true)
      */
+    #[ORM\ManyToOne(targetEntity: "Region", inversedBy: "cities")]
+    #[ORM\JoinColumn(name: "region_id", referencedColumnName: "id", nullable: true)]
     private $region;
 
     /**
@@ -61,7 +59,7 @@ class City
      * @param string $name
      * @param Region|null $region
      */
-    public function __construct(Country $country, string $name, Region $region = null)
+    public function __construct(Country $country, string $name, ?Region $region = null)
     {
         $this->name = $name;
         $this->country = $country;
@@ -89,7 +87,7 @@ class City
     /**
      * @param Region $region
      */
-    public function setRegion(Region $region = null): void
+    public function setRegion(?Region $region = null): void
     {
         $this->region = $region;
     }

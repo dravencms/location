@@ -13,5 +13,5 @@ interface CityFormFactory
      * @param City|null $city
      * @return CityForm
      */
-    public function create(City $city = null): CityForm;
+    public function create(?City $city = null): CityForm;
 }

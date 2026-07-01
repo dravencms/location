@@ -9,15 +9,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Dravencms\Database\Attributes\TimestampableEntity;
 use Dravencms\Database\Attributes\Identifier;
 use Nette;
 
 /**
  * Class Region
- * @ORM\Entity(repositoryClass="Gedmo\Sortable\Entity\Repository\SortableRepository")
- * @ORM\Table(name="locationRegion")
  */
+#[ORM\Entity(repositoryClass: "Gedmo\Sortable\Entity\Repository\SortableRepository")]
+#[ORM\Table(name: "locationRegion")]
 class Region
 {
     use Nette\SmartObject;
@@ -26,34 +26,32 @@ class Region
 
     /**
      * @var string
-     * @Gedmo\Translatable
-     * @ORM\Column(type="string",length=255,nullable=false)
      */
+    #[Gedmo\Translatable]
+    #[ORM\Column(type: "string", length: 255, nullable: false)]
     private $name;
 
     /**
      * @var boolean
-     * @ORM\Column(type="boolean", nullable=false)
      */
+    #[ORM\Column(type: "boolean", nullable: false)]
     private $isActive;
 
-    /**
-     * @Gedmo\Slug(fields={"name"})
-     * @Doctrine\ORM\Mapping\Column(length=255, unique=true,nullable=false)
-     */
+    #[ORM\Column(type: "string", length: 255, unique: true, nullable: false)]
+    #[Gedmo\Slug(fields: ["name"])]
     private $slug;
 
     /**
      * @var ArrayCollection|City[]
-     * @ORM\OneToMany(targetEntity="City", mappedBy="region",cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: "City", mappedBy: "region", cascade: ["persist"])]
     private $cities;
 
     /**
      * @var integer
-     * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer")
      */
+    #[Gedmo\SortablePosition]
+    #[ORM\Column(type: "integer")]
     private $position;
 
 

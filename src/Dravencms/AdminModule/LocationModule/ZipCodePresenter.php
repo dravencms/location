@@ -8,6 +8,8 @@
 namespace Dravencms\AdminModule\LocationModule;
 
 
+
+use Dravencms\User\Attributes\IsAllowed;
 use Dravencms\AdminModule\Components\Location\ZipCodeForm\ZipCodeForm;
 use Dravencms\AdminModule\Components\Location\ZipCodeForm\ZipCodeFormFactory;
 use Dravencms\AdminModule\Components\Location\ZipCodeGrid\ZipCodeGrid;
@@ -41,9 +43,7 @@ class ZipCodePresenter extends SecuredPresenter
     private $userZipCodeFormEntity;
 
 
-    /**
-     * @isAllowed(location,zipCodeEdit)
-     */
+    #[IsAllowed('location', 'zipCodeEdit')]
     public function actionDefault(): void
     {
         $this->template->h1 = 'Přehled PSČ';
@@ -51,9 +51,9 @@ class ZipCodePresenter extends SecuredPresenter
 
     /**
      * @param integer|null $id
-     * @isAllowed(location,zipCodeEdit)
      */
-    public function actionEdit(int $id = null): void
+    #[IsAllowed('location', 'zipCodeEdit')]
+    public function actionEdit(?int $id = null): void
     {
         if ($id) {
             $zipCode = $this->userCountryRepository->getOneById($id);

@@ -32,14 +32,12 @@ class CountryRepository
      * @param Country|null $ignoreCountry
      * @return bool
      */
-    public function isCountryNameFree(string $name, Country $ignoreCountry = null): bool
+    public function isCountryNameFree(string $name, ?Country $ignoreCountry = null): bool
     {
         $qb = $this->countryRepository->createQueryBuilder('c')
             ->select('c')
             ->where('c.name = :name')
-            ->setParameters([
-                'name' => $name
-            ]);
+            ->setParameter('name', $name);
 
         if ($ignoreCountry)
         {
@@ -55,14 +53,12 @@ class CountryRepository
      * @param Country|null $ignoreCountry
      * @return bool
      */
-    public function isCountryCodeFree(string $code, Country $ignoreCountry = null): bool
+    public function isCountryCodeFree(string $code, ?Country $ignoreCountry = null): bool
     {
         $qb = $this->countryRepository->createQueryBuilder('c')
             ->select('c')
             ->where('c.code = :code')
-            ->setParameters([
-                'code' => $code
-            ]);
+            ->setParameter('code', $code);
 
         if ($ignoreCountry)
         {
