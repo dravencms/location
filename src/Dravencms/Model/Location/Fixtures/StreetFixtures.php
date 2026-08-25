@@ -7,6 +7,7 @@ namespace Dravencms\Model\Location\Fixtures;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Dravencms\Model\Location\Entities\Street;
+use Dravencms\Model\Location\Entities\ZipCode;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -19,7 +20,7 @@ class StreetFixtures extends AbstractFixture implements DependentFixtureInterfac
      */
     public function load(ObjectManager $manager): void
     {
-        $street = new Street($this->getReference('user-zip-code-77900'), 'Brněnská');
+        $street = new Street($this->getReference('user-zip-code-77900', ZipCode::class), 'Brněnská');
         $manager->persist($street);
         $this->addReference('user-street-brnenska', $street);
         $manager->flush();

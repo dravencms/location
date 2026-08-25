@@ -26,25 +26,25 @@ class AdminMenuFixtures extends AbstractFixture implements DependentFixtureInter
 
         $menu = $manager->getRepository(Menu::class);
         // Location
-        $root = new Menu('Locations', null, 'fa-globe', $this->getReference('user-acl-operation-location-edit'), null);
+        $root = new Menu('Locations', null, 'fa-globe', $this->getReference('user-acl-operation-location-edit', \Dravencms\Model\User\Entities\AclOperation::class), null);
         $manager->persist($root);
 
-        $child = new Menu('Streets', ':Admin:Location:Street', 'fa-language', $this->getReference('user-acl-operation-location-streetEdit'));
+        $child = new Menu('Streets', ':Admin:Location:Street', 'fa-language', $this->getReference('user-acl-operation-location-streetEdit', \Dravencms\Model\User\Entities\AclOperation::class));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
-        $child = new Menu('Street Numbers', ':Admin:Location:StreetNumber', 'fa-subscript', $this->getReference('user-acl-operation-location-streetEdit'));
+        $child = new Menu('Street Numbers', ':Admin:Location:StreetNumber', 'fa-subscript', $this->getReference('user-acl-operation-location-streetEdit', \Dravencms\Model\User\Entities\AclOperation::class));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
-        $child = new Menu('Cities', ':Admin:Location:City', 'fa-map-marker', $this->getReference('user-acl-operation-location-cityEdit'));
+        $child = new Menu('Cities', ':Admin:Location:City', 'fa-map-marker', $this->getReference('user-acl-operation-location-cityEdit', \Dravencms\Model\User\Entities\AclOperation::class));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
-        $child = new Menu('Zip codes', ':Admin:Location:ZipCode', 'fa-map-signs', $this->getReference('user-acl-operation-location-zipCodeEdit'));
+        $child = new Menu('Zip codes', ':Admin:Location:ZipCode', 'fa-map-signs', $this->getReference('user-acl-operation-location-zipCodeEdit', \Dravencms\Model\User\Entities\AclOperation::class));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
-        $child = new Menu('Countries', ':Admin:Location:Country', 'fa-globe', $this->getReference('user-acl-operation-location-countryEdit'));
+        $child = new Menu('Countries', ':Admin:Location:Country', 'fa-globe', $this->getReference('user-acl-operation-location-countryEdit', \Dravencms\Model\User\Entities\AclOperation::class));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
-        $child = new Menu('Regions', ':Admin:Location:Region', 'fa-compass', $this->getReference('user-acl-operation-location-regionEdit'));
+        $child = new Menu('Regions', ':Admin:Location:Region', 'fa-compass', $this->getReference('user-acl-operation-location-regionEdit', \Dravencms\Model\User\Entities\AclOperation::class));
         $manager->persist($child);
         $menu->persistAsLastChildOf($child, $root);
         $manager->flush();

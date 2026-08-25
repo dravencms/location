@@ -7,6 +7,7 @@ namespace Dravencms\Model\Location\Fixtures;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Dravencms\Model\Location\Entities\City;
+use Dravencms\Model\Location\Entities\Country;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -19,7 +20,7 @@ class CityFixtures extends AbstractFixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        $city = new City($this->getReference('location-country-CZ'), 'Olomouc');
+        $city = new City($this->getReference('location-country-CZ', Country::class), 'Olomouc');
         $manager->persist($city);
         $this->addReference('user-city-olomouc', $city);
         $manager->flush();

@@ -6,6 +6,7 @@
 namespace Dravencms\Model\Location\Fixtures;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Dravencms\Model\Location\Entities\City;
 use Dravencms\Model\Location\Entities\ZipCode;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
@@ -19,7 +20,7 @@ class ZipCodeFixtures extends AbstractFixture implements DependentFixtureInterfa
      */
     public function load(ObjectManager $manager): void
     {
-        $zipCode = new ZipCode($this->getReference('user-city-olomouc'), '77900');
+        $zipCode = new ZipCode($this->getReference('user-city-olomouc', City::class), '77900');
         $manager->persist($zipCode);
         $this->addReference('user-zip-code-77900', $zipCode);
         $manager->flush();
