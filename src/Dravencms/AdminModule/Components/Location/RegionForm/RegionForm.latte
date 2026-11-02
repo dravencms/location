@@ -1,20 +1,20 @@
-<form n:name="form" class="panel form-horizontal">
+<form n:name="form" class="card">
     <ul class="alert alert-danger" n:if="$form->hasErrors()">
         <li n:foreach="$form->errors as $error">{$error}</li>
     </ul>
-    <div class="panel-body">
+    <div class="card-body">
         <div class="row">
             <div class="col-sm-12">
-                <div class="form-group no-margin-hr">
-                    <label class="control-label" n:name="name">Název</label>
+                <div class="mb-3">
+                    <label class="form-label" n:name="name">Název</label>
                     <input type="text" n:name="name" autofocus="autofocus" class="form-control">
                 </div>
             </div><!-- col-sm-12 -->
         </div><!-- row -->
         <div class="row">
             <div class="col-sm-12">
-                <div class="form-group no-margin-hr">
-                    <label class="control-label" n:name="cities">Města</label>
+                <div class="mb-3">
+                    <label class="form-label" n:name="cities">Města</label>
                     <select n:name="cities" class="form-control" data-placeholder="Zvolte města"></select>
                 </div>
             </div><!-- col-sm-6 -->
@@ -22,15 +22,15 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <div class="checkbox">
+                <div class="form-check">
                     <label>
-                        <input type="checkbox" n:name="isActive" class="px"> <span class="lbl">{_"Active"}</span>
+                        <input type="checkbox" n:name="isActive" class="form-check-input"> <span class="form-check-label">{_"Active"}</span>
                     </label>
                 </div>
             </div>
         </div>
     </div>
-    <div class="panel-footer">
+    <div class="card-footer">
         <input type="submit" n:name="send" class="btn btn-success button" value="Uložit">
     </div>
 </form>
