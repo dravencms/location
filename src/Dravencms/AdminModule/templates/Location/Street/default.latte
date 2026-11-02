@@ -1,6 +1,6 @@
 {block #content}
     <p n:if="isAllowed('location', 'streetEdit')">
-        <a n:href="Street:edit" class="btn btn-primary"><i class="fa fa-plus"></i> Přidat novou ulici</a>
+        <a n:href="Street:edit" class="btn btn-primary"><i class="fa fa-plus"></i> {_'location.admin.title.newStreet'}</a>
     </p>
     {control gridStreet}
 {/block}

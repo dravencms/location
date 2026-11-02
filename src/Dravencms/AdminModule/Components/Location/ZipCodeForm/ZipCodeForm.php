@@ -2,6 +2,8 @@
 
 namespace Dravencms\AdminModule\Components\Location\ZipCodeForm;
 
+use Contributte\Translation\Wrappers\Message;
+
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\ZipCode;
@@ -70,11 +72,11 @@ class ZipCodeForm extends BaseControl
         $form = $this->baseFormFactory->create();
 
         $form->addText('name')
-            ->setRequired('Prosím zadejte PSČ.');
+            ->setRequired('location.admin.validation.zipCodeRequired');
 
         $form->addSelect('city', null, $this->cityRepository->getPairs());
 
-        $form->addSubmit('send');
+        $form->addSubmit('send', 'location.admin.action.save');
 
         $form->onValidate[] = [$this, 'onValidateForm'];
         $form->onSuccess[] = [$this, 'onSuccessForm'];
@@ -100,12 +102,12 @@ class ZipCodeForm extends BaseControl
 
         if (!$this->zipCodeRepository->isZipCodeFree($values->name, $city->getCountry(), $this->zipCode))
         {
-            $form->addError('Toto PSC již existuje.');
+            $form->addError('location.admin.validation.zipCodeTaken');
         }
 
         //Kontrola opraveni
         if (!$this->user->isAllowed('location', 'zipCodeEdit')) {
-            $form->addError('Nemáte oprávění editovat zip code.');
+            $form->addError('location.admin.validation.zipCodeForbidden');
         }
     }
 
@@ -138,7 +140,7 @@ class ZipCodeForm extends BaseControl
     public function render(): void
     {
         $template = $this->template;
-        $template->panelHeading = ($this->zipCode ? 'Editation of '.$this->zipCode->getName().' ZIP code' : 'New ZIP code');
+        $template->panelHeading = ($this->zipCode ? new Message('location.admin.title.editZipCode', ['name' => $this->zipCode->getName()]) : 'location.admin.title.newZipCode');
         $template->setFile(__DIR__ . '/ZipCodeForm.latte');
         $template->render();
     }

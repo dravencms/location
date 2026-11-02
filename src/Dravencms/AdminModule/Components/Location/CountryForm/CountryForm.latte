@@ -3,20 +3,20 @@
         <li n:foreach="$form->errors as $error">{$error}</li>
     </ul>
     <div class="card-header">
-        <span class="card-title">{$panelHeading}</span>
+        <span class="card-title">{_$panelHeading}</span>
     </div>
     <div class="card-body">
 
         <div class="row">
             <div class="col-sm-6">
                 <div class="mb-3">
-                    <label class="form-label" n:name="name">{_"State"}</label>
+                    <label class="form-label" n:name="name">{_'location.admin.field.country'}</label>
                     <input n:name="name" class="form-control" autofocus="autofocus">
                 </div>
             </div><!-- col-sm-6 -->
             <div class="col-sm-6">
                 <div class="mb-3">
-                    <label class="form-label" n:name="code">{_"Code"}</label>
+                    <label class="form-label" n:name="code">{_'location.admin.field.code'}</label>
                     <input n:name="code" class="form-control">
                 </div>
             </div><!-- col-sm-6 -->
@@ -24,6 +24,6 @@
     </div>
 
     <div class="card-footer">
-        <input type="submit" n:name="send" class="btn btn-success button" value="Uložit">
+        <input type="submit" n:name="send" class="btn btn-success button" value="{_'location.admin.action.save'}">
     </div>
 </form>

@@ -2,6 +2,8 @@
 
 namespace Dravencms\AdminModule\Components\Location\CityForm;
 
+use Contributte\Translation\Wrappers\Message;
+
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseForm\BaseForm;
 use Dravencms\Components\BaseForm\BaseFormFactory;
@@ -59,12 +61,12 @@ class CityForm extends BaseControl
         $form = $this->baseFormFactory->create();
 
         $form->addText('name')
-            ->setRequired('Prosím zadejte Stat.');
+            ->setRequired('location.admin.validation.cityRequired');
 
         $form->addSelect('country', null, $this->countryRepository->getPairs())
-            ->setRequired('Prosím zadejte zemi.');
+            ->setRequired('location.admin.validation.countrySelectionRequired');
 
-        $form->addSubmit('send');
+        $form->addSubmit('send', 'location.admin.action.save');
 
         $form->onValidate[] = [$this, 'onValidateForm'];
         $form->onSuccess[] = [$this, 'onSuccessForm'];
@@ -89,12 +91,12 @@ class CityForm extends BaseControl
 
         if (!$this->cityRepository->isCityNameFree($values->name, $country, $this->city))
         {
-            $form->addError('Toto mesto již existuje.');
+            $form->addError('location.admin.validation.cityTaken');
         }
         
         //Kontrola opraveni
         if (!$this->user->isAllowed('location', 'cityEdit')) {
-            $form->addError('Nemáte oprávění editovat mesta.');
+            $form->addError('location.admin.validation.cityForbidden');
         }
     }
 
@@ -127,7 +129,7 @@ class CityForm extends BaseControl
     public function render(): void
     {
         $template = $this->template;
-        $template->panelHeading = ($this->city ? 'Editation of '.$this->city->getName().' city' : 'New City');
+        $template->panelHeading = ($this->city ? new Message('location.admin.title.editCity', ['name' => $this->city->getName()]) : 'location.admin.title.newCity');
         $template->setFile(__DIR__ . '/CityForm.latte');
         $template->render();
     }

@@ -1,6 +1,6 @@
 {block #content}
     <p n:if="isAllowed('location', 'countryEdit')">
-        <a n:href="Country:edit" class="btn btn-primary"><i class="fa fa-plus"></i> Add new country</a>
+        <a n:href="Country:edit" class="btn btn-primary"><i class="fa fa-plus"></i> {_'location.admin.title.newCountry'}</a>
     </p>
     {control gridCountry}
 {/block}

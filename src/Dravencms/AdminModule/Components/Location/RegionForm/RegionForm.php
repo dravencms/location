@@ -81,7 +81,7 @@ class RegionForm extends BaseControl
         $form = $this->baseFormFactory->create();
 
         $form->addText('name')
-            ->setRequired('Prosím zadejte název firmy.');
+            ->setRequired('location.admin.validation.regionRequired');
 
         $cities = [];
 
@@ -94,7 +94,7 @@ class RegionForm extends BaseControl
 
         $form->addCheckbox('isActive');
 
-        $form->addSubmit('send');
+        $form->addSubmit('send', 'location.admin.action.save');
 
         $form->onValidate[] = [$this, 'editFormValidate'];
         $form->onSuccess[] = [$this, 'editFormSucceeded'];
@@ -128,7 +128,7 @@ class RegionForm extends BaseControl
         $values = $form->getValues();
         if (!$this->regionRepository->isNameFree($values->name, $this->region))
         {
-            $form->addError('Region item with this name already exists!');
+            $form->addError('location.admin.validation.regionTaken');
         }
     }
 

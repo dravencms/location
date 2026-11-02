@@ -37,7 +37,7 @@ class RegionPresenter extends SecuredPresenter
     #[IsAllowed('location', 'regionEdit')]
     public function actionDefault(): void
     {
-        $this->template->h1 = $this->translator->translate('Regions');
+        $this->template->h1 = $this->translator->translate('location.admin.title.regions');
     }
 
     /**
@@ -46,8 +46,6 @@ class RegionPresenter extends SecuredPresenter
     #[IsAllowed('location', 'regionEdit')]
     public function actionEdit(?int $id = null): void
     {
-        $this->template->h1 = $this->translator->translate('Region');
-
         if ($id) {
             /** @var Region $category */
             $region = $this->regionRepository->getOneById($id);
@@ -56,10 +54,10 @@ class RegionPresenter extends SecuredPresenter
             }
 
             $this->region = $region;
-            $this->template->h1 .= ' - ' . $region->getName();
+            $this->template->h1 = $this->translator->translate('location.admin.title.editRegion', ['name' => $region->getName()]);
 
         } else {
-            $this->template->h1 .= ' - ' . $this->translator->translate('New region');
+            $this->template->h1 = $this->translator->translate('location.admin.title.newRegion');
 
         }
     }
@@ -74,10 +72,10 @@ class RegionPresenter extends SecuredPresenter
 
             /** @var Region $region */
             if ($this->region) {
-                $this->flashMessage('Changes has been saved.', Flash::SUCCESS);
+                $this->flashMessage($this->translator->translate('location.admin.flash.regionSaved'), Flash::SUCCESS);
                 $this->redirect('Region:edit', ['id' => $region->getId()]);
             } else {
-                $this->flashMessage('New region item has been saved.', Flash::SUCCESS);
+                $this->flashMessage($this->translator->translate('location.admin.flash.regionCreated'), Flash::SUCCESS);
                 $this->redirect('Region:');
             }
         };
@@ -93,7 +91,7 @@ class RegionPresenter extends SecuredPresenter
         $control = $this->regionGridFactory->create();
         $control->onDelete[] = function()
         {
-            $this->flashMessage('Region has been successfully deleted', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.regionDeleted'), Flash::SUCCESS);
             $this->redirect('Region:');
         };
         return $control;

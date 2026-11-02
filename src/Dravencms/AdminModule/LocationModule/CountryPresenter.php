@@ -42,7 +42,7 @@ class CountryPresenter extends SecuredPresenter
     #[IsAllowed('location', 'countryEdit')]
     public function actionDefault(): void
     {
-        $this->template->h1 = 'Přehled Států';
+        $this->template->h1 = $this->translator->translate('location.admin.title.countries');
     }
 
     /**
@@ -56,10 +56,10 @@ class CountryPresenter extends SecuredPresenter
             if (!$country) {
                 $this->error();
             }
-            $this->template->h1 = sprintf('Stát „%s“', $country->getName());
+            $this->template->h1 = $this->translator->translate('location.admin.title.editCountry', ['name' => $country->getName()]);
             $this->userCountryFormEntity = $country;
         } else {
-            $this->template->h1 = 'Založení nového Státu';
+            $this->template->h1 = $this->translator->translate('location.admin.title.newCountry');
         }
     }
 
@@ -71,7 +71,7 @@ class CountryPresenter extends SecuredPresenter
         $control = $this->userCountryGridFactory->create();
         $control->onDelete[] = function()
         {
-            $this->flashMessage('Country has been successfully deleted', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.countryDeleted'), Flash::SUCCESS);
             $this->redirect('Country:');
         };
         return $control;
@@ -84,7 +84,7 @@ class CountryPresenter extends SecuredPresenter
     {
         $control = $this->userCountryFormFactory->create($this->userCountryFormEntity);
         $control->onSuccess[] = function(){
-            $this->flashMessage('Stát byl úspěšně uložen', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.countrySaved'), Flash::SUCCESS);
             $this->redirect('Country:');
         };
         return $control;

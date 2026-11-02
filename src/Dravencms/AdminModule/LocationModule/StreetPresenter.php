@@ -45,7 +45,7 @@ class StreetPresenter extends SecuredPresenter
     #[IsAllowed('location', 'streetEdit')]
     public function actionDefault(): void
     {
-        $this->template->h1 = 'Přehled ulic';
+        $this->template->h1 = $this->translator->translate('location.admin.title.streets');
     }
 
     /**
@@ -63,9 +63,9 @@ class StreetPresenter extends SecuredPresenter
                 $this->error();
             }
             $this->streetFormEntity = $street;
-            $this->template->h1 = sprintf('Ulice „%s“', $street->getName());
+            $this->template->h1 = $this->translator->translate('location.admin.title.editStreet', ['name' => $street->getName()]);
         } else {
-            $this->template->h1 = 'Vytvoření nové ulice';
+            $this->template->h1 = $this->translator->translate('location.admin.title.newStreet');
         }
     }
 
@@ -76,7 +76,7 @@ class StreetPresenter extends SecuredPresenter
     {
         $control = $this->userStreetGridFactory->create();
         $control->onDelete[] = function(){
-            $this->flashMessage('Street has been successfully deleted', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.streetDeleted'), Flash::SUCCESS);
             $this->redirect('Street:');
         };
         return $control;
@@ -90,7 +90,7 @@ class StreetPresenter extends SecuredPresenter
         $component = $this->userStreetFormFactory->create($this->streetFormEntity);
         $component->onSuccess[] = function()
         {
-            $this->flashMessage('Ulice byla úspěšně uložena', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.streetSaved'), Flash::SUCCESS);
             $this->redirect('Street:');
         };
         return $component;

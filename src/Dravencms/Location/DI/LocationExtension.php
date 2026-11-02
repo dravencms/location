@@ -2,6 +2,7 @@
 
 namespace Dravencms\Location\DI;
 
+use Contributte\Translation\DI\TranslationProviderInterface;
 use Dravencms\Location\Location;
 use Nette;
 
@@ -9,8 +10,13 @@ use Nette;
  * Class LocationExtension
  * @package Dravencms\Location\DI
  */
-class LocationExtension extends Nette\DI\CompilerExtension
+class LocationExtension extends Nette\DI\CompilerExtension implements TranslationProviderInterface
 {
+    public function getTranslationResources(): array
+    {
+        return [__DIR__ . '/../lang'];
+    }
+
     public function loadConfiguration(): void
     {
         $builder = $this->getContainerBuilder();

@@ -2,6 +2,8 @@
 
 namespace Dravencms\AdminModule\Components\Location\StreetNumberForm;
 
+use Contributte\Translation\Wrappers\Message;
+
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\StreetNumber;
@@ -70,7 +72,7 @@ class StreetNumberForm extends BaseControl
         $form = $this->baseFormFactory->create();
 
         $form->addText('name')
-            ->setRequired('Prosím zadejte jméno.');
+            ->setRequired('location.admin.validation.streetNumberRequired');
 
         $zipCities = [];
         foreach ($this->streetRepository->getAll() AS $street) {
@@ -78,7 +80,7 @@ class StreetNumberForm extends BaseControl
         }
 
         $form->addSelect('street', null, $zipCities);
-        $form->addSubmit('send');
+        $form->addSubmit('send', 'location.admin.action.save');
 
         $form->onValidate[] = [$this, 'onValidateForm'];
         $form->onSuccess[] = [$this, 'onSuccessForm'];
@@ -103,12 +105,12 @@ class StreetNumberForm extends BaseControl
 
         if (!$this->streetNumberRepository->isStreetNumberNameFree($values->name, $street, $this->streetNumber))
         {
-            $form->addError('Toto číslo ulice již existuje.');
+            $form->addError('location.admin.validation.streetNumberTaken');
         }
 
         //Kontrola opraveni
         if (!$this->user->isAllowed('location', 'streetEdit')) {
-            $form->addError('Nemáte oprávění editovat číslo ulice.');
+            $form->addError('location.admin.validation.streetNumberForbidden');
         }
     }
 
@@ -141,7 +143,7 @@ class StreetNumberForm extends BaseControl
     public function render(): void
     {
         $template = $this->template;
-        $template->panelHeading = ($this->streetNumber ? 'Editation of '.$this->streetNumber->getName().' Street Number' : 'New street number');
+        $template->panelHeading = ($this->streetNumber ? new Message('location.admin.title.editStreetNumber', ['name' => $this->streetNumber->getName()]) : 'location.admin.title.newStreetNumber');
         $template->setFile(__DIR__ . '/StreetNumberForm.latte');
         $template->render();
     }

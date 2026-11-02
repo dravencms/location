@@ -41,7 +41,7 @@ class StreetNumberPresenter extends SecuredPresenter
     #[IsAllowed('location', 'streetEdit')]
     public function actionDefault(): void
     {
-        $this->template->h1 = 'Přehled čísel ulic';
+        $this->template->h1 = $this->translator->translate('location.admin.title.streetNumbers');
     }
 
     /**
@@ -59,9 +59,9 @@ class StreetNumberPresenter extends SecuredPresenter
                 $this->error();
             }
             $this->streetNumber = $streetNumber;
-            $this->template->h1 = sprintf('Číslo ulice „%s“', $streetNumber->getName());
+            $this->template->h1 = $this->translator->translate('location.admin.title.editStreetNumber', ['name' => $streetNumber->getName()]);
         } else {
-            $this->template->h1 = 'Vytvoření nového čísla ulice';
+            $this->template->h1 = $this->translator->translate('location.admin.title.newStreetNumber');
         }
     }
 
@@ -72,7 +72,7 @@ class StreetNumberPresenter extends SecuredPresenter
     {
         $control = $this->userStreetNumberGridFactory->create();
         $control->onDelete[] = function(){
-            $this->flashMessage('Street number has been successfully deleted', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.streetNumberDeleted'), Flash::SUCCESS);
             $this->redirect('StreetNumber:');
         };
         return $control;
@@ -86,7 +86,7 @@ class StreetNumberPresenter extends SecuredPresenter
         $component = $this->userStreetNumberFormFactory->create($this->streetNumber);
         $component->onSuccess[] = function()
         {
-            $this->flashMessage('Street number byla úspěšně uložena', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.streetNumberSaved'), Flash::SUCCESS);
             $this->redirect('StreetNumber:');
         };
         return $component;

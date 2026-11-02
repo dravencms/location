@@ -2,6 +2,8 @@
 
 namespace Dravencms\AdminModule\Components\Location\CountryForm;
 
+use Contributte\Translation\Wrappers\Message;
+
 
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\Country;
@@ -56,12 +58,12 @@ class CountryForm extends BaseControl
         $form = $this->baseFormFactory->create();
 
         $form->addText('name')
-            ->setRequired('Prosím zadejte Stat.');
+            ->setRequired('location.admin.validation.countryRequired');
 
         $form->addText('code')
-            ->setRequired('Prosím zadejte kod statu.');
+            ->setRequired('location.admin.validation.countryCodeRequired');
 
-        $form->addSubmit('send');
+        $form->addSubmit('send', 'location.admin.action.save');
 
         $form->onValidate[] = [$this, 'onValidateForm'];
         $form->onSuccess[] = [$this, 'onSuccessForm'];
@@ -84,17 +86,17 @@ class CountryForm extends BaseControl
 
         if (!$this->countryRepository->isCountryNameFree($values->name, $this->country))
         {
-            $form->addError('Tato zeme již existuje.');
+            $form->addError('location.admin.validation.countryTaken');
         }
 
         if (!$this->countryRepository->isCountryCodeFree($values->code, $this->country))
         {
-            $form->addError('Tento kod zeme již existuje.');
+            $form->addError('location.admin.validation.countryCodeTaken');
         }
 
         //Kontrola opraveni
         if (!$this->user->isAllowed('location', 'countryEdit')) {
-            $form->addError('Nemáte oprávění editovat zeme.');
+            $form->addError('location.admin.validation.countryForbidden');
         }
     }
 
@@ -125,7 +127,7 @@ class CountryForm extends BaseControl
     public function render(): void
     {
         $template = $this->template;
-        $template->panelHeading = ($this->country ? 'Editation of '.$this->country->getName().' country' : 'New Country');
+        $template->panelHeading = ($this->country ? new Message('location.admin.title.editCountry', ['name' => $this->country->getName()]) : 'location.admin.title.newCountry');
         $template->setFile(__DIR__ . '/CountryForm.latte');
         $template->render();
     }

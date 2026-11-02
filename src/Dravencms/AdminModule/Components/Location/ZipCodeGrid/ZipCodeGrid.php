@@ -64,11 +64,11 @@ class ZipCodeGrid extends BaseControl
 
         $grid->setDataSource($this->zipCodeRepository->getZipCodeQueryBuilder());
 
-        $grid->addColumnText('cityName', 'Město', 'city.name')
+        $grid->addColumnText('cityName', 'location.admin.field.city', 'city.name')
             ->setSortable()
             ->setFilterText();
 
-        $grid->addColumnText('name', 'PSČ')
+        $grid->addColumnText('name', 'location.admin.field.zipCode')
             ->setSortable()
             ->setFilterText();
 
@@ -76,7 +76,7 @@ class ZipCodeGrid extends BaseControl
         {
             $grid->addAction('edit', '')
                 ->setIcon('pencil')
-                ->setTitle('Upravit')
+                ->setTitle('location.admin.action.edit')
                 ->setClass('btn btn-sm btn-primary');
         }
 
@@ -84,22 +84,22 @@ class ZipCodeGrid extends BaseControl
         {
             $grid->addAction('delete', '', 'delete!')
                 ->setIcon('trash')
-                ->setTitle('Smazat')
+                ->setTitle('location.admin.action.delete')
                 ->setClass('btn btn-sm btn-danger ajax')
-                ->setConfirmation(new StringConfirmation('Do you really want to delete row %s?', 'name'));
+                ->setConfirmation(new StringConfirmation('location.admin.confirm.delete', 'name'));
 
             $grid->allowRowsAction('delete', function($item) {
                 return (count($item->getStreets()) == 0);
             });
 
-            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'gridGroupActionDelete'];
+            $grid->addGroupAction('location.admin.action.delete')->onSelect[] = [$this, 'gridGroupActionDelete'];
         }
 
-        $grid->addExportCsvFiltered('Csv export (filtered)', 'acl_resource_filtered.csv')
-            ->setTitle('Csv export (filtered)');
+        $grid->addExportCsvFiltered('location.admin.action.exportFiltered', 'acl_resource_filtered.csv')
+            ->setTitle('location.admin.action.exportFiltered');
 
-        $grid->addExportCsv('Csv export', 'acl_resource_all.csv')
-            ->setTitle('Csv export');
+        $grid->addExportCsv('location.admin.action.exportAll', 'acl_resource_all.csv')
+            ->setTitle('location.admin.action.exportAll');
 
         return $grid;
     }

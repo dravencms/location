@@ -46,7 +46,7 @@ class ZipCodePresenter extends SecuredPresenter
     #[IsAllowed('location', 'zipCodeEdit')]
     public function actionDefault(): void
     {
-        $this->template->h1 = 'Přehled PSČ';
+        $this->template->h1 = $this->translator->translate('location.admin.title.zipCodes');
     }
 
     /**
@@ -60,10 +60,10 @@ class ZipCodePresenter extends SecuredPresenter
             if (!$zipCode) {
                 $this->error();
             }
-            $this->template->h1 = sprintf('PSČ „%s“', $zipCode->getName());
+            $this->template->h1 = $this->translator->translate('location.admin.title.editZipCode', ['name' => $zipCode->getName()]);
             $this->userZipCodeFormEntity = $zipCode;
         } else {
-            $this->template->h1 = 'Založení nového PSČ';
+            $this->template->h1 = $this->translator->translate('location.admin.title.newZipCode');
         }
     }
 
@@ -75,7 +75,7 @@ class ZipCodePresenter extends SecuredPresenter
         $control = $this->userZipCodeGridFactory->create();
         $control->onDelete[] = function()
         {
-            $this->flashMessage('Zip Code has been successfully deleted', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.zipCodeDeleted'), Flash::SUCCESS);
             $this->redirect('ZipCode:');
         };
         return $control;
@@ -88,7 +88,7 @@ class ZipCodePresenter extends SecuredPresenter
     {
         $control = $this->userZipCodeFormFactory->create($this->userZipCodeFormEntity);
         $control->onSuccess[] = function(){
-            $this->flashMessage('PSČ bylo úspěšně uloženo', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.zipCodeSaved'), Flash::SUCCESS);
             $this->redirect('ZipCode:');
         };
         return $control;

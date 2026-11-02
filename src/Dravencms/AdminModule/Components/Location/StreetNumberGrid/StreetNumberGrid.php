@@ -61,23 +61,23 @@ class StreetNumberGrid extends BaseControl
 
         $grid->setDataSource($this->streetNumberRepository->getStreetNumberQueryBuilder());
 
-        $grid->addColumnText('name', 'Street Number')
+        $grid->addColumnText('name', 'location.admin.field.streetNumber')
             ->setSortable()
             ->setFilterText();
 
-        $grid->addColumnText('streetName', 'Street', 'street.name')
+        $grid->addColumnText('streetName', 'location.admin.field.street', 'street.name')
             ->setSortable()
             ->setFilterText();
 
-        $grid->addColumnText('streetZipCodeName', 'ZIP', 'street.zipCode.name')
+        $grid->addColumnText('streetZipCodeName', 'location.admin.field.zipCode', 'street.zipCode.name')
             ->setSortable()
             ->setFilterText();
 
-        $grid->addColumnText('streetZipCodeCityName', 'City', 'street.zipCode.city.name')
+        $grid->addColumnText('streetZipCodeCityName', 'location.admin.field.city', 'street.zipCode.city.name')
             ->setSortable()
             ->setFilterText();
 
-        $grid->addColumnText('streetZipCodeCityCountryName', 'Country', 'street.zipCode.city.country.name')
+        $grid->addColumnText('streetZipCodeCityCountryName', 'location.admin.field.country', 'street.zipCode.city.country.name')
             ->setSortable()
             ->setFilterText();
 
@@ -85,7 +85,7 @@ class StreetNumberGrid extends BaseControl
         {
             $grid->addAction('edit', '')
                 ->setIcon('pencil')
-                ->setTitle('Upravit')
+                ->setTitle('location.admin.action.edit')
                 ->setClass('btn btn-sm btn-primary');
         }
 
@@ -93,18 +93,18 @@ class StreetNumberGrid extends BaseControl
         {
             $grid->addAction('delete', '', 'delete!')
                 ->setIcon('trash')
-                ->setTitle('Smazat')
+                ->setTitle('location.admin.action.delete')
                 ->setClass('btn btn-sm btn-danger ajax')
-                ->setConfirmation(new StringConfirmation('Do you really want to delete row %s?', 'name'));
+                ->setConfirmation(new StringConfirmation('location.admin.confirm.delete', 'name'));
 
-            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'gridGroupActionDelete'];
+            $grid->addGroupAction('location.admin.action.delete')->onSelect[] = [$this, 'gridGroupActionDelete'];
         }
 
-        $grid->addExportCsvFiltered('Csv export (filtered)', 'acl_resource_filtered.csv')
-            ->setTitle('Csv export (filtered)');
+        $grid->addExportCsvFiltered('location.admin.action.exportFiltered', 'acl_resource_filtered.csv')
+            ->setTitle('location.admin.action.exportFiltered');
 
-        $grid->addExportCsv('Csv export', 'acl_resource_all.csv')
-            ->setTitle('Csv export');
+        $grid->addExportCsv('location.admin.action.exportAll', 'acl_resource_all.csv')
+            ->setTitle('location.admin.action.exportAll');
 
         return $grid;
     }

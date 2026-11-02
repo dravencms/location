@@ -1,0 +1,82 @@
+admin:
+	field:
+		name: Name
+		code: Code
+		country: Country
+		city: City
+		zipCode: Postal code
+		street: Street
+		streetNumber: Street number
+		cities: Cities
+		active: Active
+		position: Position
+
+	action:
+		save: Save
+		edit: Edit
+		delete: Delete
+		exportAll: CSV export
+		exportFiltered: 'CSV export (filtered)'
+		selectCity: Select a city
+		selectCities: Select cities
+
+	title:
+		countries: Countries
+		cities: Cities
+		zipCodes: Postal codes
+		streets: Streets
+		streetNumbers: Street numbers
+		regions: Regions
+		newCountry: New country
+		newCity: New city
+		newZipCode: New postal code
+		newStreet: New street
+		newStreetNumber: New street number
+		newRegion: New region
+		editCountry: Edit country "%name%"
+		editCity: Edit city "%name%"
+		editZipCode: Edit postal code "%name%"
+		editStreet: Edit street "%name%"
+		editStreetNumber: Edit street number "%name%"
+		editRegion: Edit region "%name%"
+
+	validation:
+		countryRequired: Please enter a country name.
+		countryCodeRequired: Please enter a country code.
+		cityRequired: Please enter a city name.
+		countrySelectionRequired: Please select a country.
+		zipCodeRequired: Please enter a postal code.
+		streetRequired: Please enter a street name.
+		streetNumberRequired: Please enter a street number.
+		regionRequired: Please enter a region name.
+		countryTaken: This country already exists.
+		countryCodeTaken: This country code already exists.
+		cityTaken: This city already exists.
+		zipCodeTaken: This postal code already exists.
+		streetTaken: This street already exists.
+		streetNumberTaken: This street number already exists.
+		regionTaken: A region with this name already exists.
+		countryForbidden: You do not have permission to edit countries.
+		cityForbidden: You do not have permission to edit cities.
+		zipCodeForbidden: You do not have permission to edit postal codes.
+		streetForbidden: You do not have permission to edit streets.
+		streetNumberForbidden: You do not have permission to edit street numbers.
+
+	confirm:
+		delete: Are you sure you want to delete "%s"?
+
+	flash:
+		countrySaved: The country has been saved.
+		countryDeleted: The country has been deleted.
+		citySaved: The city has been saved.
+		cityDeleted: The city has been deleted.
+		zipCodeSaved: The postal code has been saved.
+		zipCodeDeleted: The postal code has been deleted.
+		streetSaved: The street has been saved.
+		streetDeleted: The street has been deleted.
+		streetNumberSaved: The street number has been saved.
+		streetNumberDeleted: The street number has been deleted.
+		regionSaved: The region has been saved.
+		regionCreated: The new region has been saved.
+		regionDeleted: The region has been deleted.
+

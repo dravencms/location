@@ -1,6 +1,6 @@
 {block #content}
     <p n:if="isAllowed('location', 'zipCodeEdit')">
-        <a n:href="ZipCode:edit" class="btn btn-primary"><i class="fa fa-plus"></i> Add new ZIP code</a>
+        <a n:href="ZipCode:edit" class="btn btn-primary"><i class="fa fa-plus"></i> {_'location.admin.title.newZipCode'}</a>
     </p>
     {control gridZipCode}
 {/block}

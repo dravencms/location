@@ -41,7 +41,7 @@ class CityPresenter extends SecuredPresenter
     #[IsAllowed('location', 'cityEdit')]
     public function actionDefault(): void
     {
-        $this->template->h1 = 'Přehled měst';
+        $this->template->h1 = $this->translator->translate('location.admin.title.cities');
     }
 
     /**
@@ -60,9 +60,9 @@ class CityPresenter extends SecuredPresenter
             }
 
             $this->userCityFormEntity = $city;
-            $this->template->h1 = sprintf('Město „%s“', $city->getName());
+            $this->template->h1 = $this->translator->translate('location.admin.title.editCity', ['name' => $city->getName()]);
         } else {
-            $this->template->h1 = 'Založení nového města';
+            $this->template->h1 = $this->translator->translate('location.admin.title.newCity');
         }
     }
 
@@ -74,7 +74,7 @@ class CityPresenter extends SecuredPresenter
         $control = $this->userCityGridFactory->create();
         $control->onDelete[] = function()
         {
-            $this->flashMessage('City has been successfuly deleted', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.cityDeleted'), Flash::SUCCESS);
             $this->redirect('City:');
         };
         return $control;
@@ -88,7 +88,7 @@ class CityPresenter extends SecuredPresenter
         $control = $this->userCityFormFactory->create($this->userCityFormEntity);
         $control->onSuccess[] = function()
         {
-            $this->flashMessage('City has been successfuly saved', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('location.admin.flash.citySaved'), Flash::SUCCESS);
             $this->redirect('City:');
         };
         return $control;

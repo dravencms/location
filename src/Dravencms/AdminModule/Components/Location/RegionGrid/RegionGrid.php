@@ -80,19 +80,19 @@ class RegionGrid extends BaseControl
 
         $grid->setDataSource($this->regionRepository->getRegionQueryBuilder());
 
-        $grid->addColumnText('name', 'Name')
+        $grid->addColumnText('name', 'location.admin.field.name')
             ->setSortable()
             ->setFilterText();
 
-        $grid->addColumnBoolean('isActive', 'Active');
+        $grid->addColumnBoolean('isActive', 'location.admin.field.active');
 
-        $grid->addColumnPosition('position', 'Position');
+        $grid->addColumnPosition('position', 'location.admin.field.position', 'up!', 'down!');
 
         if ($this->user->isAllowed('location', 'regionEdit'))
         {
             $grid->addAction('edit', '')
                 ->setIcon('pencil')
-                ->setTitle('Upravit')
+                ->setTitle('location.admin.action.edit')
                 ->setClass('btn btn-sm btn-primary');
         }
 
@@ -100,22 +100,22 @@ class RegionGrid extends BaseControl
         {
             $grid->addAction('delete', '', 'delete!')
                 ->setIcon('trash')
-                ->setTitle('Smazat')
+                ->setTitle('location.admin.action.delete')
                 ->setClass('btn btn-sm btn-danger ajax')
-                ->setConfirmation(new StringConfirmation('Do you really want to delete row %s?', 'name'));
+                ->setConfirmation(new StringConfirmation('location.admin.confirm.delete', 'name'));
 
             $grid->allowRowsAction('delete', function($item) {
                 return (count($item->getCities()) == 0);
             });
 
-            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'gridGroupActionDelete'];
+            $grid->addGroupAction('location.admin.action.delete')->onSelect[] = [$this, 'gridGroupActionDelete'];
         }
 
-        $grid->addExportCsvFiltered('Csv export (filtered)', 'acl_resource_filtered.csv')
-            ->setTitle('Csv export (filtered)');
+        $grid->addExportCsvFiltered('location.admin.action.exportFiltered', 'acl_resource_filtered.csv')
+            ->setTitle('location.admin.action.exportFiltered');
 
-        $grid->addExportCsv('Csv export', 'acl_resource_all.csv')
-            ->setTitle('Csv export');
+        $grid->addExportCsv('location.admin.action.exportAll', 'acl_resource_all.csv')
+            ->setTitle('location.admin.action.exportAll');
 
         return $grid;
     }

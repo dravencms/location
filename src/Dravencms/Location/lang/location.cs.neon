@@ -1,0 +1,82 @@
+admin:
+	field:
+		name: Název
+		code: Kód
+		country: Země
+		city: Město
+		zipCode: PSČ
+		street: Ulice
+		streetNumber: Číslo domu
+		cities: Města
+		active: Aktivní
+		position: Pořadí
+
+	action:
+		save: Uložit
+		edit: Upravit
+		delete: Smazat
+		exportAll: Export CSV
+		exportFiltered: 'Export CSV (filtrovaný)'
+		selectCity: Vyberte město
+		selectCities: Vyberte města
+
+	title:
+		countries: Země
+		cities: Města
+		zipCodes: Poštovní směrovací čísla
+		streets: Ulice
+		streetNumbers: Čísla domů
+		regions: Regiony
+		newCountry: Nová země
+		newCity: Nové město
+		newZipCode: Nové PSČ
+		newStreet: Nová ulice
+		newStreetNumber: Nové číslo domu
+		newRegion: Nový region
+		editCountry: Upravit zemi "%name%"
+		editCity: Upravit město "%name%"
+		editZipCode: Upravit PSČ "%name%"
+		editStreet: Upravit ulici "%name%"
+		editStreetNumber: Upravit číslo domu "%name%"
+		editRegion: Upravit region "%name%"
+
+	validation:
+		countryRequired: Zadejte prosím název země.
+		countryCodeRequired: Zadejte prosím kód země.
+		cityRequired: Zadejte prosím název města.
+		countrySelectionRequired: Vyberte prosím zemi.
+		zipCodeRequired: Zadejte prosím PSČ.
+		streetRequired: Zadejte prosím název ulice.
+		streetNumberRequired: Zadejte prosím číslo domu.
+		regionRequired: Zadejte prosím název regionu.
+		countryTaken: Tato země již existuje.
+		countryCodeTaken: Tento kód země již existuje.
+		cityTaken: Toto město již existuje.
+		zipCodeTaken: Toto PSČ již existuje.
+		streetTaken: Tato ulice již existuje.
+		streetNumberTaken: Toto číslo domu již existuje.
+		regionTaken: Region s tímto názvem již existuje.
+		countryForbidden: Nemáte oprávnění upravovat země.
+		cityForbidden: Nemáte oprávnění upravovat města.
+		zipCodeForbidden: Nemáte oprávnění upravovat PSČ.
+		streetForbidden: Nemáte oprávnění upravovat ulice.
+		streetNumberForbidden: Nemáte oprávnění upravovat čísla domů.
+
+	confirm:
+		delete: Opravdu chcete smazat záznam "%s"?
+
+	flash:
+		countrySaved: Země byla uložena.
+		countryDeleted: Země byla smazána.
+		citySaved: Město bylo uloženo.
+		cityDeleted: Město bylo smazáno.
+		zipCodeSaved: PSČ bylo uloženo.
+		zipCodeDeleted: PSČ bylo smazáno.
+		streetSaved: Ulice byla uložena.
+		streetDeleted: Ulice byla smazána.
+		streetNumberSaved: Číslo domu bylo uloženo.
+		streetNumberDeleted: Číslo domu bylo smazáno.
+		regionSaved: Region byl uložen.
+		regionCreated: Nový region byl uložen.
+		regionDeleted: Region byl smazán.
+

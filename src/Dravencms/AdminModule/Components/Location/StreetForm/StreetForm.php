@@ -2,6 +2,8 @@
 
 namespace Dravencms\AdminModule\Components\Location\StreetForm;
 
+use Contributte\Translation\Wrappers\Message;
+
 use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Location\Entities\Street;
@@ -77,7 +79,7 @@ class StreetForm extends BaseControl
         $form = $this->baseFormFactory->create();
 
         $form->addText('name')
-            ->setRequired('Prosím zadejte jméno.');
+            ->setRequired('location.admin.validation.streetRequired');
 
         $zipCities = [];
         foreach ($this->cityRepository->getAll() AS $city) {
@@ -89,7 +91,7 @@ class StreetForm extends BaseControl
         }
 
         $form->addSelect('zipCode', null, $zipCities);
-        $form->addSubmit('send');
+        $form->addSubmit('send', 'location.admin.action.save');
 
         $form->onValidate[] = [$this, 'onValidateForm'];
         $form->onSuccess[] = [$this, 'onSuccessForm'];
@@ -114,12 +116,12 @@ class StreetForm extends BaseControl
 
         if (!$this->streetRepository->isStreetNameFree($values->name, $zipCode, $this->street))
         {
-            $form->addError('Tato ulice již existuje.');
+            $form->addError('location.admin.validation.streetTaken');
         }
 
         //Kontrola opraveni
         if (!$this->user->isAllowed('location', 'streetEdit')) {
-            $form->addError('Nemáte oprávění editovat ulici.');
+            $form->addError('location.admin.validation.streetForbidden');
         }
     }
 
@@ -152,7 +154,7 @@ class StreetForm extends BaseControl
     public function render(): void
     {
         $template = $this->template;
-        $template->panelHeading = ($this->street ? 'Editation of '.$this->street->getName().' Street' : 'New street');
+        $template->panelHeading = ($this->street ? new Message('location.admin.title.editStreet', ['name' => $this->street->getName()]) : 'location.admin.title.newStreet');
         $template->setFile(__DIR__ . '/StreetForm.latte');
         $template->render();
     }
