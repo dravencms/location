@@ -10,5 +10,3 @@
 - Dravencms\Model\Location\Fixtures\StreetNumberFixtures
 - Dravencms\Model\Location\Fixtures\ZipCodeFixtures
 - Dravencms\Model\Location\Fixtures\CountryFixtures
-- Dravencms\Model\Location\Fixtures\AclOperationFixtures
-- Dravencms\Model\Location\Fixtures\AclResourceFixtures

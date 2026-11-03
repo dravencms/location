@@ -89,3 +89,31 @@ menu:
     zipcode: 'ZIP codes'
     country: 'Countries'
     region: 'Regions'
+
+acl:
+    resource: 'Locations'
+    permissions:
+        edit:
+            label: 'Manage locations'
+        delete:
+            label: 'Delete locations'
+        streetEdit:
+            label: 'Manage streets and street numbers'
+        streetDelete:
+            label: 'Delete streets and street numbers'
+        cityEdit:
+            label: 'Manage cities'
+        cityDelete:
+            label: 'Delete cities'
+        zipCodeEdit:
+            label: 'Manage ZIP codes'
+        zipCodeDelete:
+            label: 'Delete ZIP codes'
+        countryEdit:
+            label: 'Manage countries'
+        countryDelete:
+            label: 'Delete countries'
+        regionEdit:
+            label: 'Manage regions'
+        regionDelete:
+            label: 'Delete regions'

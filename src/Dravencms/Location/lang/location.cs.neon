@@ -89,3 +89,31 @@ menu:
     zipcode: 'PSČ'
     country: 'Země'
     region: 'Regiony'
+
+acl:
+    resource: 'Lokality'
+    permissions:
+        edit:
+            label: 'Spravovat lokality'
+        delete:
+            label: 'Mazat lokality'
+        streetEdit:
+            label: 'Spravovat ulice a čísla domů'
+        streetDelete:
+            label: 'Mazat ulice a čísla domů'
+        cityEdit:
+            label: 'Spravovat města'
+        cityDelete:
+            label: 'Mazat města'
+        zipCodeEdit:
+            label: 'Spravovat PSČ'
+        zipCodeDelete:
+            label: 'Mazat PSČ'
+        countryEdit:
+            label: 'Spravovat země'
+        countryDelete:
+            label: 'Mazat země'
+        regionEdit:
+            label: 'Spravovat regiony'
+        regionDelete:
+            label: 'Mazat regiony'

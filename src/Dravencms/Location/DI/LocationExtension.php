@@ -20,6 +20,9 @@ class LocationExtension extends Nette\DI\CompilerExtension implements Translatio
     public function loadConfiguration(): void
     {
         $builder = $this->getContainerBuilder();
+        if ($this->compiler->getExtensions(\Dravencms\User\DI\UserExtension::class) !== []) {
+            $builder->addDefinition($this->prefix('aclProvider'))->setFactory(\Dravencms\Location\AclProvider::class);
+        }
         if ($this->compiler->getExtensions(\Dravencms\Admin\DI\AdminExtension::class) !== []) {
             $builder->addDefinition($this->prefix('adminMenuProvider'))->setFactory(\Dravencms\Location\AdminMenuProvider::class);
         }
