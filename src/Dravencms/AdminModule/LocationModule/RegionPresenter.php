@@ -17,6 +17,7 @@ use Dravencms\Model\Location\Entities\Region;
 /**
  * RegionPresenter presenter.
  */
+#[\Dravencms\User\Attributes\IsAllowed('location', 'regionEdit')]
 class RegionPresenter extends SecuredPresenter
 {
     /** @var RegionRepository @inject */

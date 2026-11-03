@@ -24,6 +24,7 @@ use Dravencms\Model\Location\Repository\CountryRepository;
  *
  * @author Adam Schubert
  */
+#[\Dravencms\User\Attributes\IsAllowed('location', 'countryEdit')]
 class CountryPresenter extends SecuredPresenter
 {
     /** @var CountryRepository @inject */

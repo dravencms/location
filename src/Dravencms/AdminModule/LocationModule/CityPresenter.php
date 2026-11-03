@@ -24,6 +24,7 @@ use Dravencms\Model\Location\Repository\CityRepository;
  *
  * @author Adam Schubert
  */
+#[\Dravencms\User\Attributes\IsAllowed('location', 'cityEdit')]
 class CityPresenter extends SecuredPresenter
 {
     /** @var CityRepository @inject */

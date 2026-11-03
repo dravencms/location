@@ -24,6 +24,7 @@ use Dravencms\Model\Location\Repository\StreetNumberRepository;
  *
  * @author Adam Schubert
  */
+#[\Dravencms\User\Attributes\IsAllowed('location', 'streetEdit')]
 class StreetNumberPresenter extends SecuredPresenter
 {
     /** @var StreetNumberRepository @inject */

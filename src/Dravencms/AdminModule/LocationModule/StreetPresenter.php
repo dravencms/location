@@ -25,6 +25,7 @@ use Dravencms\Model\Location\Repository\StreetRepository;
  *
  * @author Adam Schubert
  */
+#[\Dravencms\User\Attributes\IsAllowed('location', 'streetEdit')]
 class StreetPresenter extends SecuredPresenter
 {
     /** @var StreetRepository @inject */

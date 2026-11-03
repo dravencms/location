@@ -59,6 +59,7 @@ class CountryGrid extends BaseControl
     {
         /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
+        $grid->setWritePermission('location', 'countryEdit');
 
         $grid->setDataSource($this->countryRepository->getCountryQueryBuilder());
 
@@ -109,9 +110,11 @@ class CountryGrid extends BaseControl
     /**
      * @param integer|array $id
      */
-    #[IsAllowed('user', 'countryDelete')]
+    #[\Dravencms\User\Attributes\IsAllowed('location', 'countryDelete')]
+    #[\Dravencms\Security\Mutation]
     public function handleDelete($id): void
     {
+        $this->requirePermission('location', 'countryDelete');
         $countries = $this->countryRepository->getById($id);
         foreach($countries AS $country)
         {

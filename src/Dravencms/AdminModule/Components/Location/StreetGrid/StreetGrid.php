@@ -59,6 +59,7 @@ class StreetGrid extends BaseControl
     {
         /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
+        $grid->setWritePermission('location', 'streetEdit');
 
         $grid->setDataSource($this->streetRepository->getStreetQueryBuilder());
 
@@ -117,9 +118,11 @@ class StreetGrid extends BaseControl
     /**
      * @param integer|array $id
      */
-    #[IsAllowed('user', 'streetDelete')]
+    #[\Dravencms\User\Attributes\IsAllowed('location', 'streetDelete')]
+    #[\Dravencms\Security\Mutation]
     public function handleDelete($id): void
     {
+        $this->requirePermission('location', 'streetDelete');
         $streets = $this->streetRepository->getById($id);
         foreach ($streets AS $street) {
             $this->entityManager->remove($street);

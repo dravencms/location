@@ -25,6 +25,7 @@ use Dravencms\Model\Location\Repository\ZipCodeRepository;
  *
  * @author Adam Schubert
  */
+#[\Dravencms\User\Attributes\IsAllowed('location', 'zipCodeEdit')]
 class ZipCodePresenter extends SecuredPresenter
 {
     /** @var ZipCodeRepository @inject */

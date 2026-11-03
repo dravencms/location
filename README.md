@@ -35,3 +35,7 @@ This package is licensed under the LGPL-3.0 license.
 Run `php bin/console location:setup` after creating or migrating the application schema. The command adds missing defaults in a transaction and can be rerun on an active project. It never purges data or updates existing records, including customized names, formats, templates, active flags and default selections. Run setup commands one at a time. Schema creation/migration remains separate. Fixtures are no longer registered.
 
 Adds all countries from the installed English country dataset, matching by country code. Add `--example-address` to explicitly install the former Olomouc / 77900 / Brněnská / 54 example; address rows are matched within their parent country, city, ZIP code or street.
+
+## Admin authorization and mutations
+
+Administration uses User 3.1, Admin 3.2 and Application 0.3 guards. Screens and write callbacks enforce the existing provider-defined permissions server-side, including direct URLs and bulk callbacks. Mutating signals require POST and a session-bound action token; synchronize the matching admin assets when upgrading. See the User package's `user:security:migrate` instructions for the password-reset schema change.

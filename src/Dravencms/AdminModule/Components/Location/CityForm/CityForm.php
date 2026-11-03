@@ -105,6 +105,7 @@ class CityForm extends BaseControl
      */
     public function onSuccessForm(Form $form): void
     {
+        $this->requirePermission('location', 'cityEdit');
         $values = $form->getValues();
 
         $country = $this->countryRepository->getOneById($values->country);

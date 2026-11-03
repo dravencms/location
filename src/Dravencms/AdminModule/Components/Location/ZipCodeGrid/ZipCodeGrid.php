@@ -61,6 +61,7 @@ class ZipCodeGrid extends BaseControl
     {
         /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
+        $grid->setWritePermission('location', 'zipCodeEdit');
 
         $grid->setDataSource($this->zipCodeRepository->getZipCodeQueryBuilder());
 
@@ -115,9 +116,11 @@ class ZipCodeGrid extends BaseControl
     /**
      * @param integer|array $id
      */
-    #[IsAllowed('user', 'zipCodeDelete')]
+    #[\Dravencms\User\Attributes\IsAllowed('location', 'zipCodeDelete')]
+    #[\Dravencms\Security\Mutation]
     public function handleDelete($id): void
     {
+        $this->requirePermission('location', 'zipCodeDelete');
         $zipCodes = $this->zipCodeRepository->getById($id);
         foreach($zipCodes AS $zipCode)
         {

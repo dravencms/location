@@ -59,6 +59,7 @@ class CityGrid extends BaseControl
     {
         /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
+        $grid->setWritePermission('location', 'cityEdit');
 
         $grid->setDataSource($this->cityRepository->getCityQueryBuilder());
 
@@ -113,9 +114,11 @@ class CityGrid extends BaseControl
     /**
      * @param integer|array $id
      */
-    #[IsAllowed('user', 'cityDelete')]
+    #[\Dravencms\User\Attributes\IsAllowed('location', 'cityDelete')]
+    #[\Dravencms\Security\Mutation]
     public function handleDelete($id): void
     {
+        $this->requirePermission('location', 'cityDelete');
         $cities = $this->cityRepository->getById($id);
         foreach ($cities AS $city) {
             $this->entityManager->remove($city);

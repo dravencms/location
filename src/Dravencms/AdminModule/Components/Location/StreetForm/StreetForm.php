@@ -130,6 +130,7 @@ class StreetForm extends BaseControl
      */
     public function onSuccessForm(Form $form): void
     {
+        $this->requirePermission('location', 'streetEdit');
         $values = $form->getValues();
 
         $zipCode = $this->zipCodeRepository->getOneById($values->zipCode);

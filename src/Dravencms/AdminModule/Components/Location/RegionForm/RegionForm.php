@@ -138,6 +138,7 @@ class RegionForm extends BaseControl
      */
     public function editFormSucceeded(Form $form): void
     {
+        $this->requirePermission('location', 'regionEdit');
         $values = $form->getValues();
 
         $cities = new ArrayCollection($this->cityRepository->getById($values->cities));

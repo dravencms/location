@@ -77,6 +77,7 @@ class RegionGrid extends BaseControl
     {
         /** @var Grid $grid */
         $grid = $this->baseGridFactory->create($this, $name);
+        $grid->setWritePermission('location', 'regionEdit');
 
         $grid->setDataSource($this->regionRepository->getRegionQueryBuilder());
 
@@ -133,8 +134,11 @@ class RegionGrid extends BaseControl
      * @param array|int $id
      * @throws \Exception
      */
+    #[\Dravencms\User\Attributes\IsAllowed('location', 'regionDelete')]
+    #[\Dravencms\Security\Mutation]
     public function handleDelete($id): void
     {
+        $this->requirePermission('location', 'regionDelete');
         $categories = $this->regionRepository->getById($id);
         foreach ($categories AS $category)
         {
@@ -150,8 +154,11 @@ class RegionGrid extends BaseControl
      * @param int $id
      * @throws \Exception
      */
+    #[\Dravencms\User\Attributes\IsAllowed('location', 'regionEdit')]
+    #[\Dravencms\Security\Mutation]
     public function handleUp(int $id): void
     {
+        $this->requirePermission('location', 'regionEdit');
         $menuItem = $this->regionRepository->getOneById($id);
         $this->regionRepository->moveUp($menuItem, 1);
     }
@@ -160,8 +167,11 @@ class RegionGrid extends BaseControl
      * @param int $id
      * @throws \Exception
      */
+    #[\Dravencms\User\Attributes\IsAllowed('location', 'regionEdit')]
+    #[\Dravencms\Security\Mutation]
     public function handleDown($id): void
     {
+        $this->requirePermission('location', 'regionEdit');
         $menuItem = $this->regionRepository->getOneById($id);
         $this->regionRepository->moveDown($menuItem, 1);
     }
