@@ -29,3 +29,9 @@ The package models location levels independently because real addresses do not a
 ## License
 
 This package is licensed under the LGPL-3.0 license.
+
+## Installing default data
+
+Run `php bin/console location:setup` after creating or migrating the application schema. The command adds missing defaults in a transaction and can be rerun on an active project. It never purges data or updates existing records, including customized names, formats, templates, active flags and default selections. Run setup commands one at a time. Schema creation/migration remains separate. Fixtures are no longer registered.
+
+Adds all countries from the installed English country dataset, matching by country code. Add `--example-address` to explicitly install the former Olomouc / 77900 / Brněnská / 54 example; address rows are matched within their parent country, city, ZIP code or street.

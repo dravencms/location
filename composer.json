@@ -19,7 +19,10 @@
     "dravencms/application": ">=0.0.2",
     "dravencms/database": ">=0.0.3",
     "dravencms/base-form": ">=0.0.1",
-    "dravencms/base-grid": ">=0.0.1"
+    "dravencms/base-grid": ">=0.0.1",
+    "php": ">=8.2",
+    "symfony/console": "^6.4 || ^7.0 || ^8.0",
+    "composer-runtime-api": "^2.0"
   },
   "suggest": {
     "dravencms/admin": "Provides admin inteface to manage locations",
