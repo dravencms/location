@@ -119,7 +119,6 @@ class StreetNumberForm extends BaseControl
      */
     public function onSuccessForm(Form $form): void
     {
-        $this->requirePermission('location', 'streetEdit');
         $values = $form->getValues();
 
         $street = $this->streetRepository->getOneById($values->street);

@@ -116,7 +116,6 @@ class ZipCodeForm extends BaseControl
      */
     public function onSuccessForm(Form $form): void
     {
-        $this->requirePermission('location', 'zipCodeEdit');
         $values = $form->getValues();
 
         $city = $this->cityRepository->getOneById($values->city);

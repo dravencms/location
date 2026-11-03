@@ -105,7 +105,6 @@ class CountryForm extends BaseControl
      */
     public function onSuccessForm(Form $form): void
     {
-        $this->requirePermission('location', 'countryEdit');
         $values = $form->getValues();
 
         if ($this->country)
