@@ -56,6 +56,7 @@ admin:
 		streetTaken: This street already exists.
 		streetNumberTaken: This street number already exists.
 		regionTaken: A region with this name already exists.
+		regionForbidden: 'You do not have permission to edit regions.'
 		countryForbidden: You do not have permission to edit countries.
 		cityForbidden: You do not have permission to edit cities.
 		zipCodeForbidden: You do not have permission to edit postal codes.

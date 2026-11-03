@@ -56,6 +56,7 @@ admin:
 		streetTaken: Tato ulice již existuje.
 		streetNumberTaken: Toto číslo domu již existuje.
 		regionTaken: Region s tímto názvem již existuje.
+		regionForbidden: 'Nemáte oprávnění upravovat regiony.'
 		countryForbidden: Nemáte oprávnění upravovat země.
 		cityForbidden: Nemáte oprávnění upravovat města.
 		zipCodeForbidden: Nemáte oprávnění upravovat PSČ.

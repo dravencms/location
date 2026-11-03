@@ -54,17 +54,22 @@ class RegionForm extends BaseControl
     /** @var Region|null */
     private $region;
 
+    /** @var \Nette\Security\User */
+    private $user;
+
     /** @var array */
     public $onSuccess = [];
 
 
     public function __construct(
+        \Nette\Security\User $user,
         BaseFormFactory $baseFormFactory,
         EntityManager $entityManager,
         RegionRepository $regionRepository,
         CityRepository $cityRepository,
         ?Region $region = null
     ) {
+        $this->user = $user;
         $this->baseFormFactory = $baseFormFactory;
         $this->entityManager = $entityManager;
 
@@ -125,6 +130,10 @@ class RegionForm extends BaseControl
      */
     public function editFormValidate(Form $form): void
     {
+        if (!$this->user->isAllowed('location', 'regionEdit')) {
+            $form->addError('location.admin.validation.regionForbidden');
+            return;
+        }
         $values = $form->getValues();
         if (!$this->regionRepository->isNameFree($values->name, $this->region))
         {
@@ -138,7 +147,6 @@ class RegionForm extends BaseControl
      */
     public function editFormSucceeded(Form $form): void
     {
-        $this->requirePermission('location', 'regionEdit');
         $values = $form->getValues();
 
         $cities = new ArrayCollection($this->cityRepository->getById($values->cities));
