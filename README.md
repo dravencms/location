@@ -8,7 +8,7 @@ Reusable geographical data model and administration for DravenCMS. It manages co
 - Region, city, street, street-number, and ZIP-code entities.
 - Repositories and pair/query helpers for application forms.
 - Optional administration grids and forms.
-- ACL and admin-menu fixtures.
+- Provider-defined ACL permissions and admin navigation.
 
 ## Installation
 
@@ -16,9 +16,9 @@ Reusable geographical data model and administration for DravenCMS. It manages co
 composer require dravencms/location
 ```
 
-The package loader registers its services and Doctrine attribute mappings. Apply the package schema through the application's migration workflow and load fixtures/default data before creating dependent locale or user records.
+The package loader registers its services and Doctrine attribute mappings. Apply the package schema through the application's migration workflow and run `php bin/console location:setup` to install country data before creating dependent records.
 
-Install `dravencms/admin` to expose management presenters and `dravencms/user` to use the supplied ACL fixtures.
+Install `dravencms/admin` to expose management presenters and `dravencms/user` for provider-defined permissions.
 
 ## Usage
 
