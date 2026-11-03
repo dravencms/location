@@ -80,3 +80,12 @@ admin:
 		regionCreated: Nový region byl uložen.
 		regionDeleted: Region byl smazán.
 
+
+menu:
+    root: 'Lokality'
+    street: 'Ulice'
+    streetnumber: 'Čísla domů'
+    city: 'Města'
+    zipcode: 'PSČ'
+    country: 'Země'
+    region: 'Regiony'

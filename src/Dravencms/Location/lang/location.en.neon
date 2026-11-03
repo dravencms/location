@@ -80,3 +80,12 @@ admin:
 		regionCreated: The new region has been saved.
 		regionDeleted: The region has been deleted.
 
+
+menu:
+    root: 'Locations'
+    street: 'Streets'
+    streetnumber: 'Street numbers'
+    city: 'Cities'
+    zipcode: 'ZIP codes'
+    country: 'Countries'
+    region: 'Regions'
